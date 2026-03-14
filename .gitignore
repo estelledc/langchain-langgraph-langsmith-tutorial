@@ -1,0 +1,28 @@
+# 敏感配置（绝不提交真实 Key）
+.env
+
+# Python 编译产物
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# 打包产物
+*.egg-info/
+dist/
+build/
+
+# 向量库本地文件
+*.faiss
+*.pkl
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Jupyter
+.ipynb_checkpoints/
