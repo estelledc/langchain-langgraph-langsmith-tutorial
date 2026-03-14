@@ -1,5 +1,7 @@
 # LangChain / LangGraph / LangSmith 学习教程
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/estelledc/langchain-langgraph-langsmith-tutorial)
+
 基于 **DashScope（通义千问）** 作为 LLM 后端，配合 **LangSmith** 可观测性平台，系统学习 LangChain、LangGraph、LangSmith 三大核心库。全部示例可独立运行，适合零基础到进阶的渐进式学习。
 
 ## 快速开始
