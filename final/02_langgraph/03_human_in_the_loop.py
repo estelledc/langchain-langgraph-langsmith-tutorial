@@ -278,7 +278,12 @@ if __name__ == "__main__":
     print("\n" + "=" * 50)
     print("交互式演示（需要人工输入）：")
     print("1. interrupt_before 演示 - 危险操作前确认")
-    run_interactive = input("是否运行交互式演示？(y/n): ").strip().lower()
+    try:
+        run_interactive = input("是否运行交互式演示？(y/n): ").strip().lower()
+    except EOFError:
+        # 批跑/CI 场景：stdin 关闭时默认跳过交互式部分
+        print("(检测到非交互式终端，跳过交互式演示)")
+        run_interactive = "n"
     if run_interactive == "y":
         demo_interrupt_before()
         demo_interrupt_in_node()

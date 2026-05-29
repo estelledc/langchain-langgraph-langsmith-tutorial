@@ -38,7 +38,6 @@ def demo_dataset_crud():
     dataset = ls_client.create_dataset(
         dataset_name=dataset_name,
         description="CRUD 演示数据集",
-        data_type="kv",  # key-value 类型
     )
     print(f"\n1. 创建数据集：{dataset_name}（ID: {dataset.id}）")
     

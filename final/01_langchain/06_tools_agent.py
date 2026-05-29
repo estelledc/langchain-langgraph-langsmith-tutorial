@@ -19,7 +19,7 @@ import random
 from datetime import datetime
 from langchain_core.tools import tool, StructuredTool
 from langchain_core.messages import HumanMessage
-from langchain.agents import AgentExecutor, create_tool_calling_agent
+from langchain_classic.agents import AgentExecutor, create_tool_calling_agent
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from pydantic import BaseModel, Field
 

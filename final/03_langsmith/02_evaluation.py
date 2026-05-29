@@ -17,7 +17,6 @@ from langchain_core.messages import HumanMessage
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langsmith import Client, evaluate
-from langsmith.evaluation import LangChainStringEvaluator
 from langsmith.schemas import Run, Example
 
 from final._common import make_llm
@@ -144,24 +143,41 @@ def keyword_check_evaluator(run: Run, example: Example) -> dict:
     }
 
 
-# ── 4. LLM-as-Judge 评估器 ────────────────────────────────────────────────────
-def create_llm_judge():
-    """创建 LLM-as-Judge 评估器"""
-    
-    # 使用 LangChain 内置的 QA 评估器（基于 LLM 判断准确性）
-    qa_evaluator = LangChainStringEvaluator(
-        "qa",
-        config={
-            "llm": llm,
-        },
-        prepare_data=lambda run, example: {
-            "prediction": (run.outputs or {}).get("answer", ""),
-            "reference": (example.outputs or {}).get("answer", ""),
-            "input": (example.inputs or {}).get("question", ""),
-        }
-    )
-    
-    return qa_evaluator
+# ── 4. LLM-as-Judge 评估器（自定义函数）──────────────────────────────────────
+# 注意：langsmith 0.8 移除了 LangChainStringEvaluator，最稳的做法是写一个
+# 自定义评估函数，让 LLM 直接给"准确性"打分（0/0.5/1）。
+def llm_judge_evaluator(run: Run, example: Example) -> dict:
+    """LLM-as-Judge：让 LLM 评判预测答案与参考答案的语义一致性"""
+    prediction = (run.outputs or {}).get("answer", "")
+    reference = (example.outputs or {}).get("answer", "")
+    question = (example.inputs or {}).get("question", "")
+
+    judge_prompt = ChatPromptTemplate.from_messages([
+        ("system",
+         "你是一个评分助手，判断预测答案与参考答案的语义一致性。"
+         "只输出一个数字：1（完全一致或语义等价）/ 0.5（部分一致）/ 0（不一致或答非所问）。"),
+        ("human",
+         "问题：{question}\n参考答案：{reference}\n预测答案：{prediction}\n\n你的评分（只输出数字）："),
+    ])
+    judge_chain = judge_prompt | llm | StrOutputParser()
+    raw = judge_chain.invoke({
+        "question": question,
+        "reference": reference,
+        "prediction": prediction,
+    }).strip()
+
+    # 解析 LLM 输出，容错处理
+    try:
+        score = float(raw.split()[0])
+        score = max(0.0, min(1.0, score))
+    except (ValueError, IndexError):
+        score = 0.0
+
+    return {
+        "key": "llm_judge",
+        "score": score,
+        "comment": f"LLM 评分原始输出：{raw[:50]}",
+    }
 
 
 # ── 5. 运行评估 ───────────────────────────────────────────────────────────────
@@ -174,7 +190,7 @@ def run_evaluation():
     
     print(f"\n开始评估，数据集：{dataset_name}")
     print("评估器：长度检查、关键词覆盖、LLM-as-Judge")
-    
+
     # evaluate() 会：
     # 1. 遍历数据集中的每个样本
     # 2. 调用 target_function 得到预测结果
@@ -186,6 +202,7 @@ def run_evaluation():
         evaluators=[
             length_check_evaluator,
             keyword_check_evaluator,
+            llm_judge_evaluator,
         ],
         experiment_prefix="qa_baseline",  # 实验名称前缀
         metadata={"model": "qwen-plus", "version": "1.0"},
