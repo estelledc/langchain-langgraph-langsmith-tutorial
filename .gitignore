@@ -27,6 +27,13 @@ build/
 # Jupyter
 .ipynb_checkpoints/
 
+# Jekyll / GitHub Pages 本地构建产物
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+vendor/
+
 # 学习者主战场——你写的代码不进 git
 _scratch/*
 # 但保留 README 和 journal 目录骨架

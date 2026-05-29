@@ -1,0 +1,49 @@
+title: LangChain Tutorial Zero
+description: 给零基础选手的 AI 辅助学习教程 — 用 Claude Code / Cursor 学 LangChain + LangGraph + LangSmith
+url: ""
+baseurl: ""
+lang: zh-CN
+
+# GitHub Pages 默认主题（零配置原生支持）
+theme: jekyll-theme-cayman
+
+# GitHub Pages 默认插件（启用相对 .md 链接 → .html 重写）
+plugins:
+  - jekyll-relative-links
+  - jekyll-default-layout
+  - jekyll-readme-index
+  - jekyll-titles-from-headings
+
+# 让 README.md 自动当首页 index.html
+relative_links:
+  enabled: true
+  collections: true
+readme_index:
+  enabled: true
+  remove_originals: false
+  with_frontmatter: true
+
+# 不要把这些目录里的内容当成站点页面发布
+exclude:
+  - .venv/
+  - .env
+  - .env.example
+  - _scratch/
+  - .gitignore
+  - requirements.txt
+  - "**/__pycache__/"
+  - "**/*.pyc"
+  - LICENSE
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+
+# 顶部导航（Cayman 主题不显式用，但保留作记录用）
+header_pages:
+  - SETUP.md
+  - HOW_TO_LEARN_WITH_AI.md
+  - tutorial/README.md
+  - docs/concepts.md
+  - docs/prompts-cheatsheet.md
+  - docs/debug-recipes.md
+  - docs/challenges.md
