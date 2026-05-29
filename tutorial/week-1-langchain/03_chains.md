@@ -13,6 +13,8 @@
 - [ ] 打开 Claude Code 或 Cursor，cd 到本仓库根
 - [ ] 在 `_scratch/` 新建空文件 `my_03_chain.py`（`touch _scratch/my_03_chain.py`）
 
+> **耗时提醒**：这个文件实测跑完 ≈ 5-7 分钟（6 个 demo 串行调 LLM，公网网络下更快但仍有 3 分钟级别）。看到终端长时间停在某段输出**不要以为卡死**，等就好。
+
 ---
 
 ## 任务卡

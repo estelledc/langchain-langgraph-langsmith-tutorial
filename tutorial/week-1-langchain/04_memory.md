@@ -13,6 +13,8 @@
 - [ ] 打开 Claude Code 或 Cursor，cd 到本仓库根
 - [ ] 在 `_scratch/` 新建空文件 `my_04_memory.py`（`touch _scratch/my_04_memory.py`）
 
+> **会看到的 warning（不是 bug）**：跑 final 时终端可能跳 `LangChainDeprecationWarning: RunnableWithMessageHistory is deprecated. Use LangGraph's built-in persistence instead.`。这是 langchain 1.x 把状态管理推荐路径迁到 langgraph 了，但 RunnableWithMessageHistory 仍然能用——你 week-3 学 LangGraph 时会看到"新方式"。先按本篇学就行，**别一上来就跳到 langgraph**。
+
 ---
 
 ## 任务卡

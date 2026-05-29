@@ -1,6 +1,8 @@
 # LangChain Tutorial Zero — 给零基础选手的 AI 辅助学习教程
 
 > 不是另一份官方教程，是一份**学习脚手架**：你跟 Claude Code / Cursor 对话产出代码，再回头对照参考答案看自己写得如何。
+>
+> **代码实测**：14 个独立可执行 final/.py 全部经过作者实测（2026-05-29，langchain 1.3.2）→ [docs/test-runs.md](docs/test-runs.md)
 
 ## 这是什么
 

@@ -14,6 +14,8 @@
 - [ ] 打开 Claude Code 或 Cursor，cd 到本仓库根
 - [ ] 在 `_scratch/` 新建空文件 `my_05_rag.py`（`touch _scratch/my_05_rag.py`）
 
+> **跑不通常见原因**：如果终端报 `openai.PermissionDeniedError: Error code: 403 ... text-embedding-v3`，说明你的 DashScope key 没开通 embedding 模型权限。回 [DashScope 控制台](https://dashscope.aliyuncs.com) → 模型广场 → 开通"通用文本向量"。这一步**只这篇用得到**，前面 04 篇都不需要。
+
 ---
 
 ## 任务卡
