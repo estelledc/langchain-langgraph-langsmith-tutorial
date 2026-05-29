@@ -26,3 +26,11 @@ build/
 
 # Jupyter
 .ipynb_checkpoints/
+
+# 学习者主战场——你写的代码不进 git
+_scratch/*
+# 但保留 README 和 journal 目录骨架
+!_scratch/README.md
+!_scratch/journal/
+_scratch/journal/*
+!_scratch/journal/.gitkeep
