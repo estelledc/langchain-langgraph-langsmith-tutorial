@@ -8,7 +8,7 @@
 
 | 周次 | 目录 | 概念 | 状态 |
 |------|------|------|------|
-| Week 1 | [week-1-langchain/](week-1-langchain/) | LangChain 核心：LLM、Prompt、LCEL、Memory、RAG | 🚧 待填（5 篇） |
+| Week 1 | [week-1-langchain/](week-1-langchain/) | LangChain 核心：LLM、Prompt、LCEL、Memory、RAG | ✅ Done (5/5) |
 | Week 2 | [week-2-tools-and-agent/](week-2-tools-and-agent/) | Tool & Agent | 🚧 待建 |
 | Week 3 | [week-3-langgraph/](week-3-langgraph/) | StateGraph、条件边、HITL、多 Agent | 🚧 待建 |
 | Week 4 | [week-4-langsmith-and-project/](week-4-langsmith-and-project/) | 追踪、评估、综合项目 | 🚧 待建 |
