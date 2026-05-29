@@ -1,0 +1,24 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+/* hero 已显示页面标题；隐藏内容区里 markdown 第一行 H1 的重复 */
+.main-content > h1:first-child {
+  display: none;
+}
+
+/* 中文段落字间距更舒适 */
+.main-content {
+  line-height: 1.7;
+}
+
+/* 表格让 VS 官方教程 / 学习路线那种对比表更好看 */
+.main-content table {
+  display: table;
+  width: 100%;
+}
+
+.main-content table th {
+  background: #f6f8fa;
+}
