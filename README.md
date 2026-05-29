@@ -11,16 +11,17 @@
 ## 30 秒上手
 
 ```bash
-git clone <fork 后你自己的 URL>
+# 1. fork 本仓库到你自己的 GitHub，然后 clone（把 YOUR-USERNAME 换成你自己）
+git clone https://github.com/YOUR-USERNAME/langchain-tutorial-zero.git
 cd langchain-tutorial-zero
 
-# 1. 跟着 SETUP.md 配 .env 和依赖
+# 2. 跟着 SETUP.md 配 .env 和依赖（约 15 分钟，含申 API Key）
 open SETUP.md
 
-# 2. 读完元教程再开始（5 分钟）
+# 3. 读完元教程再开始（5 分钟，必读）
 open HOW_TO_LEARN_WITH_AI.md
 
-# 3. 走第一篇 tutorial
+# 4. 走第一篇 tutorial
 open tutorial/week-1-langchain/01_hello_llm.md
 ```
 
@@ -30,11 +31,18 @@ open tutorial/week-1-langchain/01_hello_llm.md
 ├── HOW_TO_LEARN_WITH_AI.md   # 必读：怎么用 CC/Cursor 学陌生代码
 ├── SETUP.md                  # 必读：环境搭建
 ├── tutorial/                 # 学习剧本（你主要看这里）
+│   ├── README.md             # 学习路线索引
 │   └── week-1-langchain/  ... week-4-langsmith-and-project/
 ├── final/                    # 参考答案（任务卡指明何时偷看）
-├── _scratch/                 # 你的主战场（自己代码放这）
-└── docs/                     # 速查表 / 排错手册
+│   ├── _common.py            # 共享 boilerplate（学习者别改）
+│   └── 01_langchain/  ...  04_project/
+├── _scratch/                 # 你的主战场（你写的代码放这；已 gitignore）
+│   └── journal/              # 卡点日志
+└── docs/                     # 设计 spec 和实施 plan（fork 后可参考；不影响学习）
+    └── superpowers/
 ```
+
+> 进度状态：Week 1 已完成（5 篇 tutorial），Week 2-4 在另一个 plan 里推进。
 
 ## 适合你吗
 
