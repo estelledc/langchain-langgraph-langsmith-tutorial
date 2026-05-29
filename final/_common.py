@@ -10,8 +10,8 @@ from dotenv import load_dotenv
 load_dotenv(override=True)
 
 # DashScope（通义千问）实际可用的模型 ID
-# 注意：原 README 里写的 "qwen3.5-plus" 不存在；正确 ID 是 qwen-plus
-DEFAULT_MODEL = "qwen-plus"
+# 默认 qwen-plus（DashScope 公网常用）；可在 .env 设 DASHSCOPE_MODEL 覆盖
+DEFAULT_MODEL = os.environ.get("DASHSCOPE_MODEL", "qwen-plus")
 DASHSCOPE_BASE_URL = os.environ["DASHSCOPE_BASE_URL"]
 DASHSCOPE_API_KEY = os.environ["DASHSCOPE_API_KEY"]
 
