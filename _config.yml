@@ -1,7 +1,7 @@
 title: LangChain Tutorial Zero
 description: 给零基础选手的 AI 辅助学习教程 — 用 Claude Code / Cursor 学 LangChain + LangGraph + LangSmith
-url: ""
-baseurl: ""
+# url 和 baseurl 留给 actions/configure-pages 自动注入
+# （手动设空字符串会让 CSS / 内部 link 拼接成根域名路径，部署到子路径仓库时 404）
 lang: zh-CN
 
 # GitHub Pages 默认主题（零配置原生支持）
