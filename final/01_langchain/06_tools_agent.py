@@ -8,28 +8,24 @@
 - AgentExecutor（旧式，了解原理）
 - 工具调用的 LangSmith Trace 分析
 """
+# 配套教程：tutorial/week-2-tools-and-agent/01_tools_agent.md
 
-from dotenv import load_dotenv
-load_dotenv(override=True)
+import sys, pathlib
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent.parent))
 
-import os
 import math
 import json
 import random
 from datetime import datetime
-from langchain_openai import ChatOpenAI
 from langchain_core.tools import tool, StructuredTool
 from langchain_core.messages import HumanMessage
 from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from pydantic import BaseModel, Field
 
-llm = ChatOpenAI(
-    model="qwen3.5-plus",
-    base_url=os.environ["DASHSCOPE_BASE_URL"],
-    api_key=os.environ["DASHSCOPE_API_KEY"],
-    temperature=0,
-)
+from final._common import make_llm
+
+llm = make_llm(temperature=0)
 
 
 # ── 1. 用 @tool 装饰器定义工具 ───────────────────────────────────────────────

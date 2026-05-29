@@ -9,23 +9,19 @@
 - RunnableLambda：将普通函数包装成 Runnable
 - 链的调试：verbose 和 LangSmith Trace
 """
+# 配套教程：tutorial/week-1-langchain/03_chains.md
 
-from dotenv import load_dotenv
-load_dotenv(override=True)
+import sys, pathlib
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent.parent))
 
-import os
-from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser, JsonOutputParser
 from langchain_core.runnables import RunnableParallel, RunnablePassthrough, RunnableLambda
 from langchain_core.pydantic_v1 import BaseModel, Field
 
-llm = ChatOpenAI(
-    model="qwen3.5-plus",
-    base_url=os.environ["DASHSCOPE_BASE_URL"],
-    api_key=os.environ["DASHSCOPE_API_KEY"],
-    temperature=0.7,
-)
+from final._common import make_llm
+
+llm = make_llm(temperature=0.7)
 
 
 # ── 1. 基础链：prompt | llm | parser ──────────────────────────────────────────

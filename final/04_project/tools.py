@@ -3,11 +3,11 @@ tools.py — 研究助手 Agent 的工具集
 
 包含：搜索、计算、文本分析、知识库检索等工具
 """
+# 配套教程：tutorial/week-4-langsmith-and-project/04_capstone.md
 
-from dotenv import load_dotenv
-load_dotenv(override=True)
+import sys, pathlib
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent.parent))
 
-import os
 import math
 import json
 from datetime import datetime

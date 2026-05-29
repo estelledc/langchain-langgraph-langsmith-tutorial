@@ -8,12 +8,11 @@
 - 自定义评估函数
 - 查看评估结果
 """
+# 配套教程：tutorial/week-4-langsmith-and-project/02_evaluation.md
 
-from dotenv import load_dotenv
-load_dotenv(override=True)
+import sys, pathlib
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent.parent))
 
-import os
-from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
@@ -21,12 +20,9 @@ from langsmith import Client, evaluate
 from langsmith.evaluation import LangChainStringEvaluator
 from langsmith.schemas import Run, Example
 
-llm = ChatOpenAI(
-    model="qwen3.5-plus",
-    base_url=os.environ["DASHSCOPE_BASE_URL"],
-    api_key=os.environ["DASHSCOPE_API_KEY"],
-    temperature=0,
-)
+from final._common import make_llm
+
+llm = make_llm(temperature=0)
 
 ls_client = Client()
 
@@ -192,7 +188,7 @@ def run_evaluation():
             keyword_check_evaluator,
         ],
         experiment_prefix="qa_baseline",  # 实验名称前缀
-        metadata={"model": "qwen3.5-plus", "version": "1.0"},
+        metadata={"model": "qwen-plus", "version": "1.0"},
     )
     
     print(f"\n评估完成！共评估 {len(list(results))} 个样本")

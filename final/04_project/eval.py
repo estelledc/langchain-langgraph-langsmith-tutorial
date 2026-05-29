@@ -7,24 +7,20 @@ eval.py — 研究助手 Agent 的 LangSmith 评估
 3. 报告长度：是否在合理范围内
 4. 工具使用率：是否合理调用了工具
 """
+# 配套教程：tutorial/week-4-langsmith-and-project/04_capstone.md
 
-from dotenv import load_dotenv
-load_dotenv(override=True)
+import sys, pathlib
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent.parent))
 
 import os
-from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage
 from langsmith import Client, evaluate
 from langsmith.schemas import Run, Example
 
+from final._common import make_llm
 from agent import run_research
 
-llm = ChatOpenAI(
-    model="qwen3.5-plus",
-    base_url=os.environ["DASHSCOPE_BASE_URL"],
-    api_key=os.environ["DASHSCOPE_API_KEY"],
-    temperature=0,
-)
+llm = make_llm(temperature=0)
 
 ls_client = Client()
 DATASET_NAME = "research_agent_eval_v1"
@@ -214,7 +210,7 @@ def run_evaluation(experiment_name: str = "research_agent_v1"):
         ],
         experiment_prefix=experiment_name,
         metadata={
-            "model": "qwen3.5-plus",
+            "model": "qwen-plus",
             "agent_version": "1.0",
         },
         max_concurrency=1,  # 顺序执行，避免 rate limit

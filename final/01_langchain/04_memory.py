@@ -8,12 +8,11 @@
 - ConversationSummaryMemory：超长对话自动摘要
 - session_id：多用户/多会话隔离
 """
+# 配套教程：tutorial/week-1-langchain/04_memory.md
 
-from dotenv import load_dotenv
-load_dotenv(override=True)
+import sys, pathlib
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent.parent))
 
-import os
-from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.chat_history import BaseChatMessageHistory
@@ -21,12 +20,9 @@ from langchain_core.messages import HumanMessage, AIMessage
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
 
-llm = ChatOpenAI(
-    model="qwen3.5-plus",
-    base_url=os.environ["DASHSCOPE_BASE_URL"],
-    api_key=os.environ["DASHSCOPE_API_KEY"],
-    temperature=0.7,
-)
+from final._common import make_llm
+
+llm = make_llm(temperature=0.7)
 
 
 # ── 1. 手动维护消息历史（最底层，理解原理）────────────────────────────────────

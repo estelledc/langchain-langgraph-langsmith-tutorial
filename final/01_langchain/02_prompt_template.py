@@ -7,12 +7,11 @@
 - FewShotChatMessagePromptTemplate（少样本提示）
 - 模板变量插值与格式化
 """
+# 配套教程：tutorial/week-1-langchain/02_prompt_template.md
 
-from dotenv import load_dotenv
-load_dotenv(override=True)
+import sys, pathlib
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent.parent))
 
-import os
-from langchain_openai import ChatOpenAI
 from langchain_core.prompts import (
     PromptTemplate,
     ChatPromptTemplate,
@@ -20,12 +19,9 @@ from langchain_core.prompts import (
 )
 from langchain_core.output_parsers import StrOutputParser
 
-llm = ChatOpenAI(
-    model="qwen3.5-plus",
-    base_url=os.environ["DASHSCOPE_BASE_URL"],
-    api_key=os.environ["DASHSCOPE_API_KEY"],
-    temperature=0.7,
-)
+from final._common import make_llm
+
+llm = make_llm(temperature=0.7)
 
 # ── 1. PromptTemplate：纯文本模板 ─────────────────────────────────────────────
 def demo_prompt_template():

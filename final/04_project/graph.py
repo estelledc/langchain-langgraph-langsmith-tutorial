@@ -4,13 +4,12 @@ graph.py — 研究助手 Agent 的 LangGraph 状态图
 架构：
 用户问题 → Planner（拆解任务）→ ReAct 循环（搜索/计算/分析）→ Writer（生成报告）→ 输出
 """
+# 配套教程：tutorial/week-4-langsmith-and-project/04_capstone.md
 
-from dotenv import load_dotenv
-load_dotenv(override=True)
+import sys, pathlib
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent.parent))
 
-import os
 from typing import TypedDict, Annotated
-from langchain_openai import ChatOpenAI
 from langchain_core.messages import BaseMessage, HumanMessage, SystemMessage
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
@@ -19,14 +18,10 @@ from langgraph.graph.message import add_messages
 from langgraph.prebuilt import ToolNode, tools_condition
 from langgraph.checkpoint.memory import MemorySaver
 
+from final._common import make_llm
 from tools import ALL_TOOLS
 
-llm = ChatOpenAI(
-    model="qwen3.5-plus",
-    base_url=os.environ["DASHSCOPE_BASE_URL"],
-    api_key=os.environ["DASHSCOPE_API_KEY"],
-    temperature=0.3,
-)
+llm = make_llm(temperature=0.3)
 
 llm_with_tools = llm.bind_tools(ALL_TOOLS)
 tool_node = ToolNode(ALL_TOOLS)

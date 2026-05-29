@@ -8,12 +8,12 @@
 - create_retrieval_chain：组装完整的 RAG 链
 - with_sources：返回来源文档
 """
+# 配套教程：tutorial/week-1-langchain/05_rag_basic.md
 
-from dotenv import load_dotenv
-load_dotenv(override=True)
+import sys, pathlib
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent.parent))
 
-import os
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_openai import OpenAIEmbeddings
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
@@ -21,20 +21,17 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document
 
+from final._common import make_llm, DASHSCOPE_BASE_URL, DASHSCOPE_API_KEY
+
 # ── LLM ──────────────────────────────────────────────────────────────────────
-llm = ChatOpenAI(
-    model="qwen3.5-plus",
-    base_url=os.environ["DASHSCOPE_BASE_URL"],
-    api_key=os.environ["DASHSCOPE_API_KEY"],
-    temperature=0,  # RAG 场景建议设为 0，减少幻觉
-)
+llm = make_llm(temperature=0)  # RAG 场景建议设为 0，减少幻觉
 
 # ── Embeddings（使用 DashScope 兼容 OpenAI 的 embedding 接口）──────────────
 # DashScope 支持 text-embedding-v3 等模型
 embeddings = OpenAIEmbeddings(
     model="text-embedding-v3",
-    base_url=os.environ["DASHSCOPE_BASE_URL"],
-    api_key=os.environ["DASHSCOPE_API_KEY"],
+    base_url=DASHSCOPE_BASE_URL,
+    api_key=DASHSCOPE_API_KEY,
 )
 
 

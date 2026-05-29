@@ -8,25 +8,22 @@
 - 嵌套 Trace：父子关系的 Run Tree
 - RunTree：完全手动控制 Trace 的底层 API
 """
+# 配套教程：tutorial/week-4-langsmith-and-project/01_tracing.md
 
-from dotenv import load_dotenv
-load_dotenv(override=True)
+import sys, pathlib
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent.parent))
 
 import os
 import time
-from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langsmith import traceable, Client
 from langsmith.run_trees import RunTree
 
-llm = ChatOpenAI(
-    model="qwen3.5-plus",
-    base_url=os.environ["DASHSCOPE_BASE_URL"],
-    api_key=os.environ["DASHSCOPE_API_KEY"],
-    temperature=0.7,
-)
+from final._common import make_llm
+
+llm = make_llm(temperature=0.7)
 
 # LangSmith 客户端（用于查询 Trace 数据）
 ls_client = Client()

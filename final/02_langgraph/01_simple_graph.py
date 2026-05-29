@@ -9,23 +9,19 @@
 - invoke() vs stream() 两种执行方式
 - 可视化图结构
 """
+# 配套教程：tutorial/week-3-langgraph/01_simple_graph.md
 
-from dotenv import load_dotenv
-load_dotenv(override=True)
+import sys, pathlib
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent.parent))
 
-import os
 from typing import TypedDict, Annotated
-from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage, AIMessage, BaseMessage
 from langgraph.graph import StateGraph, START, END
 from langgraph.graph.message import add_messages
 
-llm = ChatOpenAI(
-    model="qwen3.5-plus",
-    base_url=os.environ["DASHSCOPE_BASE_URL"],
-    api_key=os.environ["DASHSCOPE_API_KEY"],
-    temperature=0.7,
-)
+from final._common import make_llm
+
+llm = make_llm(temperature=0.7)
 
 
 # ── 1. 最简 StateGraph：单节点聊天机器人 ─────────────────────────────────────

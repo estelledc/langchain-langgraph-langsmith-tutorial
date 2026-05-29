@@ -7,22 +7,18 @@
 - invoke() / stream() 两种调用方式
 - LangSmith 自动追踪（.env 中 LANGCHAIN_TRACING_V2=true 即可）
 """
+# 配套教程：tutorial/week-1-langchain/01_hello_llm.md
 
-from dotenv import load_dotenv
-load_dotenv(override=True)  # override=True 确保 .env 覆盖 shell 环境变量
+import sys, pathlib
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent.parent))
 
-import os
-from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage, SystemMessage, AIMessage
 
+from final._common import make_llm
+
 # ── 1. 创建 LLM 实例 ─────────────────────────────────────────────────────────
-#   DashScope 兼容 OpenAI 格式，只需修改 base_url 和 api_key
-llm = ChatOpenAI(
-    model="qwen3.5-plus",                          # 通义千问 qwen3.5-plus 模型
-    base_url=os.environ["DASHSCOPE_BASE_URL"],  # 从 .env 读取
-    api_key=os.environ["DASHSCOPE_API_KEY"],    # 从 .env 读取
-    temperature=0.7,
-)
+#   DashScope 兼容 OpenAI 格式，用 _common.make_llm() 统一构造
+llm = make_llm(temperature=0.7)
 
 def demo_invoke():
     """最简单的一次性调用"""

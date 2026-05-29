@@ -8,14 +8,13 @@
 - ReAct 模式：Reasoning + Acting 循环
 - MemorySaver：Checkpointer 持久化状态（跨轮对话）
 """
+# 配套教程：tutorial/week-3-langgraph/02_conditional_edges.md
 
-from dotenv import load_dotenv
-load_dotenv(override=True)
+import sys, pathlib
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent.parent))
 
-import os
 import math
 from typing import TypedDict, Annotated
-from langchain_openai import ChatOpenAI
 from langchain_core.messages import BaseMessage, HumanMessage
 from langchain_core.tools import tool
 from langgraph.graph import StateGraph, START, END
@@ -23,12 +22,9 @@ from langgraph.graph.message import add_messages
 from langgraph.prebuilt import ToolNode, tools_condition
 from langgraph.checkpoint.memory import MemorySaver
 
-llm = ChatOpenAI(
-    model="qwen3.5-plus",
-    base_url=os.environ["DASHSCOPE_BASE_URL"],
-    api_key=os.environ["DASHSCOPE_API_KEY"],
-    temperature=0,
-)
+from final._common import make_llm
+
+llm = make_llm(temperature=0)
 
 
 # ── 工具定义 ─────────────────────────────────────────────────────────────────

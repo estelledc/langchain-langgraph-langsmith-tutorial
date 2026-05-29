@@ -9,13 +9,12 @@
 - 获取当前状态快照：graph.get_state()
 - 实际场景：危险操作前确认、内容审核、人工修改 AI 输出
 """
+# 配套教程：tutorial/week-3-langgraph/03_human_in_the_loop.md
 
-from dotenv import load_dotenv
-load_dotenv(override=True)
+import sys, pathlib
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent.parent))
 
-import os
 from typing import TypedDict, Annotated, Literal
-from langchain_openai import ChatOpenAI
 from langchain_core.messages import BaseMessage, HumanMessage, AIMessage
 from langchain_core.tools import tool
 from langgraph.graph import StateGraph, START, END
@@ -24,12 +23,9 @@ from langgraph.prebuilt import ToolNode, tools_condition
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.types import Command, interrupt
 
-llm = ChatOpenAI(
-    model="qwen3.5-plus",
-    base_url=os.environ["DASHSCOPE_BASE_URL"],
-    api_key=os.environ["DASHSCOPE_API_KEY"],
-    temperature=0.7,
-)
+from final._common import make_llm
+
+llm = make_llm(temperature=0.7)
 
 
 # ── 工具定义（模拟危险操作）────────────────────────────────────────────────

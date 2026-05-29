@@ -6,15 +6,16 @@ agent.py — 研究助手 Agent 入口
     python agent.py --question "LangGraph 的核心特性有哪些？"
     python agent.py --stream  # 流式输出每个步骤
 """
+# 配套教程：tutorial/week-4-langsmith-and-project/04_capstone.md
 
-from dotenv import load_dotenv
-load_dotenv(override=True)
+import sys, pathlib
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent.parent))
 
 import argparse
-import sys
 import os
 from langchain_core.messages import HumanMessage
 
+# 通过 graph.py 间接触发 final._common 的 load_dotenv()，加载 .env
 from graph import build_research_graph, ResearchState
 
 

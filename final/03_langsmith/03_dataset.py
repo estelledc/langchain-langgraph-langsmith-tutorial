@@ -8,25 +8,21 @@
 - 导出数据集
 - 使用数据集做回归测试
 """
+# 配套教程：tutorial/week-4-langsmith-and-project/03_dataset.md
 
-from dotenv import load_dotenv
-load_dotenv(override=True)
+import sys, pathlib
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent.parent))
 
-import os
 import json
 from datetime import datetime
-from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langsmith import Client, traceable
 
-llm = ChatOpenAI(
-    model="qwen3.5-plus",
-    base_url=os.environ["DASHSCOPE_BASE_URL"],
-    api_key=os.environ["DASHSCOPE_API_KEY"],
-    temperature=0,
-)
+from final._common import make_llm
+
+llm = make_llm(temperature=0)
 
 ls_client = Client()
 
