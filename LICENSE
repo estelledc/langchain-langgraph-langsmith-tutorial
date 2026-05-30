@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2026
+Copyright (c) 2026 estelledc
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,3 +19,28 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+## Attribution
+
+This repository started as a refactor of the original 17-file LangChain tutorial
+in this same repo. The reference code in `final/` retains the structure and
+concept coverage of the original; the teaching scaffolding (`tutorial/` task
+cards, `docs/` cheatsheets, `HOW_TO_LEARN_WITH_AI.md` meta-tutorial,
+`CLAUDE.md` / `.cursorrules` AI-tool integration) is new work.
+
+Original concept coverage credit: 17 .py files in this repo's git history before
+commit `8cb037a` (May 2026).
+
+For citation in academic / blog contexts:
+
+```
+@misc{langchain_tutorial_zero,
+  author = {estelledc},
+  title = {LangChain Tutorial Zero — beginner-friendly LangChain/LangGraph/LangSmith
+           tutorial with AI-tool-assisted learning scaffolding},
+  year = {2026},
+  url = {https://github.com/estelledc/langchain-langgraph-langsmith-tutorial}
+}
+```
