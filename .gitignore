@@ -36,8 +36,9 @@ vendor/
 
 # 学习者主战场——你写的代码不进 git
 _scratch/*
-# 但保留 README 和 journal 目录骨架
+# 但保留 README 和 journal 目录骨架 + 作者提供的示例日志
 !_scratch/README.md
 !_scratch/journal/
 _scratch/journal/*
 !_scratch/journal/.gitkeep
+!_scratch/journal/example-*.md
