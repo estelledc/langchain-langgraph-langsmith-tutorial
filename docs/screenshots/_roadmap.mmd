@@ -1,0 +1,47 @@
+flowchart TD
+    Start([HOW_TO_LEARN_WITH_AI.md<br/>5 分钟元教程]) --> W1_01
+
+    subgraph W1[Week 1 · LangChain 核心 ~4h]
+        W1_01[01 hello_llm<br/>LLM 调用三态]
+        W1_02[02 prompt_template<br/>模板 + 占位符]
+        W1_03[03 chains<br/>LCEL 管道]
+        W1_04[04 memory<br/>多轮对话]
+        W1_05[05 rag_basic<br/>检索增强]
+        W1_01 --> W1_02 --> W1_03 --> W1_04 --> W1_05
+    end
+
+    subgraph W2[Week 2 · Tool & 工程化 ~3.5h]
+        W2_01[01 tools_agent<br/>@tool + AgentExecutor]
+        W2_02[02 structured_output<br/>with_structured_output]
+        W2_03[03 streaming_and_resilience<br/>stream / retry / fallback]
+        W2_01 --> W2_02 --> W2_03
+    end
+
+    subgraph W3[Week 3 · LangGraph ~5.5h]
+        W3_01[01 simple_graph<br/>StateGraph 三件套]
+        W3_02[02 conditional_edges<br/>ReAct + Checkpointer]
+        W3_03[03 human_in_the_loop<br/>interrupt + 审批]
+        W3_04[04 multi_agent<br/>Supervisor + 并行]
+        W3_01 --> W3_02 --> W3_03 --> W3_04
+    end
+
+    subgraph W4[Week 4 · LangSmith + Capstone ~5h]
+        W4_01[01 tracing<br/>@traceable + RunTree]
+        W4_02[02 evaluation<br/>evaluator + LLM-as-Judge]
+        W4_03[03 dataset<br/>CRUD + 从 trace 收集]
+        W4_04[04 capstone<br/>4 文件研究助手]
+        W4_01 --> W4_02 --> W4_03 --> W4_04
+    end
+
+    W1_05 --> W2_01
+    W2_03 --> W3_01
+    W3_04 --> W4_01
+
+    W4_04 --> Done([挑战赛<br/>docs/challenges.md])
+
+    style Start fill:#a1c4fd,color:#000
+    style Done fill:#84fab0,color:#000
+    style W1 fill:#fff5e6
+    style W2 fill:#ffe6e6
+    style W3 fill:#e6f7ff
+    style W4 fill:#f0e6ff

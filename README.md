@@ -10,7 +10,13 @@
 
 **在线版**：[estelledc.github.io/langchain-langgraph-langsmith-tutorial](https://estelledc.github.io/langchain-langgraph-langsmith-tutorial/) — 不想 clone 也能直接读
 
-![首页 hero](docs/screenshots/01-home-hero.png)
+## 4 周学习路径（约 17 小时）
+
+<p align="center">
+  <img src="docs/screenshots/00-roadmap.png" alt="4 周 16 篇学习路径图" width="520">
+</p>
+
+每周一段，从 LangChain 核心 → Tool/Agent → LangGraph → LangSmith。每篇时长见 [tutorial/README.md](tutorial/README.md)。
 
 ---
 
