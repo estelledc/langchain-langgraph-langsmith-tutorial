@@ -12,6 +12,37 @@
 
 ## [Unreleased]
 
+---
+
+## [1.1.0] — 2026-05-30
+
+围绕"长期可信度 + 被收录"的对外升级。
+
+### Added
+- **README 全面重写** —— 顶部加差异化定位段（三个不可替代卖点）、作者介绍、60 秒 Quick Start 可跑代码块；不再用旧的"30 秒上手"开场
+- `docs/screenshots/00-roadmap.png` —— 4 周 16 篇路线图 PNG hero 图（`docs/screenshots/_roadmap.mmd` 是 mermaid 源文件，可用 `npx @mermaid-js/mermaid-cli` 重渲染）
+- `tutorial/README.md` —— 学习路线表加每周总时长，前置概念依赖表加每篇预估时长（4 周 ~17 小时）
+- `docs/maintenance.md` —— 长期维护节奏与 SOP（周/月/季/年/触发式）
+- `scripts/smoke-test.sh` —— 一键跑批 14 个 final/.py，支持 `--quick`，结果自动 append 到 `docs/test-runs.md`
+- `docs/superpowers/specs/2026-05-30-tutorial-positioning-design.md` —— 长远定位 spec（Phase 1+2+3 总规划）
+- `docs/superpowers/awesome-list-pr-templates.md` —— 中文 awesome list PR 模板 + 已提交 PR 清单
+
+### Changed
+- 与官方教程对比表保留，但定位段移到 README 顶部之前
+- 「30 秒上手」改名「完整环境（4 周教程）」，仅作 Quick Start 失败后的兜底入口
+
+### Submitted (外部 PR)
+- [`AiHubCN/Awesome-Chinese-LLM#102`](https://github.com/AiHubCN/Awesome-Chinese-LLM/pull/102) — open / mergeable
+- [`WangRongsheng/awesome-LLM-resources#127`](https://github.com/WangRongsheng/awesome-LLM-resources/pull/127) — open / mergeable
+
+### Maintenance commitment
+- 至少 90 天内 final/.py 全跑通；撞破坏性变更 24 小时内 README 加 banner
+- 月级跑 smoke test，季度做完整体检，年度做结构性回顾（详见 [docs/maintenance.md](docs/maintenance.md)）
+
+---
+
+## [1.0.x post-release] — 2026-05-29 ~ 05-30
+
 ### Added (P0-P1 系统化补建)
 - `CLAUDE.md` + `.cursorrules` —— Claude Code / Cursor 自动加载教学约束（7 条心法转 AI 默认行为）
 - `_scratch/journal/example-week1-01-hello-llm.md` —— 真实卡点日志样例
