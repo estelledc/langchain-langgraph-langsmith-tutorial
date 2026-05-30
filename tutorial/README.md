@@ -8,14 +8,16 @@
 
 ---
 
-## 学习路线（4 周 14 篇）
+## 学习路线（4 周 16 篇 · 总计约 17 小时）
 
-| 周次 | 目录 | 概念 | 状态 |
-|------|------|------|------|
-| Week 1 | [week-1-langchain/](week-1-langchain/) | LangChain 核心：LLM、Prompt、LCEL、Memory、RAG | ✅ 5/5 |
-| Week 2 | [week-2-tools-and-agent/](week-2-tools-and-agent/) | Tool & Agent / 结构化输出 / 流式 + 容错 | ✅ 3/3 |
-| Week 3 | [week-3-langgraph/](week-3-langgraph/) | StateGraph、条件边、HITL、多 Agent | ✅ 4/4 |
-| Week 4 | [week-4-langsmith-and-project/](week-4-langsmith-and-project/) | 追踪、评估、综合项目 | ✅ 4/4 |
+> 时长是「零基础学员跟着 AI 走一遍」的预估（含读 tutorial + 跟 AI 对话写代码 + 跑 final 对照 + 写卡点日志）。熟手通常是这个时长的 1/3。
+
+| 周次 | 目录 | 概念 | 篇数 | 预估时长 |
+|------|------|------|------|----------|
+| Week 1 | [week-1-langchain/](week-1-langchain/) | LangChain 核心：LLM、Prompt、LCEL、Memory、RAG | 5/5 | ~4 小时 |
+| Week 2 | [week-2-tools-and-agent/](week-2-tools-and-agent/) | Tool & Agent / 结构化输出 / 流式 + 容错 | 3/3 | ~3.5 小时 |
+| Week 3 | [week-3-langgraph/](week-3-langgraph/) | StateGraph、条件边、HITL、多 Agent | 4/4 | ~5.5 小时 |
+| Week 4 | [week-4-langsmith-and-project/](week-4-langsmith-and-project/) | 追踪、评估、综合项目 | 4/4 | ~5 小时 |
 
 ---
 
@@ -75,28 +77,28 @@ flowchart TD
 
 ---
 
-## 前置概念依赖
+## 前置概念依赖 + 预估时长
 
-走每一篇前需要懂的"前置概念"——讲不出 = 回去补：
+走每一篇前需要懂的"前置概念"——讲不出 = 回去补。时长是零基础学员节奏。
 
-| Tutorial | 必须懂 |
-|---|---|
-| **week-1/01_hello_llm** | LLM 是补全器 / token 计费 / Chat 三种角色（→ [docs/concepts.md](../docs/concepts.md)） |
-| **week-1/02_prompt_template** | 01 内容 + Python f-string |
-| **week-1/03_chains** | 02 内容 + Unix 管道（`cat \| grep`）的概念 |
-| **week-1/04_memory** | 03 内容 + dict / list 操作 |
-| **week-1/05_rag_basic** | 04 内容 + Embedding 是什么 |
-| **week-2/01_tools_agent** | week-1 全部 + Python 装饰器（`@xxx`） |
-| **week-2/02_structured_output** | 01 + Pydantic BaseModel |
-| **week-2/03_streaming_and_resilience** | 02 + asyncio 基础（at-least 知道 async / await） |
-| **week-3/01_simple_graph** | week-2 + TypedDict + 流程图概念 |
-| **week-3/02_conditional_edges** | 01 + ReAct 循环 |
-| **week-3/03_human_in_the_loop** | 02 + Checkpointer / thread_id |
-| **week-3/04_multi_agent** | 03 + Supervisor 模式日常类比（PM + 专家团） |
-| **week-4/01_tracing** | week-3 + 黑匣子录像类比 |
-| **week-4/02_evaluation** | 01 + dataset 概念 |
-| **week-4/03_dataset** | 02 + CRUD 概念 |
-| **week-4/04_capstone** | 全部 13 篇 + 项目分模块的工程感 |
+| Tutorial | 必须懂 | 预估时长 |
+|---|---|---|
+| **week-1/01_hello_llm** | LLM 是补全器 / token 计费 / Chat 三种角色（→ [docs/concepts.md](../docs/concepts.md)） | 35 分钟 |
+| **week-1/02_prompt_template** | 01 内容 + Python f-string | 35 分钟 |
+| **week-1/03_chains** | 02 内容 + Unix 管道（`cat \| grep`）的概念 | 50 分钟 |
+| **week-1/04_memory** | 03 内容 + dict / list 操作 | 60 分钟 |
+| **week-1/05_rag_basic** | 04 内容 + Embedding 是什么 | 80 分钟 |
+| **week-2/01_tools_agent** | week-1 全部 + Python 装饰器（`@xxx`） | 80 分钟 |
+| **week-2/02_structured_output** | 01 + Pydantic BaseModel | 60 分钟 |
+| **week-2/03_streaming_and_resilience** | 02 + asyncio 基础（at-least 知道 async / await） | 70 分钟 |
+| **week-3/01_simple_graph** | week-2 + TypedDict + 流程图概念 | 70 分钟 |
+| **week-3/02_conditional_edges** | 01 + ReAct 循环 | 80 分钟 |
+| **week-3/03_human_in_the_loop** | 02 + Checkpointer / thread_id | 80 分钟 |
+| **week-3/04_multi_agent** | 03 + Supervisor 模式日常类比（PM + 专家团） | 95 分钟 |
+| **week-4/01_tracing** | week-3 + 黑匣子录像类比 | 60 分钟 |
+| **week-4/02_evaluation** | 01 + dataset 概念 | 80 分钟 |
+| **week-4/03_dataset** | 02 + CRUD 概念 | 60 分钟 |
+| **week-4/04_capstone** | 全部 15 篇 + 项目分模块的工程感 | 110 分钟 |
 
 ---
 

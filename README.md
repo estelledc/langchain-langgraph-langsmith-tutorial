@@ -1,27 +1,88 @@
-# LangChain Tutorial Zero — 给零基础选手的 AI 辅助学习教程
+# LangChain Tutorial Zero
 
-> 不是另一份官方教程，是一份**学习脚手架**：你跟 Claude Code / Cursor 对话产出代码，再回头对照参考答案看自己写得如何。
->
-> **代码实测**：14 个 final/.py 全部经过作者实测（langchain 1.3.2，2026-05）→ [docs/test-runs.md](docs/test-runs.md)
->
-> **在线版**：[estelledc.github.io/langchain-langgraph-langsmith-tutorial](https://estelledc.github.io/langchain-langgraph-langsmith-tutorial/)
+> 给编程零基础选手的 LangChain 1.3.x 中文教程，4 周 14 篇 learning-by-doing。
+
+和市面上的 LangChain 教程比，这套有三件事别人没做：
+
+- **AI 辅助学习元教程** —— 不只教 LangChain，还教你"怎么用 Claude Code 学 LangChain"。[HOW_TO_LEARN_WITH_AI.md](HOW_TO_LEARN_WITH_AI.md) 7 条 prompt 心法 + 每篇配套任务卡 + [CLAUDE.md](CLAUDE.md) 把教学约束自动注入 AI（不用类比 / 不一口气讲 5 个概念 / 报错先问"你以为会发生什么"）。中文圈目前唯一一份。
+- **LangChain 1.3.x 实测** —— [docs/test-runs.md](docs/test-runs.md) 记录了 6 处破坏性变更的修法（`pydantic_v1` 迁移、`langchain_classic` 拆包、`LangChainStringEvaluator` 等）。对标 liaokongVFX 9k⭐ 那本 2024 停更的教程，这里 14 个 final 脚本全部在 1.3.x 跑过一遍。
+- **任务卡 + 给 AI 的 prompt** —— 每篇不是 API 列表，而是一组任务卡（"在 `_scratch/` 写出你的版本 → 自检对比 `final/`"），配套可复制的 prompt 模板。learning-by-doing，不是文档罗列。
+
+**在线版**：[estelledc.github.io/langchain-langgraph-langsmith-tutorial](https://estelledc.github.io/langchain-langgraph-langsmith-tutorial/) — 不想 clone 也能直接读
 
 ![首页 hero](docs/screenshots/01-home-hero.png)
 
-学习者打开任意一篇 tutorial，看到的是**任务卡 + 给 AI 的 prompt** 结构（不是 reference style 的 API 罗列）：
+---
 
-![tutorial 任务卡示例](docs/screenshots/03-tutorial-task-cards.png)
+## 关于作者
 
-撞到不懂的术语？打开 `docs/concepts.md`，每个术语**先类比再定义**：
+我是 jason，**编程零基础**。这套教程是我自己学的过程沉淀的——开了一个空仓库，靠 Claude Code 一句一句问，把 LangChain / LangGraph / LangSmith 三大件啃下来，期间踩的每一个坑（环境变量没覆盖 / pydantic 版本错 / DashScope 兼容性、`langchain_classic` 拆包……）都写进了 [docs/debug-recipes.md](docs/debug-recipes.md) 和 [docs/test-runs.md](docs/test-runs.md)。
 
-![docs 概念词典](docs/screenshots/04-docs-concepts.png)
+我不是 LangChain 专家。但**正因为我从零基础走过来，我知道哪句术语会卡住、哪个例子第一次跑会报什么错**。这套教程对自己学的最大价值不是"我懂得多"，而是"我把卡点和有效 prompt 留下来了"，下一个零基础的人不用重新踩。
+
+如果你也是零基础选手，建议先读 [HOW_TO_LEARN_WITH_AI.md](HOW_TO_LEARN_WITH_AI.md)——它比任何一篇 tutorial 都重要。
 
 ---
 
-## 30 秒上手
+## 60 秒 Quick Start
+
+不用 clone 仓库，三步跑通第一个 LangChain + DashScope 调用。
+
+**1. 装包**
 
 ```bash
-# 1. fork 本仓库到你自己的 GitHub，clone（YOUR-USERNAME 换成你自己）
+pip install langchain langchain-openai python-dotenv
+```
+
+**2. 设环境变量**
+
+去 [DashScope 控制台](https://dashscope.console.aliyun.com/) 申请 API Key（有免费额度），然后：
+
+```bash
+export DASHSCOPE_API_KEY="sk-你的key"
+export DASHSCOPE_BASE_URL="https://dashscope.aliyuncs.com/compatible-mode/v1"
+```
+
+**3. 跑第一个 LLM 调用**
+
+新建 `hello.py`：
+
+```python
+from langchain_core.messages import HumanMessage, SystemMessage
+from langchain_openai import ChatOpenAI
+import os
+
+llm = ChatOpenAI(
+    model="qwen-plus",
+    base_url=os.environ["DASHSCOPE_BASE_URL"],
+    api_key=os.environ["DASHSCOPE_API_KEY"],
+    temperature=0.7,
+)
+
+messages = [
+    SystemMessage(content="你是一个简洁的 AI 助手，回答不超过 50 字。"),
+    HumanMessage(content="什么是 LangChain？"),
+]
+
+response = llm.invoke(messages)
+print(response.content)
+print("Token 用量：", response.response_metadata.get("token_usage", {}))
+```
+
+```bash
+python hello.py
+```
+
+跑通了？正式从 [tutorial/week-1-langchain/01_hello_llm.md](tutorial/week-1-langchain/01_hello_llm.md) 开始。跑不通？查 [docs/debug-recipes.md](docs/debug-recipes.md)。
+
+---
+
+## 完整环境（4 周教程）
+
+Quick Start 只是单文件 demo。要走 4 周 14 篇完整教程：
+
+```bash
+# 1. fork 本仓库，clone（YOUR-USERNAME 换成你自己）
 git clone https://github.com/YOUR-USERNAME/langchain-langgraph-langsmith-tutorial.git
 cd langchain-langgraph-langsmith-tutorial
 
@@ -35,9 +96,19 @@ open HOW_TO_LEARN_WITH_AI.md
 open tutorial/week-1-langchain/01_hello_llm.md
 ```
 
-> **教程在线版**：[estelledc.github.io/langchain-langgraph-langsmith-tutorial](https://estelledc.github.io/langchain-langgraph-langsmith-tutorial/) — 不想 clone 也能直接读全部内容
->
-> **仓库 vs 项目代号**：仓库名 `langchain-langgraph-langsmith-tutorial` 是历史名（从原 fork 继承）；这套教程的代号叫 **LangChain Tutorial Zero**——以后可能改名，但 git clone 命令以仓库名为准。
+> **仓库 vs 项目代号**：仓库名 `langchain-langgraph-langsmith-tutorial` 是历史名；项目代号叫 **LangChain Tutorial Zero**——git clone 命令以仓库名为准。
+
+---
+
+## 一眼看懂教程结构
+
+学习者打开任意一篇 tutorial，看到的是**任务卡 + 给 AI 的 prompt** 结构（不是 reference style 的 API 罗列）：
+
+![tutorial 任务卡示例](docs/screenshots/03-tutorial-task-cards.png)
+
+撞到不懂的术语？打开 [docs/concepts.md](docs/concepts.md)，每个术语**先类比再定义**：
+
+![docs 概念词典](docs/screenshots/04-docs-concepts.png)
 
 ---
 
