@@ -1,9 +1,29 @@
-langchain>=0.3
-langchain-classic>=1.0
-langchain-openai>=0.2
-langchain-community>=0.3
-langgraph>=0.2
-langsmith>=0.1
-faiss-cpu
-python-dotenv
-grandalf
+# LangChain Tutorial Zero — pin 在 docs/test-runs.md 实测过的版本
+# 维护节奏：每半年回头跑一次全量 final smoke test，确认 pin 还能跑
+# 上次实测：2026-05-29，全部 14 个 final 通过
+
+# Core
+langchain==1.3.2
+langchain-core>=1.0,<2.0          # langchain 1.x 的依赖，跟着 langchain 走
+langchain-classic==1.0.7          # langchain.agents.AgentExecutor 拆出的包
+langchain-openai==1.2.2           # ChatOpenAI（兼容 DashScope）
+langchain-community==1.0.4        # 一些 retriever / loader
+
+# LangGraph
+langgraph==1.2.2
+langgraph-checkpoint>=1.0,<2.0    # MemorySaver / SqliteSaver
+
+# LangSmith
+langsmith==0.8.7
+
+# 数据 / 工具依赖
+faiss-cpu>=1.7,<2.0               # RAG 向量库（faiss-cpu 1.x 接口稳定）
+python-dotenv>=1.0,<2.0           # .env 加载
+pydantic>=2.0,<3.0                # langchain 1.x 全切 v2
+grandalf>=0.7,<1.0                # langgraph 的 ASCII 可视化
+
+# 注意
+# - 不 pin 到 ==X.Y.Z 的依赖（langchain-core / pydantic 等）使用兼容范围
+#   确保 langchain==1.3.2 自身能拉到合适的传递依赖
+# - 升级建议：开新分支 → 抬高所有 pin → 跑 docs/test-runs.md 描述的全量 smoke test
+#   通过后更新 CHANGELOG + test-runs.md，再 PR 回 master
