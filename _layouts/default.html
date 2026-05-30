@@ -1,0 +1,25 @@
+---
+layout: cayman
+---
+
+{{ content }}
+
+<script type="module">
+  // Jekyll Pages 默认不渲染 mermaid block；这段 JS 在客户端把
+  // <pre><code class="language-mermaid">...</code></pre> 转成 mermaid 渲染容器
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+  document.querySelectorAll('pre > code.language-mermaid').forEach((codeEl) => {
+    const div = document.createElement('div');
+    div.classList.add('mermaid');
+    div.textContent = codeEl.textContent;
+    codeEl.parentElement.replaceWith(div);
+  });
+
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'default',
+    securityLevel: 'loose',
+    flowchart: { htmlLabels: true, curve: 'basis' },
+  });
+</script>
