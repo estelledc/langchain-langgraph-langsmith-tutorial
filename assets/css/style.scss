@@ -2,6 +2,7 @@
 ---
 
 @import "{{ site.theme }}";
+@import 'opendesign/theme';
 
 /* hero 已显示页面标题；隐藏内容区里 markdown 第一行 H1 的重复 */
 .main-content > h1:first-child {

@@ -1,0 +1,79 @@
+// langchain-tutorial · Tech Utility theme
+
+:root {
+  --ink: #c9d1d9;
+  --paper: #0d1117;
+  --accent: #7ee787;
+  --muted: #8b949e;
+  --rule: rgba(255, 255, 255, 0.12);
+  --code-bg: #161b22;
+  --fs-h1: 2.5rem;
+  --fs-h2: 1.75rem;
+  --fs-body: 1rem;
+  --fs-caption: 0.875rem;
+  --fs-mono: 0.9375rem;
+  --font-mono: "JetBrains Mono", Menlo, Consolas, monospace;
+  --font-sans: Inter, "PingFang SC", -apple-system, sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.65;
+  margin: 0;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-mono);
+  letter-spacing: -0.01em;
+}
+h2 { color: var(--accent); }
+
+a { color: var(--accent); border-bottom: 1px solid transparent; text-decoration: none; }
+a:hover { border-bottom-color: var(--accent); }
+
+pre, code {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  background: var(--code-bg);
+}
+pre { padding: 1rem; border-radius: 6px; overflow-x: auto; border: 1px solid var(--rule); }
+code { padding: 0.1em 0.4em; border-radius: 3px; }
+pre code { background: transparent; padding: 0; }
+
+.page-header {
+  // 覆盖 Cayman 的蓝紫渐变
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink);
+}
+.project-name { font-family: var(--font-mono); }
+.project-tagline { color: var(--muted); }
+
+.main-content {
+  max-width: 920px;
+  padding: 2rem 1.5rem;
+}
+
+.site-topbar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-mono);
+  font-size: var(--fs-caption);
+}
+.site-topbar .brand { color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; }
+.return-to-hub {
+  color: var(--muted); text-decoration: none; letter-spacing: 0.05em; text-transform: lowercase;
+  border-bottom: 1px solid transparent;
+}
+.return-to-hub:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+.site-footer {
+  font-family: var(--font-mono); font-size: var(--fs-caption); color: var(--muted);
+  border-top: 1px solid var(--rule); padding: 2rem 0; margin-top: 4rem; text-align: center;
+}
+.site-footer a { color: var(--muted); border-bottom: 1px solid var(--rule); }
+
+.mermaid { background: var(--code-bg); padding: 1rem; border-radius: 6px; margin: 1.5rem 0; }
