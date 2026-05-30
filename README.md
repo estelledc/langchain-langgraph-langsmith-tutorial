@@ -3,6 +3,18 @@
 > 不是另一份官方教程，是一份**学习脚手架**：你跟 Claude Code / Cursor 对话产出代码，再回头对照参考答案看自己写得如何。
 >
 > **代码实测**：14 个 final/.py 全部经过作者实测（langchain 1.3.2，2026-05）→ [docs/test-runs.md](docs/test-runs.md)
+>
+> **在线版**：[estelledc.github.io/langchain-langgraph-langsmith-tutorial](https://estelledc.github.io/langchain-langgraph-langsmith-tutorial/)
+
+![首页 hero](docs/screenshots/01-home-hero.png)
+
+学习者打开任意一篇 tutorial，看到的是**任务卡 + 给 AI 的 prompt** 结构（不是 reference style 的 API 罗列）：
+
+![tutorial 任务卡示例](docs/screenshots/03-tutorial-task-cards.png)
+
+撞到不懂的术语？打开 `docs/concepts.md`，每个术语**先类比再定义**：
+
+![docs 概念词典](docs/screenshots/04-docs-concepts.png)
 
 ---
 
