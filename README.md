@@ -113,7 +113,7 @@ open tutorial/week-1-langchain/01_hello_llm.md
 | 周次 | 内容 | 状态 |
 |---|---|---|
 | **Week 1** | LangChain 核心：LLM、Prompt、LCEL、Memory、RAG | ✅ 5 篇 |
-| **Week 2** | Tool & Agent | ✅ 1 篇 |
+| **Week 2** | Tool & Agent / 结构化输出 / 流式 + 容错 | ✅ 3 篇 |
 | **Week 3** | LangGraph：StateGraph、条件边、HITL、多 Agent | ✅ 4 篇 |
 | **Week 4** | LangSmith + Capstone：Tracing、Evaluation、Dataset、综合项目 | ✅ 4 篇 |
 

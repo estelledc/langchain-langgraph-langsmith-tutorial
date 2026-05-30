@@ -220,6 +220,6 @@ python _scratch/my_06_tools.py
 
 ## 通往下一站
 
-- 全部通关 → 跳 [week-3-langgraph/01_simple_graph.md](../week-3-langgraph/01_simple_graph.md)（开始接触 LangGraph 的 StateGraph，这是 Agent 的"升级版基建"）
+- 全部通关 → 跳 [02_structured_output.md](02_structured_output.md)（让 LLM 返回 Pydantic 对象，生产 90% 场景必用）
 - 卡在某个任务 → 发 AI："给我一个再小一号的练习"，让它把任务再拆细
 - 想多练 → 给 Agent 加第三个工具（比如 `random_choice(items: list[str]) -> str`），看它能不能正确选用

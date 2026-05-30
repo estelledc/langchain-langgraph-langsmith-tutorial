@@ -13,7 +13,7 @@
 | 周次 | 目录 | 概念 | 状态 |
 |------|------|------|------|
 | Week 1 | [week-1-langchain/](week-1-langchain/) | LangChain 核心：LLM、Prompt、LCEL、Memory、RAG | ✅ 5/5 |
-| Week 2 | [week-2-tools-and-agent/](week-2-tools-and-agent/) | Tool & Agent | ✅ 1/1 |
+| Week 2 | [week-2-tools-and-agent/](week-2-tools-and-agent/) | Tool & Agent / 结构化输出 / 流式 + 容错 | ✅ 3/3 |
 | Week 3 | [week-3-langgraph/](week-3-langgraph/) | StateGraph、条件边、HITL、多 Agent | ✅ 4/4 |
 | Week 4 | [week-4-langsmith-and-project/](week-4-langsmith-and-project/) | 追踪、评估、综合项目 | ✅ 4/4 |
 
@@ -34,8 +34,11 @@ flowchart TD
         W1_01 --> W1_02 --> W1_03 --> W1_04 --> W1_05
     end
 
-    subgraph W2[Week 2 · Tool & Agent]
+    subgraph W2[Week 2 · Tool & 工程化]
         W2_01[01 tools_agent<br/>@tool + AgentExecutor]
+        W2_02[02 structured_output<br/>with_structured_output + Pydantic]
+        W2_03[03 streaming_and_resilience<br/>stream / retry / fallback]
+        W2_01 --> W2_02 --> W2_03
     end
 
     subgraph W3[Week 3 · LangGraph]
@@ -54,7 +57,8 @@ flowchart TD
         W4_01 --> W4_02 --> W4_03 --> W4_04
     end
 
-    W1_05 --> W2_01 --> W3_01
+    W1_05 --> W2_01
+    W2_03 --> W3_01
     W3_04 --> W4_01
 
     W4_04 --> Done([挑战赛<br/>docs/challenges.md])
@@ -83,6 +87,8 @@ flowchart TD
 | **week-1/04_memory** | 03 内容 + dict / list 操作 |
 | **week-1/05_rag_basic** | 04 内容 + Embedding 是什么 |
 | **week-2/01_tools_agent** | week-1 全部 + Python 装饰器（`@xxx`） |
+| **week-2/02_structured_output** | 01 + Pydantic BaseModel |
+| **week-2/03_streaming_and_resilience** | 02 + asyncio 基础（at-least 知道 async / await） |
 | **week-3/01_simple_graph** | week-2 + TypedDict + 流程图概念 |
 | **week-3/02_conditional_edges** | 01 + ReAct 循环 |
 | **week-3/03_human_in_the_loop** | 02 + Checkpointer / thread_id |
