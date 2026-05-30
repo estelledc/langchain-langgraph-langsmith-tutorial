@@ -3,6 +3,15 @@
 > 基于 2026-05-30 调研：扫了 7 个候选 list，2 个推荐 + 3 个 fallback。
 > 主仓库 [README.md](../../README.md) Phase 2 配套。
 
+## 已提交 PR（2026-05-30）
+
+- **PR A**: https://github.com/AiHubCN/Awesome-Chinese-LLM/pull/102 — open / mergeable
+  - 注：`HqWu-HITCS/Awesome-Chinese-LLM` 已 transfer 到 `AiHubCN` 组织
+- **PR B**: https://github.com/WangRongsheng/awesome-LLM-resources/pull/127 — open / mergeable
+  - 注：原 `awesome-LLM-resourses` 改名为 `awesome-LLM-resources`（修拼写）
+
+PR 提交脚本：`/tmp/submit-prs-v2.sh`（一次性脚本，可参考但 redirect/拼写已改不可直接复用）
+
 ## 推荐目标 Top 2
 
 ### A. Awesome-Chinese-LLM（22.6k⭐，强推）
