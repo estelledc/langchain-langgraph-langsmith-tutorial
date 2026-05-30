@@ -10,8 +10,8 @@
 
 ```bash
 # 1. fork 本仓库到你自己的 GitHub，clone（YOUR-USERNAME 换成你自己）
-git clone https://github.com/YOUR-USERNAME/langchain-tutorial-zero.git
-cd langchain-tutorial-zero
+git clone https://github.com/YOUR-USERNAME/langchain-langgraph-langsmith-tutorial.git
+cd langchain-langgraph-langsmith-tutorial
 
 # 2. 跟着 SETUP.md 配 .env 和依赖（约 15 分钟，含申 API Key）
 open SETUP.md
@@ -22,6 +22,10 @@ open HOW_TO_LEARN_WITH_AI.md
 # 4. 走第一篇 tutorial
 open tutorial/week-1-langchain/01_hello_llm.md
 ```
+
+> **教程在线版**：[estelledc.github.io/langchain-langgraph-langsmith-tutorial](https://estelledc.github.io/langchain-langgraph-langsmith-tutorial/) — 不想 clone 也能直接读全部内容
+>
+> **仓库 vs 项目代号**：仓库名 `langchain-langgraph-langsmith-tutorial` 是历史名（从原 fork 继承）；这套教程的代号叫 **LangChain Tutorial Zero**——以后可能改名，但 git clone 命令以仓库名为准。
 
 ---
 
