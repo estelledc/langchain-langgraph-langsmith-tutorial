@@ -64,11 +64,6 @@ pre code { background: transparent; padding: 0; }
   font-size: var(--fs-caption);
 }
 .site-topbar .brand { color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; }
-.return-to-hub {
-  color: var(--muted); text-decoration: none; letter-spacing: 0.05em; text-transform: lowercase;
-  border-bottom: 1px solid transparent;
-}
-.return-to-hub:hover { color: var(--accent); border-bottom-color: var(--accent); }
 
 .site-footer {
   font-family: var(--font-mono); font-size: var(--fs-caption); color: var(--muted);
