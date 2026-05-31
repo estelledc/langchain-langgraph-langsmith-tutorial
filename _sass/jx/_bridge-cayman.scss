@@ -1,0 +1,44 @@
+// Jason DS · Cayman bridge v1.0.0
+
+@import 'tokens';
+@import 'base';
+@import 'components';
+
+// Tech Utility 暗色 layer 2 override
+:root {
+  --jx-paper: #0d1117;
+  --jx-surface: #161922;
+  --jx-surface-sunk: #161b22;
+  --jx-ink: #c9d1d9;
+  --jx-ink-2: #b0b4bd;
+  --jx-ink-muted: #8b949e;
+  --jx-rule: rgba(255,255,255,0.08);
+  --jx-rule-strong: var(--jx-ink);
+  --jx-accent: #7ee787;
+  --jx-accent-hub: #6c8aff;
+}
+
+// Cayman .page-header 适配
+.page-header {
+  background: var(--jx-paper);
+  color: var(--jx-ink);
+  border-bottom: 1px solid var(--jx-rule-strong);
+  padding-block: var(--jx-space-7);
+}
+.project-name {
+  font-family: var(--jx-font-display);
+  font-size: var(--jx-fs-h1);
+  font-weight: var(--jx-weight-heading);
+  letter-spacing: var(--jx-tracking-h1);
+}
+.project-tagline {
+  font-family: var(--jx-font-sans-zh);
+  font-size: var(--jx-fs-lg);
+  color: var(--jx-ink-2);
+}
+
+// Cayman .main-content 适配
+.main-content {
+  max-width: var(--jx-container);
+  padding-inline: var(--jx-gutter);
+}

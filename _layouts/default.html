@@ -14,7 +14,7 @@
 
     <header class="site-topbar">
       <span class="brand">LANGCHAIN_TUTORIAL</span>
-      <a class="return-to-hub" href="https://estelledc.github.io/" rel="home">← estelledc.github.io</a>
+      <a class="jx-return-to-hub" href="https://estelledc.github.io/" rel="home">回 Jason 主站</a>
     </header>
 
     <header class="page-header" role="banner">
@@ -28,11 +28,19 @@
     <main id="content" class="main-content" role="main">
       {{ content }}
 
-      <footer class="site-footer">
-        <p>
-          2026 · Jason Xun ·
-          <a href="https://github.com/estelledc/langchain-langgraph-langsmith-tutorial" target="_blank" rel="noopener">GitHub</a>
-        </p>
+      <footer class="jx-footer">
+        <div class="jx-footer__colophon">
+          <strong>LangChain Tutorial Zero</strong>
+          <span lang="en">VOL · MMXXVI</span>
+        </div>
+        <nav class="jx-footer__index">
+          <a href="{{ '/SETUP.html' | relative_url }}">setup</a>
+          <a href="{{ '/HOW_TO_LEARN_WITH_AI.html' | relative_url }}">how to learn</a>
+          <a href="{{ '/tutorial/' | relative_url }}">tutorial</a>
+          <a href="https://estelledc.github.io/">回 hub</a>
+          <a href="https://github.com/estelledc/langchain-langgraph-langsmith-tutorial">github</a>
+        </nav>
+        <time class="jx-footer__stamp" datetime="2026-05-31" lang="en">2026·05·31</time>
       </footer>
     </main>
 

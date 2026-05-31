@@ -1,0 +1,111 @@
+/* Jason DS · Base v1.0.0
+ * 默认 reset + body 排版基底 + chrome layer 强制 sans
+ */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--jx-paper);
+  color: var(--jx-ink);
+  font-family: var(--jx-font-sans-zh);
+  font-size: var(--jx-fs-body);
+  line-height: var(--jx-leading-body);
+  font-feature-settings: var(--jx-font-features-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body :lang(en) {
+  font-family: var(--jx-font-sans-latin);
+  letter-spacing: var(--jx-tracking-body);
+}
+
+/* Headings：display serif，CJK / Latin 字距分流 */
+h1, h2, h3, h4 {
+  font-family: var(--jx-font-display);
+  font-weight: var(--jx-weight-heading);
+  line-height: var(--jx-leading-tight);
+  margin-block: var(--jx-space-5) var(--jx-space-4);
+}
+h1 { font-size: var(--jx-fs-h1); letter-spacing: var(--jx-tracking-h1); }
+h2 { font-size: var(--jx-fs-h2); letter-spacing: var(--jx-tracking-h2); }
+h3 { font-size: var(--jx-fs-h3); letter-spacing: var(--jx-tracking-h3); }
+h4 { font-size: var(--jx-fs-lg); letter-spacing: var(--jx-tracking-h3); }
+h1:lang(zh), h2:lang(zh), h3:lang(zh), h4:lang(zh) { letter-spacing: var(--jx-tracking-cjk); }
+
+/* Body links */
+a {
+  color: var(--jx-link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  transition: color var(--jx-duration-fast) var(--jx-easing);
+}
+a:hover { color: var(--jx-accent-hover); }
+a:focus-visible {
+  outline: none;
+  box-shadow: var(--jx-shadow-focus);
+  border-radius: var(--jx-radius-2);
+}
+
+/* Mono inline */
+code, kbd, samp {
+  font-family: var(--jx-font-mono);
+  font-size: 0.92em;
+  letter-spacing: var(--jx-tracking-mono);
+  font-feature-settings: var(--jx-font-features-mono);
+}
+
+/* Block code 默认 hairline + sunk surface */
+pre {
+  font-family: var(--jx-font-mono);
+  font-size: var(--jx-fs-sm);
+  line-height: var(--jx-leading-mono);
+  background: var(--jx-surface-sunk);
+  padding: var(--jx-space-4) var(--jx-space-5);
+  border-radius: var(--jx-radius-3);
+  box-shadow: var(--jx-shadow-hairline);
+  overflow-x: auto;
+  margin-block: var(--jx-space-5);
+}
+pre code { background: transparent; padding: 0; font-size: inherit; }
+
+/* Quotes */
+blockquote {
+  margin-block: var(--jx-space-5);
+  padding-inline-start: var(--jx-space-5);
+  border-inline-start: 2px solid var(--jx-rule-strong);
+  font-style: italic;
+  color: var(--jx-ink-2);
+}
+
+/* HR：默认就是 hairline */
+hr {
+  border: none;
+  border-top: 1px solid var(--jx-rule-strong);
+  margin-block: var(--jx-section-y);
+}
+
+/* 选中态 */
+::selection {
+  background: var(--jx-accent-tint);
+  color: var(--jx-ink);
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
