@@ -1,3 +1,8 @@
+---
+layout: default
+title: LangChain Tutorial Zero
+---
+
 # LangChain Tutorial Zero
 
 > 给编程零基础选手的 LangChain 1.3.x 中文教程，4 周 14 篇 learning-by-doing。
