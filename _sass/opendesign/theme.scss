@@ -77,3 +77,24 @@ pre code { background: transparent; padding: 0; }
 .site-footer a { color: var(--muted); border-bottom: 1px solid var(--rule); }
 
 .mermaid { background: var(--code-bg); padding: 1rem; border-radius: 6px; margin: 1.5rem 0; }
+
+// —— Light mode override (system-following) ——
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+    --ink: #1f2328;
+    --paper: #f6f3ec;
+    --accent: #1a7f37;
+    --muted: #5c6068;
+    --rule: rgba(31, 35, 40, 0.14);
+    --code-bg: #ece8de;
+  }
+  // Cayman .page-header 渐变在 light 下要降饱和
+  .page-header {
+    background: linear-gradient(120deg, #f6f3ec 0%, #ece8de 100%);
+    color: #1f2328;
+  }
+  .project-tagline {
+    color: #5c6068;
+  }
+}
