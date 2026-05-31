@@ -42,3 +42,44 @@
   max-width: var(--jx-container);
   padding-inline: var(--jx-gutter);
 }
+
+// Dark mode: Cayman highlight + highlighter-rouge 浅底反白
+@media (prefers-color-scheme: dark) {
+  // 内联 code（class="highlighter-rouge"）
+  code.highlighter-rouge,
+  .highlighter-rouge code {
+    background: rgb(30, 35, 42);
+    color: rgb(220, 225, 232);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  // 代码块容器
+  div.highlight,
+  pre.highlight,
+  figure.highlight {
+    background: rgb(22, 27, 34);
+    color: rgb(220, 225, 232);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  div.highlight pre,
+  div.highlight code,
+  figure.highlight pre,
+  figure.highlight code {
+    background: transparent;
+    color: inherit;
+  }
+
+  // Cayman page-header dark 覆盖
+  .page-header {
+    background-image: linear-gradient(120deg, #161b22 0%, #0d1117 100%);
+    background-color: #0d1117;
+    color: var(--jx-ink);
+  }
+  .page-header .project-name { color: var(--jx-ink); }
+  .page-header .project-tagline { color: var(--jx-ink-2); }
+  .page-header .btn {
+    color: var(--jx-ink);
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+}
