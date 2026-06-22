@@ -1,0 +1,157 @@
+/* Jason DS · Tokens v1.0.0
+ * SoT: dotfiles/home-claude/design-system/jx-tokens.css
+ * 9 仓通过 vendor copy 同步：scripts/sync-jx-to-repos.sh
+ *
+ * 命名空间硬规则：
+ * - --jx-* 前缀禁改
+ * - 取值在 satellite :root 覆盖（layer 2）
+ * - 完全自定义元素用 --<repo-name>-* 二级命名空间
+ */
+
+:root {
+  color-scheme: light dark;
+
+  /* ── Color · light ── */
+  --jx-paper: #f6f6f3;
+  --jx-surface: #ffffff;
+  --jx-surface-sunk: #eeede9;
+  --jx-ink: #16181d;
+  --jx-ink-2: #41454d;
+  --jx-ink-muted: #6b7079;
+  --jx-ink-faint: #9097a1;
+  --jx-rule: rgba(22,24,29,0.08);
+  --jx-rule-soft: rgba(22,24,29,0.04);
+  --jx-rule-strong: var(--jx-ink);
+  --jx-accent: #2240d6;
+  --jx-accent-hover: color-mix(in oklab, var(--jx-accent), black 10%);
+  --jx-accent-tint: color-mix(in oklab, var(--jx-accent), white 88%);
+  --jx-focus-ring: rgba(34,64,214,0.28);
+  --jx-link: var(--jx-accent);
+  --jx-cta-bg: var(--jx-ink);
+  --jx-cta-fg: var(--jx-paper);
+  --jx-accent-hub: #2240d6; /* 逃生通道：satellite override --jx-accent 时仍能强制墨蓝 */
+
+  /* ── Status · 三态 ── */
+  --jx-state-learning: #1f6f78;
+  --jx-state-learning-tint: color-mix(in oklab, var(--jx-state-learning), white 86%);
+  --jx-state-learning-glyph: "△";
+  --jx-state-building: #8a5519;
+  --jx-state-building-tint: color-mix(in oklab, var(--jx-state-building), white 86%);
+  --jx-state-building-glyph: "◇";
+  --jx-state-shipped: #2c5e3a;
+  --jx-state-shipped-tint: color-mix(in oklab, var(--jx-state-shipped), white 86%);
+  --jx-state-shipped-glyph: "■";
+
+  /* ── Typography ── */
+  --jx-font-display: "Source Serif 4", "Spectral", "Songti SC", Georgia, serif;
+  --jx-font-sans-zh: -apple-system, BlinkMacSystemFont, "PingFang SC", "HarmonyOS Sans SC", "Source Han Sans SC", "Noto Sans CJK SC", "Microsoft YaHei", system-ui, sans-serif;
+  --jx-font-sans-latin: "Inter", "Geist", ui-sans-serif, system-ui, sans-serif;
+  --jx-font-mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, "Cascadia Code", "SF Mono", Menlo, monospace;
+  --jx-font-features-body: "ss01", "cv11", "calt" 1, "liga" 1;
+  --jx-font-features-mono: "zero", "ss02";
+
+  --jx-fs-micro: 11px;
+  --jx-fs-xs: 12px;
+  --jx-fs-sm: 13px;
+  --jx-fs-body: 16px;
+  --jx-fs-lg: 19px;
+  --jx-fs-h3: 24px;
+  --jx-fs-h2: 32px;
+  --jx-fs-h1: 44px;
+  --jx-fs-display: 64px;
+
+  --jx-weight-reading: 400;
+  --jx-weight-ui: 500;
+  --jx-weight-heading: 600;
+
+  --jx-leading-display: 1.04;
+  --jx-leading-tight: 1.18;
+  --jx-leading-body: 1.62;
+  --jx-leading-mono: 1.45;
+
+  --jx-tracking-display: -0.028em;
+  --jx-tracking-h1: -0.022em;
+  --jx-tracking-h2: -0.016em;
+  --jx-tracking-h3: -0.01em;
+  --jx-tracking-body: 0;
+  --jx-tracking-mono: 0.02em;
+  --jx-tracking-eyebrow: 0.14em;
+  --jx-tracking-cjk: 0;
+
+  --jx-measure-title: 18ch;
+  --jx-measure-lede: 32em;
+  --jx-measure-body: 62ch;
+
+  /* ── Space ── */
+  --jx-space-1: 4px;
+  --jx-space-2: 8px;
+  --jx-space-3: 12px;
+  --jx-space-4: 16px;
+  --jx-space-5: 24px;
+  --jx-space-6: 32px;
+  --jx-space-7: 48px;
+  --jx-space-8: 72px;
+  --jx-section-y: clamp(48px, 7.5vw, 80px);
+  --jx-gutter: clamp(16px, 3vw, 24px);
+  --jx-container: 1160px;
+
+  /* ── Radius ── */
+  --jx-radius-1: 2px;
+  --jx-radius-2: 4px;
+  --jx-radius-3: 6px;
+  --jx-radius-4: 10px;
+  --jx-radius-5: 14px;
+  --jx-radius-pill: 9999px;
+
+  /* ── Shadow ── */
+  --jx-shadow-hairline: 0 0 0 1px var(--jx-rule);
+  --jx-shadow-hairline-strong: 0 0 0 1px var(--jx-rule-strong);
+  --jx-shadow-stack:
+    0 0 0 1px rgba(22,24,29,0.06),
+    0 1px 1px rgba(22,24,29,0.03),
+    0 6px 20px -10px rgba(22,24,29,0.10),
+    inset 0 0 0 1px rgba(255,255,255,0.55);
+  --jx-shadow-stack-dark:
+    0 0 0 1px rgba(255,255,255,0.06),
+    0 1px 1px rgba(0,0,0,0.4),
+    0 8px 28px -12px rgba(0,0,0,0.55),
+    inset 0 0 0 1px rgba(255,255,255,0.04);
+  --jx-shadow-focus: 0 0 0 3px var(--jx-focus-ring);
+  --jx-shadow-press: inset 0 1px 0 rgba(22,24,29,0.06);
+
+  /* ── Motion ── */
+  --jx-easing: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --jx-easing-press: cubic-bezier(0.4, 0, 0.6, 1);
+  --jx-duration-fast: 120ms;
+  --jx-duration-base: 200ms;
+  --jx-duration-slow: 320ms;
+}
+
+/* ── Color · dark mirror ── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --jx-paper: #0e1014;
+    --jx-surface: #161922;
+    --jx-surface-sunk: #0a0c10;
+    --jx-ink: #ebecef;
+    --jx-ink-2: #b0b4bd;
+    --jx-ink-muted: #7c818c;
+    --jx-ink-faint: #5a5f69;
+    --jx-rule: rgba(255,255,255,0.07);
+    --jx-rule-soft: rgba(255,255,255,0.035);
+    --jx-rule-strong: var(--jx-ink);
+    --jx-accent: #6c8aff;
+    --jx-accent-hover: color-mix(in oklab, var(--jx-accent), white 10%);
+    --jx-accent-tint: color-mix(in oklab, var(--jx-accent), black 70%);
+    --jx-focus-ring: rgba(108,138,255,0.36);
+    --jx-shadow-stack: var(--jx-shadow-stack-dark);
+  }
+}
+
+/* ── Print mode ── */
+@media print {
+  :root {
+    --jx-paper: #ffffff;
+    --jx-ink: #000000;
+  }
+}

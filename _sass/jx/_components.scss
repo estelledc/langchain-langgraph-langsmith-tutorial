@@ -1,0 +1,188 @@
+/* Jason DS · Eyebrow v1.0.0 */
+
+.jx-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--jx-space-3);
+  font-family: var(--jx-font-mono);
+  font-size: var(--jx-fs-micro);
+  font-weight: var(--jx-weight-heading);
+  text-transform: uppercase;
+  letter-spacing: var(--jx-tracking-eyebrow);
+  color: var(--jx-ink-muted);
+  font-feature-settings: var(--jx-font-features-mono);
+}
+.jx-eyebrow__rule {
+  display: inline-block;
+  width: var(--jx-space-6);
+  height: 1px;
+  background: var(--jx-rule-strong);
+}
+
+/* Jason DS · Status Chip v1.0.0
+ * Three-state with shape redundancy: △ learning / ◇ building / ■ shipped
+ * Required: color + glyph + mono label (color-blind safe)
+ */
+
+.jx-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--jx-space-2);
+  padding: 2px var(--jx-space-3);
+  font-family: var(--jx-font-mono);
+  font-size: var(--jx-fs-micro);
+  font-weight: var(--jx-weight-heading);
+  text-transform: uppercase;
+  letter-spacing: var(--jx-tracking-eyebrow);
+  border-radius: var(--jx-radius-pill);
+  background: var(--_chip-tint);
+  color: var(--_chip-color);
+  font-feature-settings: var(--jx-font-features-mono);
+  white-space: nowrap;
+}
+.jx-chip::before {
+  content: var(--_chip-glyph);
+  font-size: 1em;
+  line-height: 1;
+}
+.jx-chip[data-state="learning"] {
+  --_chip-color: var(--jx-state-learning);
+  --_chip-tint: var(--jx-state-learning-tint);
+  --_chip-glyph: var(--jx-state-learning-glyph);
+}
+.jx-chip[data-state="building"] {
+  --_chip-color: var(--jx-state-building);
+  --_chip-tint: var(--jx-state-building-tint);
+  --_chip-glyph: var(--jx-state-building-glyph);
+}
+.jx-chip[data-state="shipped"] {
+  --_chip-color: var(--jx-state-shipped);
+  --_chip-tint: var(--jx-state-shipped-tint);
+  --_chip-glyph: var(--jx-state-shipped-glyph);
+}
+
+/* Jason DS · External Pill v1.0.0
+ * 出站链接统一 hairline + 右上 ↗ 箭头 (no icon font)
+ */
+
+.jx-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--jx-space-2);
+  padding: var(--jx-space-2) var(--jx-space-4);
+  font-family: var(--jx-font-mono);
+  font-size: var(--jx-fs-xs);
+  letter-spacing: var(--jx-tracking-mono);
+  color: var(--jx-ink-2);
+  text-decoration: none;
+  border-radius: var(--jx-radius-pill);
+  box-shadow: var(--jx-shadow-hairline);
+  background: transparent;
+  transition: color var(--jx-duration-fast) var(--jx-easing),
+              box-shadow var(--jx-duration-fast) var(--jx-easing);
+}
+.jx-pill::after {
+  content: "↗";
+  font-size: 0.92em;
+  color: var(--jx-ink-muted);
+  transition: transform var(--jx-duration-fast) var(--jx-easing);
+}
+.jx-pill:hover {
+  color: var(--jx-accent);
+  box-shadow: 0 0 0 1px var(--jx-accent);
+}
+.jx-pill:hover::after {
+  color: var(--jx-accent);
+  transform: translate(1px, -1px);
+}
+.jx-pill:focus-visible {
+  outline: none;
+  box-shadow: var(--jx-shadow-focus);
+}
+
+/* Jason DS · Footer v1.0.0
+ * 三栏：colophon / 索引 / last-updated
+ * Layer 1：9 仓必有此结构
+ */
+
+.jx-footer {
+  margin-top: var(--jx-section-y);
+  padding: var(--jx-space-7) var(--jx-gutter);
+  border-top: 1px solid var(--jx-rule-strong);
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: var(--jx-space-6);
+  max-width: var(--jx-container);
+  margin-inline: auto;
+  font-family: var(--jx-font-mono);
+  font-size: var(--jx-fs-micro);
+  letter-spacing: var(--jx-tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--jx-ink-muted);
+  font-feature-settings: var(--jx-font-features-mono);
+}
+.jx-footer__colophon strong {
+  display: block;
+  font-family: var(--jx-font-display);
+  font-size: var(--jx-fs-sm);
+  font-weight: var(--jx-weight-heading);
+  letter-spacing: var(--jx-tracking-h3);
+  text-transform: none;
+  color: var(--jx-ink);
+  margin-bottom: var(--jx-space-2);
+}
+.jx-footer__index {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--jx-space-3) var(--jx-space-5);
+}
+.jx-footer__index a {
+  color: var(--jx-ink-2);
+  text-decoration: none;
+  transition: color var(--jx-duration-fast) var(--jx-easing);
+}
+.jx-footer__index a:hover { color: var(--jx-accent); }
+.jx-footer__stamp {
+  text-align: end;
+  color: var(--jx-ink-faint);
+}
+@media (max-width: 720px) {
+  .jx-footer {
+    grid-template-columns: 1fr;
+  }
+  .jx-footer__stamp {
+    text-align: start;
+    border-top: 1px solid var(--jx-rule);
+    padding-top: var(--jx-space-3);
+  }
+}
+
+/* Jason DS · Return to Hub v1.0.0
+ * 9 satellite 必现，固定左上 mono caption。
+ * Hub 自身不引此组件。
+ */
+
+.jx-return-to-hub {
+  position: relative; /* 各仓可在自己 :root 下加 fixed/absolute */
+  display: inline-flex;
+  align-items: center;
+  gap: var(--jx-space-2);
+  padding: var(--jx-space-2) 0;
+  font-family: var(--jx-font-mono);
+  font-size: var(--jx-fs-micro);
+  text-transform: lowercase;
+  letter-spacing: var(--jx-tracking-eyebrow);
+  color: var(--jx-ink-muted);
+  text-decoration: none;
+  font-feature-settings: var(--jx-font-features-mono);
+  transition: color var(--jx-duration-fast) var(--jx-easing);
+}
+.jx-return-to-hub::before { content: "←"; }
+.jx-return-to-hub:hover {
+  color: var(--jx-accent-hub); /* 强制墨蓝逃生通道，satellite override --jx-accent 时仍墨蓝 */
+}
+.jx-return-to-hub:focus-visible {
+  outline: none;
+  box-shadow: var(--jx-shadow-focus);
+}
+

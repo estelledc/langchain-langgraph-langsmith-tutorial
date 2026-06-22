@@ -23,6 +23,13 @@ readme_index:
   remove_originals: false
   with_frontmatter: true
 
+# 强制给所有页面套 default layout（绕过 jekyll-default-layout 不稳定）
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+
 # 不要把这些目录里的内容当成站点页面发布
 exclude:
   - .venv/

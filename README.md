@@ -1,12 +1,17 @@
+---
+layout: default
+title: LangChain Tutorial Zero
+---
+
 # LangChain Tutorial Zero
 
 > 给编程零基础选手的 LangChain 1.3.x 中文教程，4 周 14 篇 learning-by-doing。
 
-和市面上的 LangChain 教程比，这套有三件事别人没做：
+零基础学习者打开这个仓库学 LangChain，三条线按"什么算做完了"来组织：
 
-- **AI 辅助学习元教程** —— 不只教 LangChain，还教你"怎么用 Claude Code 学 LangChain"。[HOW_TO_LEARN_WITH_AI.md](HOW_TO_LEARN_WITH_AI.md) 7 条 prompt 心法 + 每篇配套任务卡 + [CLAUDE.md](CLAUDE.md) 把教学约束自动注入 AI（不用类比 / 不一口气讲 5 个概念 / 报错先问"你以为会发生什么"）。中文圈目前唯一一份。
-- **LangChain 1.3.x 实测** —— [docs/test-runs.md](docs/test-runs.md) 记录了 6 处破坏性变更的修法（`pydantic_v1` 迁移、`langchain_classic` 拆包、`LangChainStringEvaluator` 等）。对标 liaokongVFX 9k⭐ 那本 2024 停更的教程，这里 14 个 final 脚本全部在 1.3.x 跑过一遍。
-- **任务卡 + 给 AI 的 prompt** —— 每篇不是 API 列表，而是一组任务卡（"在 `_scratch/` 写出你的版本 → 自检对比 `final/`"），配套可复制的 prompt 模板。learning-by-doing，不是文档罗列。
+- **AI 辅助学习元教程** —— 做完的标志是你能独立用 Claude Code 上手下一个新框架。[HOW_TO_LEARN_WITH_AI.md](HOW_TO_LEARN_WITH_AI.md) 给出 7 条 prompt 原则，每篇配任务卡，[CLAUDE.md](CLAUDE.md) 把教学约束注入 AI（不用类比 / 不一口气讲 5 个概念 / 报错先问"你以为会发生什么"）。
+- **LangChain 1.3.x 实测** —— 做完的标志是 14 个 final 脚本在 1.3.x 上一次跑通。[docs/test-runs.md](docs/test-runs.md) 记录了 6 处破坏性变更的修法（`pydantic_v1` 迁移、`langchain_classic` 拆包、`LangChainStringEvaluator` 等）。
+- **任务卡 + 给 AI 的 prompt** —— 完成态是你在 `_scratch/` 写出自己的版本，再对照 `final/` 找差距。每篇提供一组任务卡和可复制的 prompt 模板，按 learning-by-doing 推进。
 
 **在线版**：[estelledc.github.io/langchain-langgraph-langsmith-tutorial](https://estelledc.github.io/langchain-langgraph-langsmith-tutorial/) — 不想 clone 也能直接读
 
@@ -22,11 +27,11 @@
 
 ## 关于作者
 
-我是 jason，**编程零基础**。这套教程是我自己学的过程沉淀的——开了一个空仓库，靠 Claude Code 一句一句问，把 LangChain / LangGraph / LangSmith 三大件啃下来，期间踩的每一个坑（环境变量没覆盖 / pydantic 版本错 / DashScope 兼容性、`langchain_classic` 拆包……）都写进了 [docs/debug-recipes.md](docs/debug-recipes.md) 和 [docs/test-runs.md](docs/test-runs.md)。
+我是 jason，编程零基础。这套教程的产生方式很简单：开一个空仓库，跟 Claude Code 一句一句问，把 LangChain / LangGraph / LangSmith 啃下来——每跑通一个最小例子，就把过程里卡住的地方（pydantic 版本错 / DashScope 兼容性 / `langchain_classic` 拆包……）原样落进 [docs/debug-recipes.md](docs/debug-recipes.md) 和 [docs/test-runs.md](docs/test-runs.md)。
 
-我不是 LangChain 专家。但**正因为我从零基础走过来，我知道哪句术语会卡住、哪个例子第一次跑会报什么错**。这套教程对自己学的最大价值不是"我懂得多"，而是"我把卡点和有效 prompt 留下来了"，下一个零基础的人不用重新踩。
+判断"学懂了"的标准也对应这个动作：例子能从零跑通、报错能自己定位、踩过的坑下次不再踩。这套教程留下的是卡点的位置和当时管用的 prompt——下一个零基础的人照着走，可以少绕一段。
 
-如果你也是零基础选手，建议先读 [HOW_TO_LEARN_WITH_AI.md](HOW_TO_LEARN_WITH_AI.md)——它比任何一篇 tutorial 都重要。
+如果你也是零基础，建议先读 [HOW_TO_LEARN_WITH_AI.md](HOW_TO_LEARN_WITH_AI.md)，它讲的是怎么跟 AI 配合学，零基础起步用得上。
 
 ---
 
@@ -132,7 +137,7 @@ open tutorial/week-1-langchain/01_hello_llm.md
 | **进阶练习** | 无 | [docs/challenges.md](docs/challenges.md) 7 个真实小项目挑战 |
 | **典型用法** | "这个 API 怎么调" 时翻文档查一下 | "我要从零学会"——4 周 14 篇按节奏走 |
 
-**一句话**：官方教程是**字典**，这套是**家教**。
+你翻官方教程查 API 时，这份在旁边讲给你听。
 
 ---
 
@@ -169,7 +174,7 @@ open tutorial/week-1-langchain/01_hello_llm.md
 
 ## 适合你吗
 
-✅ 适合：
+适合：周六下午打开 VS Code，跟着第一章跑 `pip install langchain`，报错时把整段堆栈贴给 AI 问"这是什么意思"——如果这个画面对你来说不别扭，这套就合适。
 
 - 编程零基础或只懂语法
 - 第一次碰 LangChain
@@ -177,7 +182,7 @@ open tutorial/week-1-langchain/01_hello_llm.md
 - 中文学习者
 - 有 30+ 小时（4 周）
 
-❌ 不适合：
+不适合：你打开教程，第一反应是想看完整 API 列表，或者想把它当英文文档的中译本——那这套帮不上忙。
 
 - 想找官方文档替代品（请去 [docs.langchain.com](https://docs.langchain.com)）
 - 不想写代码只想读
@@ -187,12 +192,12 @@ open tutorial/week-1-langchain/01_hello_llm.md
 
 ## 学习路线
 
-| 周次 | 内容 | 状态 |
+| 周次 | 内容 | 完成标准 |
 |---|---|---|
-| **Week 1** | LangChain 核心：LLM、Prompt、LCEL、Memory、RAG | ✅ 5 篇 |
-| **Week 2** | Tool & Agent / 结构化输出 / 流式 + 容错 | ✅ 3 篇 |
-| **Week 3** | LangGraph：StateGraph、条件边、HITL、多 Agent | ✅ 4 篇 |
-| **Week 4** | LangSmith + Capstone：Tracing、Evaluation、Dataset、综合项目 | ✅ 4 篇 |
+| **Week 1** | LangChain 核心：LLM、Prompt、LCEL、Memory、RAG | 5 篇笔记已发布 |
+| **Week 2** | Tool & Agent、结构化输出、流式与容错 | 3 篇笔记已发布 |
+| **Week 3** | LangGraph：StateGraph、条件边、HITL、多 Agent | 4 篇笔记已发布 |
+| **Week 4** | LangSmith + Capstone：Tracing、Evaluation、Dataset、综合项目 | 4 篇笔记已发布 |
 
 每篇 tutorial 结构统一：**准备 → 任务卡（4-5 个） → 通关条件 → 卡点日志 → 通往下一站**。
 
@@ -225,4 +230,4 @@ open tutorial/week-1-langchain/01_hello_llm.md
 
 ---
 
-> **设计哲学**：零基础不是问题，**不知道怎么问**才是。这套教程的全部价值，是把"你不知道怎么问"的部分预制好，让你只管按 prompt 走。
+> 打开任意一节，把里面的 prompt 复制给 AI 直接问——"该怎么问"的那部分，教程已经替你写好了。

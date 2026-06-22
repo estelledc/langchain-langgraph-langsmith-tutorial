@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "zh-CN" }}">
+  <head>
+    <meta charset="UTF-8">
+    {% seo %}
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0d1117">
+    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    {% include head-custom.html %}
+  </head>
+  <body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="site-topbar">
+      <span class="brand">LANGCHAIN_TUTORIAL</span>
+      <a class="jx-return-to-hub" href="https://estelledc.github.io/" rel="home">回 Jason 主站</a>
+    </header>
+
+    <header class="page-header" role="banner">
+      <h1 class="project-name">{{ page.title | default: site.title | default: site.github.repository_name }}</h1>
+      <h2 class="project-tagline">{{ page.description | default: site.description | default: site.github.project_tagline }}</h2>
+      {% if site.github.is_project_page %}
+        <a href="{{ site.github.repository_url }}" class="btn">View on GitHub</a>
+      {% endif %}
+    </header>
+
+    <main id="content" class="main-content" role="main">
+      {{ content }}
+
+      <footer class="jx-footer">
+        <div class="jx-footer__colophon">
+          <strong>LangChain Tutorial Zero</strong>
+          <span lang="en">VOL · MMXXVI</span>
+        </div>
+        <nav class="jx-footer__index">
+          <a href="{{ '/SETUP.html' | relative_url }}">setup</a>
+          <a href="{{ '/HOW_TO_LEARN_WITH_AI.html' | relative_url }}">how to learn</a>
+          <a href="{{ '/tutorial/' | relative_url }}">tutorial</a>
+          <a href="https://github.com/estelledc/langchain-langgraph-langsmith-tutorial">github</a>
+        </nav>
+        <time class="jx-footer__stamp" datetime="2026-05-31" lang="en">2026·05·31</time>
+      </footer>
+    </main>
+
+    <script type="module">
+      // Jekyll Pages 默认不渲染 mermaid block；这段 JS 在客户端把
+      // <pre><code class="language-mermaid">...</code></pre> 转成 mermaid 渲染容器
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+      document.querySelectorAll('pre > code.language-mermaid').forEach((codeEl) => {
+        const div = document.createElement('div');
+        div.classList.add('mermaid');
+        div.textContent = codeEl.textContent;
+        codeEl.parentElement.replaceWith(div);
+      });
+
+      // Effective theme: explicit data-theme > prefers-color-scheme
+      const explicit = document.documentElement.getAttribute('data-theme');
+      const isDark = explicit === 'dark'
+                  || (!explicit && window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: isDark ? 'dark' : 'default',
+        securityLevel: 'loose',
+        flowchart: { htmlLabels: true, curve: 'basis' },
+      });
+    </script>
+  </body>
+</html>
