@@ -2,7 +2,7 @@
 
 > LangChain / LangGraph / LangSmith 高频报错速查 + 给 AI 的诊断 prompt 模板。报错先来这页搜，搜不到再开 AI 对话。
 
-**配套**：[docs/test-runs.md](test-runs.md) 是作者本人 14 个 final 全跑过一遍的实战记录，遇到没在本页的报错，去那里再翻一遍。
+**配套**：[docs/test-runs.md](test-runs.md) 记录了作者对 smoke test 清单中 14 个直接执行入口的历史实测（12 PASS / 1 PARTIAL / 1 SKIP）；遇到没在本页的报错，去那里再翻一遍。
 
 ---
 
@@ -417,4 +417,4 @@ results = evaluate(
 
 ## 版本
 
-- v1（2026-05）：初版，覆盖 6 大类共 16 个常见报错，对齐 langchain 1.3 / langsmith 0.8 / langgraph 1.2
+- v1（2026-05）：初版，覆盖 6 大类共 18 个常见报错，对齐 langchain 1.3 / langsmith 0.8 / langgraph 1.2

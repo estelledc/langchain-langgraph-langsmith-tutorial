@@ -1,8 +1,17 @@
 title: LangChain Tutorial Zero
-description: 给零基础选手的 AI 辅助学习教程 — 用 Claude Code / Cursor 学 LangChain + LangGraph + LangSmith
-# url 和 baseurl 留给 actions/configure-pages 自动注入
-# （手动设空字符串会让 CSS / 内部 link 拼接成根域名路径，部署到子路径仓库时 404）
+description: 一套面向初学者的中文 AI 辅助编程教程：用任务卡、苏格拉底式 prompt、可执行参考与卡点日志学习 LangChain、LangGraph 和 LangSmith。
+url: https://estelledc.github.io
+baseurl: /langchain-langgraph-langsmith-tutorial
+repository: estelledc/langchain-langgraph-langsmith-tutorial
 lang: zh-CN
+locale: zh_CN
+timezone: Asia/Shanghai
+author:
+  name: Jason Xun
+  url: https://estelledc.github.io/
+
+# 默认分享图；layout 统一生成 canonical metadata 与 canonical Person graph。
+logo: /assets/og-tutorial-zero.png
 
 # GitHub Pages 默认主题（零配置原生支持）
 theme: jekyll-theme-cayman
@@ -29,6 +38,10 @@ defaults:
       path: ""
     values:
       layout: default
+      image: /assets/og-tutorial-zero.png
+
+sass:
+  style: compressed
 
 # 不要把这些目录里的内容当成站点页面发布
 exclude:
@@ -43,6 +56,8 @@ exclude:
   - LICENSE
   - Gemfile
   - Gemfile.lock
+  - scripts/
+  - docs/superpowers/
   - vendor/
 
 # 顶部导航（Cayman 主题不显式用，但保留作记录用）

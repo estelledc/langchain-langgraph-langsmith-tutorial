@@ -1,0 +1,11 @@
+---
+layout: null
+permalink: /sitemap.xml
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{% assign public_pages = site.pages | sort: 'url' %}
+{% for item in public_pages %}{% unless item.url == '/404.html' or item.url == '/robots.txt' or item.url == '/sitemap.xml' %}{% assign last_char = item.url | slice: -1, 1 %}{% assign extension = item.url | slice: -5, 5 %}{% if last_char == '/' or extension == '.html' %}
+  <url><loc>{{ item.url | absolute_url }}</loc></url>
+{% endif %}{% endunless %}{% endfor %}
+</urlset>

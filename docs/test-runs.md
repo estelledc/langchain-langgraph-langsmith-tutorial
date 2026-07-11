@@ -7,7 +7,7 @@
 
 ## 这份文档是什么
 
-一份诚实的"作者真的把所有 17 个 final/.py 都跑过一遍"记录。包括：
+一份针对 smoke test 清单中 14 个直接执行入口的真实运行记录。包括：
 
 - 哪些文件**直接跑通**
 - 哪些文件**遇到 langchain 1.x / langsmith 0.8 破坏性变更**，怎么修的
@@ -35,7 +35,7 @@
 | `final/03_langsmith/03_dataset.py` | PASS（修复后） | 100s | **修了 create_dataset 的 data_type 参数** |
 | `final/04_project/agent.py` | PASS | 172s | 综合项目入口；间接调用 graph.py / tools.py |
 
-**统计**：12 PASS / 1 PARTIAL（本机 SSL）/ 1 SKIP（凭证）= **代码层 14/14 通过**（5 文件需修复后通过；2 文件本机环境受限，但已确认非代码 bug）。
+**统计**：12 PASS / 1 PARTIAL（本机 SSL）/ 1 SKIP（凭证），共 14 个入口。5 个文件在修复兼容性问题后通过；另外 2 个入口受当时环境限制。这是 2026-05-29 的历史记录，不等同于当前环境重新全量通过。
 
 `tools.py` / `graph.py` / `eval.py` 是被 import 的支持模块（`tools.py` / `graph.py`）或独立评估脚本（`eval.py`，需先跑 agent.py 生成 trace），不在直接 smoke test 范围。
 

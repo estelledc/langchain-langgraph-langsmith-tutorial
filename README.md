@@ -1,233 +1,316 @@
 ---
 layout: default
 title: LangChain Tutorial Zero
+description: 一套面向初学者的中文 AI 辅助编程教程：用任务卡、苏格拉底式 prompt、可执行参考与卡点日志学习 LangChain、LangGraph 和 LangSmith。
+image: /assets/og-tutorial-zero.png
+last_modified_at: 2026-07-11
 ---
 
-# LangChain Tutorial Zero
+<section class="tutorial-hero" aria-labelledby="tutorial-title">
+  <div>
+    <div class="tutorial-hero__status">
+      <span class="jx-chip" data-state="maintained">持续维护</span>
+      <span>Chinese · learning by building · LangChain 1.3.2</span>
+    </div>
+    <h1 id="tutorial-title">把 AI 从“答案机”，变成你的编程学习搭档。</h1>
+    <p class="tutorial-hero__lede">LangChain Tutorial Zero 面向刚接触 AI 应用开发的中文学习者。你不会从复制完整答案开始，而会沿着 16 篇任务卡，在自己的 <code>_scratch/</code> 里动手、对照、解释，再把卡点留下来。</p>
+    <p class="tutorial-hero__en" lang="en"><strong>English summary.</strong> A Chinese, beginner-oriented learning system for LangChain, LangGraph, and LangSmith. Sixteen guided lessons pair Socratic AI prompts with hands-on tasks, executable references, self-checks, and a learning journal.</p>
+    <div class="tutorial-hero__actions" aria-label="开始学习">
+      <a class="jx-action" href="https://estelledc.github.io/langchain-langgraph-langsmith-tutorial/HOW_TO_LEARN_WITH_AI.html">先学会怎么问 AI</a>
+      <a class="jx-action jx-action--secondary" href="https://estelledc.github.io/langchain-langgraph-langsmith-tutorial/tutorial/">查看 4 周路径</a>
+      <a class="jx-pill" href="https://github.com/estelledc/langchain-langgraph-langsmith-tutorial">GitHub repository</a>
+    </div>
+  </div>
 
-> 给编程零基础选手的 LangChain 1.3.x 中文教程，4 周 14 篇 learning-by-doing。
+  <aside class="tutorial-terminal" aria-label="教程学习循环示例">
+    <div class="tutorial-terminal__bar">
+      <span class="tutorial-terminal__lights" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span>learning-session.md</span>
+    </div>
+    <pre><span class="terminal-prompt">$ goal</span>
+理解 StateGraph，不复制完整答案
 
-零基础学习者打开这个仓库学 LangChain，三条线按"什么算做完了"来组织：
+<span class="terminal-prompt">$ ask-ai</span>
+先用“地铁线路图”类比，只问我一个问题
 
-- **AI 辅助学习元教程** —— 做完的标志是你能独立用 Claude Code 上手下一个新框架。[HOW_TO_LEARN_WITH_AI.md](HOW_TO_LEARN_WITH_AI.md) 给出 7 条 prompt 原则，每篇配任务卡，[CLAUDE.md](CLAUDE.md) 把教学约束注入 AI（不用类比 / 不一口气讲 5 个概念 / 报错先问"你以为会发生什么"）。
-- **LangChain 1.3.x 实测** —— 做完的标志是 14 个 final 脚本在 1.3.x 上一次跑通。[docs/test-runs.md](docs/test-runs.md) 记录了 6 处破坏性变更的修法（`pydantic_v1` 迁移、`langchain_classic` 拆包、`LangChainStringEvaluator` 等）。
-- **任务卡 + 给 AI 的 prompt** —— 完成态是你在 `_scratch/` 写出自己的版本，再对照 `final/` 找差距。每篇提供一组任务卡和可复制的 prompt 模板，按 learning-by-doing 推进。
+<span class="terminal-pass">✓ build</span>  _scratch/my_graph.py
+<span class="terminal-pass">✓ compare</span> final/02_langgraph/01_simple_graph.py
+<span class="terminal-pass">✓ explain</span> 为什么条件边决定下一站
 
-**在线版**：[estelledc.github.io/langchain-langgraph-langsmith-tutorial](https://estelledc.github.io/langchain-langgraph-langsmith-tutorial/) — 不想 clone 也能直接读
+<span class="terminal-note">→ journal: 写下卡点与“原来如此”时刻</span></pre>
+  </aside>
+</section>
 
-## 4 周学习路径（约 17 小时）
+<div class="metric-strip" aria-label="教程可核验范围">
+  <div><strong data-metric="lessons">16</strong><span>篇学习剧本</span></div>
+  <div><strong data-metric="entrypoints">14</strong><span>个直接验证入口</span></div>
+  <div><strong data-metric="concepts">18</strong><span>个类比式概念</span></div>
+  <div><strong data-metric="challenges">7</strong><span>个开放挑战</span></div>
+</div>
 
-<p align="center">
-  <img src="docs/screenshots/00-roadmap.png" alt="4 周 16 篇学习路径图" width="520">
-</p>
-
-每周一段，从 LangChain 核心 → Tool/Agent → LangGraph → LangSmith。每篇时长见 [tutorial/README.md](tutorial/README.md)。
-
----
-
-## 关于作者
-
-我是 jason，编程零基础。这套教程的产生方式很简单：开一个空仓库，跟 Claude Code 一句一句问，把 LangChain / LangGraph / LangSmith 啃下来——每跑通一个最小例子，就把过程里卡住的地方（pydantic 版本错 / DashScope 兼容性 / `langchain_classic` 拆包……）原样落进 [docs/debug-recipes.md](docs/debug-recipes.md) 和 [docs/test-runs.md](docs/test-runs.md)。
-
-判断"学懂了"的标准也对应这个动作：例子能从零跑通、报错能自己定位、踩过的坑下次不再踩。这套教程留下的是卡点的位置和当时管用的 prompt——下一个零基础的人照着走，可以少绕一段。
-
-如果你也是零基础，建议先读 [HOW_TO_LEARN_WITH_AI.md](HOW_TO_LEARN_WITH_AI.md)，它讲的是怎么跟 AI 配合学，零基础起步用得上。
-
----
-
-## 60 秒 Quick Start
-
-不用 clone 仓库，三步跑通第一个 LangChain + DashScope 调用。
-
-**1. 装包**
-
-```bash
-pip install langchain langchain-openai python-dotenv
-```
-
-**2. 设环境变量**
-
-去 [DashScope 控制台](https://dashscope.console.aliyun.com/) 申请 API Key（有免费额度），然后：
-
-```bash
-export DASHSCOPE_API_KEY="sk-你的key"
-export DASHSCOPE_BASE_URL="https://dashscope.aliyuncs.com/compatible-mode/v1"
-```
-
-**3. 跑第一个 LLM 调用**
-
-新建 `hello.py`：
-
-```python
-from langchain_core.messages import HumanMessage, SystemMessage
-from langchain_openai import ChatOpenAI
-import os
-
-llm = ChatOpenAI(
-    model="qwen-plus",
-    base_url=os.environ["DASHSCOPE_BASE_URL"],
-    api_key=os.environ["DASHSCOPE_API_KEY"],
-    temperature=0.7,
+<section class="home-section task-lab" id="try-one" aria-labelledby="task-lab-title">
+  <div class="home-heading">
+    <span class="home-heading__index">Try one task · no timer</span>
+    <h2 id="task-lab-title">先完成一个微任务，再决定要不要学四周。</h2>
+    <p>这不是装饰性的 demo。它复刻第一课的最小节奏：用类比定位角色、补一处代码、自检，再写下一句能复用的理解。</p>
+  </div>
+  <div class="task-lab__grid">
+    <ol class="task-lab__steps" aria-label="微任务进度">
+      <li data-task-stage="analogy" data-state="current" aria-current="step"><span>01</span><strong>类比</strong><small>先建立角色直觉</small></li>
+      <li data-task-stage="fill"><span>02</span><strong>补代码</strong><small>只填关键一格</small></li>
+      <li data-task-stage="check"><span>03</span><strong>自检</strong><small>解释为什么</small></li>
+      <li data-task-stage="journal"><span>04</span><strong>日志</strong><small>留下迁移线索</small></li>
+    </ol>
+    <div class="task-lab__workbench" data-task-lab>
+      <p class="task-lab__analogy"><span>地铁类比</span> Prompt 是目的地说明，模型客户端是把这张说明送进模型、再把回复带回来的列车。</p>
+      <fieldset>
+        <legend>哪一个名字应该填进模型客户端的位置？</legend>
+        <pre aria-label="待补全的 Python 代码"><code>llm = <mark data-code-slot>_____</mark>(
+    model="qwen-plus"
 )
+reply = llm.invoke("用一句话介绍你自己")</code></pre>
+        <div class="task-lab__choices">
+          <label><input type="radio" name="model-client" value="PromptTemplate"> <span>PromptTemplate</span></label>
+          <label><input type="radio" name="model-client" value="ChatOpenAI"> <span>ChatOpenAI</span></label>
+          <label><input type="radio" name="model-client" value="LangSmith"> <span>LangSmith</span></label>
+        </div>
+        <button class="task-lab__check" type="button" data-check-answer disabled>检查我的选择</button>
+        <p class="task-lab__status" data-task-status role="status" aria-live="polite">先选择一个答案；这里只检查角色判断，不会调用外部模型。</p>
+      </fieldset>
+      <div class="task-lab__journal" data-task-journal hidden>
+        <span>Journal prompt</span>
+        <p>补完这句话：<strong>“模型客户端像列车，但这个类比不适用于 ______，因为 ______。”</strong></p>
+        <a href="https://estelledc.github.io/langchain-langgraph-langsmith-tutorial/tutorial/week-1-langchain/01_hello_llm.html">带着这句话进入第一课 →</a>
+      </div>
+      <noscript><p class="task-lab__noscript">正确答案是 <code>ChatOpenAI</code>。启用 JavaScript 后可以体验选择、自检与日志解锁。</p></noscript>
+    </div>
+  </div>
+</section>
 
-messages = [
-    SystemMessage(content="你是一个简洁的 AI 助手，回答不超过 50 字。"),
-    HumanMessage(content="什么是 LangChain？"),
-]
+<section class="home-section" id="problem" aria-labelledby="problem-title">
+  <div class="home-heading">
+    <span class="home-heading__index">01 / Problem</span>
+    <h2 id="problem-title">初学者缺的通常不是代码，而是一条不会被 AI 代做的学习路径。</h2>
+    <p>官方文档擅长告诉你 API 是什么，却默认你已经理解 Agent、State、Trace 等上下文；聊天机器人又很容易直接交付一段完整代码，让“能运行”掩盖“没理解”。</p>
+  </div>
+  <div class="problem-grid">
+    <article class="problem-card">
+      <span class="card-kicker">Context gap</span>
+      <h3>术语先于直觉出现</h3>
+      <p>第一次看到 LCEL、ReAct 或 Checkpointer 时，定义本身并不能告诉你它为什么存在。</p>
+    </article>
+    <article class="problem-card">
+      <span class="card-kicker">Copy trap</span>
+      <h3>AI 太快给出完整答案</h3>
+      <p>复制代码能让终端变绿，却没有暴露自己的心智模型，也没有留下可迁移的判断。</p>
+    </article>
+    <article class="problem-card">
+      <span class="card-kicker">Version drift</span>
+      <h3>框架更新让示例失效</h3>
+      <p>LangChain 1.x 的拆包和 API 变化会让旧教程报错，必须把依赖版本、修复和运行记录放在一起。</p>
+    </article>
+  </div>
+</section>
 
-response = llm.invoke(messages)
-print(response.content)
-print("Token 用量：", response.response_metadata.get("token_usage", {}))
-```
+<section class="home-section" id="learning-system" aria-labelledby="system-title">
+  <div class="home-heading">
+    <span class="home-heading__index">02 / Learning system</span>
+    <h2 id="system-title">每一课都走同一条闭环：先建立直觉，再亲手证明。</h2>
+    <p>教程把 AI 放在“陪练”位置。它可以换类比、拆小问题、提供候选根因，但关键代码、差异判断和学习日志由学习者完成。</p>
+  </div>
+  <div class="learning-loop" aria-label="四步学习闭环">
+    <div>
+      <span class="card-kicker">01 · Frame</span>
+      <strong>类比与大纲</strong>
+      <p>先说清概念在解决什么问题，再把实现拆成 3–5 个可回答的小步骤。</p>
+    </div>
+    <div>
+      <span class="card-kicker">02 · Build</span>
+      <strong>在 scratch 动手</strong>
+      <p>自己的代码只写进 <code>_scratch/</code>；任务卡提供约束，不直接交付完整答案。</p>
+    </div>
+    <div>
+      <span class="card-kicker">03 · Compare</span>
+      <strong>区分真错与风格</strong>
+      <p>对照 <code>final/</code> 时先判断差异是否影响结果，再由学习者自己修正。</p>
+    </div>
+    <div>
+      <span class="card-kicker">04 · Reuse</span>
+      <strong>记录卡点</strong>
+      <p>把“原来如此”、有效 prompt 和未解决问题写入 journal，变成下一次可复用的经验。</p>
+    </div>
+  </div>
+</section>
+
+<section class="home-section" id="curriculum" aria-labelledby="curriculum-title">
+  <div class="home-heading">
+    <span class="home-heading__index">03 / Curriculum</span>
+    <h2 id="curriculum-title">4 周、16 篇，从第一次调用走到可评估的 Agent。</h2>
+    <p>“周”是内容分组，不是完成承诺。每篇的分钟数是仓库中的学习节奏估算，真实耗时取决于 Python 基础、网络和 API 权限。</p>
+  </div>
+  <div class="week-grid">
+    <a class="week-card" href="https://estelledc.github.io/langchain-langgraph-langsmith-tutorial/tutorial/week-1-langchain/">
+      <span class="card-kicker">Week 01</span>
+      <h3>LangChain 核心</h3>
+      <p>LLM 调用、Prompt、LCEL、Memory 与基础 RAG。</p>
+      <span class="week-card__meta">5 lessons · foundations</span>
+    </a>
+    <a class="week-card" href="https://estelledc.github.io/langchain-langgraph-langsmith-tutorial/tutorial/week-2-tools-and-agent/">
+      <span class="card-kicker">Week 02</span>
+      <h3>Tool 与工程化</h3>
+      <p>工具调用、结构化输出、流式响应、重试与 fallback。</p>
+      <span class="week-card__meta">3 lessons · reliability</span>
+    </a>
+    <a class="week-card" href="https://estelledc.github.io/langchain-langgraph-langsmith-tutorial/tutorial/week-3-langgraph/">
+      <span class="card-kicker">Week 03</span>
+      <h3>LangGraph</h3>
+      <p>StateGraph、条件边、Human-in-the-loop 与多 Agent。</p>
+      <span class="week-card__meta">4 lessons · orchestration</span>
+    </a>
+    <a class="week-card" href="https://estelledc.github.io/langchain-langgraph-langsmith-tutorial/tutorial/week-4-langsmith-and-project/">
+      <span class="card-kicker">Week 04</span>
+      <h3>LangSmith + Capstone</h3>
+      <p>Tracing、Evaluation、Dataset 与四文件研究助手。</p>
+      <span class="week-card__meta">4 lessons · evaluation</span>
+    </a>
+  </div>
+</section>
+
+<section class="home-section" id="evidence" aria-labelledby="evidence-title">
+  <div class="home-heading">
+    <span class="home-heading__index">04 / Evidence</span>
+    <h2 id="evidence-title">把“教程能不能运行”拆成可追溯的证据，而不是一句保证。</h2>
+    <p>公开证据区分当前静态检查与 2026-05-29 的历史 API 实测；需要外部凭证的行为不会被本站构建冒充为已重新验证。</p>
+  </div>
+  <div class="verification-passport" aria-label="验证护照">
+    <header><div><span>Verification passport</span><strong>不同证据，不混写成一次“全部通过”。</strong></div><time datetime="2026-07-11">2026-07-11</time></header>
+    <ul>
+      <li><span class="jx-source-tag" data-source="build">Build</span><div><strong>当前静态契约 · Verified</strong><small>课程数量、页面结构、链接、Python 语法与发布门禁在本轮重新检查。</small></div></li>
+      <li><span class="jx-source-tag" data-source="history">History</span><div><strong>外部 API 跑批 · Observed 2026-05-29</strong><small>14 个入口的历史结果为 12 PASS / 1 PARTIAL / 1 SKIP，保留环境与凭证限制。</small></div></li>
+      <li><span class="jx-source-tag" data-source="external">External</span><div><strong>当前模型服务状态 · Unknown</strong><small>未在 Pages 构建中重新调用收费 API，因此不声称今天仍全部可运行。</small></div></li>
+    </ul>
+  </div>
+  <div class="evidence-grid">
+    <article class="evidence-card evidence-card--primary">
+      <span class="card-kicker">Historical run · 2026-05-29</span>
+      <h3>14 个入口：12 PASS / 1 PARTIAL / 1 SKIP</h3>
+      <p>历史记录逐项列出耗时、输出与限制。PARTIAL 来自本机 SSL 环境，SKIP 来自 embedding 权限；本次前端重构没有把它们重新宣称为通过。</p>
+      <a href="https://estelledc.github.io/langchain-langgraph-langsmith-tutorial/docs/test-runs.html">查看真实运行记录</a>
+    </article>
+    <article class="evidence-card">
+      <span class="card-kicker">Compatibility</span>
+      <h3>依赖被固定，6 处破坏性变更有记录</h3>
+      <p><code>requirements.txt</code> 固定 LangChain 1.3.2、LangGraph 1.2.2 与 LangSmith 0.8.7；迁移原因保留在测试档案。</p>
+      <a href="https://github.com/estelledc/langchain-langgraph-langsmith-tutorial/blob/master/requirements.txt">查看依赖口径</a>
+    </article>
+    <article class="evidence-card">
+      <span class="card-kicker">Executable contract</span>
+      <h3>展示、链接与 Python 语法进入发布门禁</h3>
+      <p>Pages 发布前会核对课程数量、元数据、唯一 H1、内部链接，并对全部参考 Python 文件执行语法编译检查。</p>
+      <span class="evidence-card__note">CI · source + rendered output</span>
+    </article>
+  </div>
+</section>
+
+<section class="home-section lesson-proof" aria-labelledby="lesson-title">
+  <div>
+    <span class="home-heading__index">Inside one lesson</span>
+    <h2 id="lesson-title">教程页不是 API 清单，而是一组能亲手完成的任务卡。</h2>
+    <ol class="lesson-proof__steps">
+      <li>先跑参考，描述自己观察到的输入与输出。</li>
+      <li>挖空关键步骤，在 <code>_scratch/</code> 写自己的版本。</li>
+      <li>故意制造一个错误，再解释它暴露的机制。</li>
+      <li>对照 final，自检并写下卡点日志。</li>
+    </ol>
+    <p><a href="https://estelledc.github.io/langchain-langgraph-langsmith-tutorial/tutorial/week-1-langchain/01_hello_llm.html">打开第一篇任务卡</a></p>
+  </div>
+  <figure class="lesson-proof__visual">
+    <img src="docs/screenshots/03-tutorial-task-cards.png" alt="Hello LLM 教程页中的准备清单和任务卡示例" width="1280" height="900" loading="lazy" decoding="async">
+  </figure>
+</section>
+
+<section class="home-section builder-section" id="role" aria-labelledby="role-title">
+  <div>
+    <span class="home-heading__index">05 / Role & AI boundary</span>
+    <h2 id="role-title">以学习者身份构建教程，也对验证边界负责。</h2>
+  </div>
+  <div>
+    <p>我是 Jason Xun。这个项目的角色不是“权威讲师”，而是学生作者、教学系统设计者和维护者：把自己遇到的版本坑、失败路径与有效提问整理成下一位初学者可以复用的脚手架。</p>
+    <div class="builder-boundary">
+      <div>
+        <h3>Human owns</h3>
+        <p>课程顺序、学习约束、运行验证、失败分类、内容取舍与最终发布。</p>
+      </div>
+      <div>
+        <h3>AI assists</h3>
+        <p>类比生成、问题拆解、代码陪练、候选根因与文档初稿；不代替学习者完成判断。</p>
+      </div>
+    </div>
+    <div class="builder-links">
+      <a class="jx-action jx-action--secondary" href="https://estelledc.github.io/about/">About</a>
+      <a class="jx-action jx-action--secondary" href="https://estelledc.github.io/resume/">Resume</a>
+      <a class="jx-pill" href="https://github.com/estelledc">GitHub</a>
+    </div>
+  </div>
+</section>
+
+<section class="home-section start-panel" aria-labelledby="start-title">
+  <h2 id="start-title">第一次打开，从这三步开始。</h2>
+  <div class="start-grid">
+    <div>
+      <strong>01 · Learn the method</strong>
+      <p>先读 <a href="https://estelledc.github.io/langchain-langgraph-langsmith-tutorial/HOW_TO_LEARN_WITH_AI.html">HOW_TO_LEARN_WITH_AI.md</a>，理解为什么不直接向 AI 要完整代码。</p>
+    </div>
+    <div>
+      <strong>02 · Prepare locally</strong>
+      <p>按 <a href="https://estelledc.github.io/langchain-langgraph-langsmith-tutorial/SETUP.html">SETUP.md</a> 建立虚拟环境与本地 <code>.env</code>；真实 API Key 不进入仓库。</p>
+    </div>
+    <div>
+      <strong>03 · Build lesson one</strong>
+      <p>从 <a href="https://estelledc.github.io/langchain-langgraph-langsmith-tutorial/tutorial/week-1-langchain/01_hello_llm.html">01_hello_llm.md</a> 开始，把自己的实现写进 <code>_scratch/</code>。</p>
+    </div>
+  </div>
+</section>
+
+<section class="home-section limits-panel" id="limitations" aria-labelledby="limits-title">
+  <h2 id="limits-title">局限与适用边界</h2>
+  <div class="limits-grid">
+    <div>
+      <span class="card-kicker">Prerequisite</span>
+      <p>面向框架初学者，不代替 Python 基础；至少应能阅读函数、列表、字典与异常信息。</p>
+    </div>
+    <div>
+      <span class="card-kicker">Version</span>
+      <p>示例固定在仓库声明的 1.x 版本，不承诺跟随 LangChain 最新 API；升级需要重新跑批。</p>
+    </div>
+    <div>
+      <span class="card-kicker">External systems</span>
+      <p>完整运行依赖 DashScope、LangSmith、网络与模型权限；API 费用、延迟和可用性不由本仓库控制。</p>
+    </div>
+  </div>
+</section>
+
+## 本地验证
+
+站点展示契约、内部链接和 Python 语法检查均可在不提供 API Key 的情况下运行：
 
 ```bash
-python hello.py
+bundle install
+JEKYLL_ENV=production bundle exec jekyll build
+ruby scripts/check-showcase.rb --built _site
+bundle exec htmlproofer _site --disable-external --no-enforce-https \
+  --swap-urls '^/langchain-langgraph-langsmith-tutorial:'
+python3 -m compileall -q final
+bash -n scripts/smoke-test.sh
 ```
 
-跑通了？正式从 [tutorial/week-1-langchain/01_hello_llm.md](tutorial/week-1-langchain/01_hello_llm.md) 开始。跑不通？查 [docs/debug-recipes.md](docs/debug-recipes.md)。
+需要模型与 LangSmith 凭证的 14 个入口由 `bash scripts/smoke-test.sh` 执行。它会调用外部服务、产生时延或费用，因此不属于 Pages 构建；运行前请先按 [SETUP.md](SETUP.md) 配置本地 `.env`。历史结果见 [docs/test-runs.md](docs/test-runs.md)。
 
----
+## 贡献
 
-## 完整环境（4 周教程）
+- 教程卡点：提交 Issue，说明在哪一步、预期什么、实际发生什么。
+- 新的兼容性错误：补充 [debug recipes](docs/debug-recipes.md) 与复现条件。
+- 真正有效的学习 prompt：补充 [prompt cheatsheet](docs/prompts-cheatsheet.md)。
+- 完成 4 周后：从 [7 个开放挑战](docs/challenges.md) 里选一个继续构建。
 
-Quick Start 只是单文件 demo。要走 4 周 14 篇完整教程：
-
-```bash
-# 1. fork 本仓库，clone（YOUR-USERNAME 换成你自己）
-git clone https://github.com/YOUR-USERNAME/langchain-langgraph-langsmith-tutorial.git
-cd langchain-langgraph-langsmith-tutorial
-
-# 2. 跟着 SETUP.md 配 .env 和依赖（约 15 分钟，含申 API Key）
-open SETUP.md
-
-# 3. 读完元教程再开始（5 分钟，必读）
-open HOW_TO_LEARN_WITH_AI.md
-
-# 4. 走第一篇 tutorial
-open tutorial/week-1-langchain/01_hello_llm.md
-```
-
-> **仓库 vs 项目代号**：仓库名 `langchain-langgraph-langsmith-tutorial` 是历史名；项目代号叫 **LangChain Tutorial Zero**——git clone 命令以仓库名为准。
-
----
-
-## 一眼看懂教程结构
-
-学习者打开任意一篇 tutorial，看到的是**任务卡 + 给 AI 的 prompt** 结构（不是 reference style 的 API 罗列）：
-
-![tutorial 任务卡示例](docs/screenshots/03-tutorial-task-cards.png)
-
-撞到不懂的术语？打开 [docs/concepts.md](docs/concepts.md)，每个术语**先类比再定义**：
-
-![docs 概念词典](docs/screenshots/04-docs-concepts.png)
-
----
-
-## VS 官方教程
-
-| 维度 | LangChain 官方文档 | 这套教程 |
-|---|---|---|
-| **目标读者** | 已懂 LLM / Agent 概念的工程师 | 编程零基础（能看懂 `def foo():` 即可） |
-| **教学风格** | reference style — 直给代码 + API 文档 | learning-by-doing — 任务卡 + 自己写 + 自检 |
-| **AI 工具维度** | 完全没有 | 每个知识点配「给 AI 的 prompt」让 CC/Cursor 陪你拆代码 |
-| **术语处理** | 默认你懂（"embedding"/"agent"/"trace" 直接用） | [docs/concepts.md](docs/concepts.md) 18 个核心术语全用日常类比 |
-| **错误处理** | 散落各处，要自己搜 | [docs/debug-recipes.md](docs/debug-recipes.md) 16 个高频报错速查 |
-| **prompt 工程** | 几个固定示例 | [docs/prompts-cheatsheet.md](docs/prompts-cheatsheet.md) 21 个高频 prompt 模板 + 反模式表 |
-| **语言** | 主英文，中文翻译滞后 | 原生中文，术语首次出现注英文 |
-| **进阶练习** | 无 | [docs/challenges.md](docs/challenges.md) 7 个真实小项目挑战 |
-| **典型用法** | "这个 API 怎么调" 时翻文档查一下 | "我要从零学会"——4 周 14 篇按节奏走 |
-
-你翻官方教程查 API 时，这份在旁边讲给你听。
-
----
-
-## 这是什么
-
-- 4 周从零学会 LangChain + LangGraph + LangSmith
-- **核心方法**：每个知识点配「给 AI 的 prompt」+ 自检任务，让 AI 陪你拆代码
-- **后端**：DashScope（通义千问）+ LangSmith Trace（都有免费层）
-
----
-
-## 仓库结构
-
-```
-├── HOW_TO_LEARN_WITH_AI.md      # 必读：怎么用 CC/Cursor 学陌生代码
-├── SETUP.md                     # 必读：环境搭建
-├── tutorial/                    # 学习剧本（你主要看这里）
-│   ├── README.md                # 学习路线索引
-│   └── week-1-langchain/  ...   # 按周组织，4 周共 14 篇
-├── final/                       # 参考答案（任务卡指明何时偷看）
-│   ├── _common.py               # 共享 boilerplate（学习者别改）
-│   └── 01_langchain/  ...       # 14 个独立可执行 .py
-├── docs/                        # 速查 + 进阶资源
-│   ├── concepts.md              # 18 个核心术语小词典
-│   ├── prompts-cheatsheet.md    # 21 个高频 prompt 模板
-│   ├── debug-recipes.md         # 16 个高频报错速查
-│   ├── challenges.md            # capstone 后 7 个真实挑战
-│   └── test-runs.md             # 14 个 final 实测档案
-└── _scratch/                    # 你的主战场（你写的代码放这；已 gitignore）
-    └── journal/                 # 卡点日志
-```
-
----
-
-## 适合你吗
-
-适合：周六下午打开 VS Code，跟着第一章跑 `pip install langchain`，报错时把整段堆栈贴给 AI 问"这是什么意思"——如果这个画面对你来说不别扭，这套就合适。
-
-- 编程零基础或只懂语法
-- 第一次碰 LangChain
-- 想用 AI 工具学陌生代码
-- 中文学习者
-- 有 30+ 小时（4 周）
-
-不适合：你打开教程，第一反应是想看完整 API 列表，或者想把它当英文文档的中译本——那这套帮不上忙。
-
-- 想找官方文档替代品（请去 [docs.langchain.com](https://docs.langchain.com)）
-- 不想写代码只想读
-- 英文资料够你看
-
----
-
-## 学习路线
-
-| 周次 | 内容 | 完成标准 |
-|---|---|---|
-| **Week 1** | LangChain 核心：LLM、Prompt、LCEL、Memory、RAG | 5 篇笔记已发布 |
-| **Week 2** | Tool & Agent、结构化输出、流式与容错 | 3 篇笔记已发布 |
-| **Week 3** | LangGraph：StateGraph、条件边、HITL、多 Agent | 4 篇笔记已发布 |
-| **Week 4** | LangSmith + Capstone：Tracing、Evaluation、Dataset、综合项目 | 4 篇笔记已发布 |
-
-每篇 tutorial 结构统一：**准备 → 任务卡（4-5 个） → 通关条件 → 卡点日志 → 通往下一站**。
-
-通关后建议：
-
-1. 跑完 capstone → 挑一个 [challenges.md](docs/challenges.md) 做出师作业
-2. 你自己沉淀的 prompt → 提 PR 到 [prompts-cheatsheet.md](docs/prompts-cheatsheet.md)
-3. 你撞到的新报错 → 提 PR 到 [debug-recipes.md](docs/debug-recipes.md)
-
----
-
-## 这个仓库**不**做什么
-
-- 不是另一份官方文档翻译——你已经能看英文文档了，本仓库帮不上忙
-- 不教 Python 基础——请先看 [Python 基础教程](https://www.runoob.com/python3/python3-tutorial.html) 至少能写循环和函数
-- 不保证最新版 LangChain 兼容——pin 在 1.3.x，半年回头一次
-
----
-
-## 反馈与贡献
-
-提 Issue 或 PR 都行：
-
-- 撞了报错 → PR 到 `debug-recipes.md`
-- 觉得某 tutorial 卡点 → 提 issue 描述哪一段不顺
-- 用过的 prompt 真有效 → PR 到 `prompts-cheatsheet.md`
-- 完成挑战 → PR 你的卡点日志到 `_scratch/journal/challenge-N-<日期>.md`
-
-本项目基于 [MIT License](LICENSE)。
-
----
-
-> 打开任意一节，把里面的 prompt 复制给 AI 直接问——"该怎么问"的那部分，教程已经替你写好了。
+本项目使用 [MIT License](https://github.com/estelledc/langchain-langgraph-langsmith-tutorial/blob/master/LICENSE)。

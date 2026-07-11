@@ -10,7 +10,7 @@
 ## 现状盘点
 
 - 14 ⭐ / 0 fork / 53 commits / 最新 5月活跃
-- owner: `estelledc` (zx775004276@qq.com)；本地 git 用户 `estelledc` —— **不是 jason 的主 GitHub 账号**
+- owner: `estelledc`；公开作者身份统一为 `Jason Xun`，不在文档暴露本地 Git 或邮箱配置。
 - 内容：14 篇 tutorial（4 周）+ 5 个 docs（concepts/prompts-cheatsheet/debug-recipes/challenges/test-runs）+ HOW_TO_LEARN_WITH_AI.md 元教程 + 14 个实测 final/.py
 - 已有：MIT LICENSE / CHANGELOG / CONTRIBUTING / issue templates / GitHub Pages
 - 缺：作者背书段 / 可视化路线图 hero 图 / 差异化定位声明 / Quick Start 可跑代码块 / 每节预估时长 / Colab 入口
@@ -81,7 +81,7 @@
 
 - **不做** 英文版翻译 —— 14⭐ 没底气推 awesome-langchain，等被中文 list 收录后再考虑
 - **不做** B 站配套视频 —— 投入大效果不确定
-- **不做** owner 迁移到 jason 账号 —— 反而需要一篇博客解释「以前用 estelledc 账号，现在迁过来」会更复杂；维持现状，简历段直接写「主要作者」即可
+- **不做** owner 迁移 —— 维持 `estelledc` 公开入口，并用 canonical Person schema 统一作者身份。
 - **不做** 抄 microsoft 七件套 —— 保留 AI 辅助学习这个真差异化
 - **不做** 短期内冲 50+ ⭐ —— 涨星没有快路径，能涨就涨，重点在被收录
 
@@ -97,7 +97,7 @@
 
 ## Owner 归属处理
 
-git remote 是 `estelledc/...`，commit author 是 `estelledc <zx775004276@qq.com>`。简历表述用「主要作者 / 主要贡献者」即可（estelledc 是 Jason 的另一个账号，可在简历或面试中说明）。**不做** 仓库迁移 —— 迁移会丢 stars、丢 issue 历史，付出大于收益。
+git remote 与公开作者入口均使用 `estelledc/...`。简历表述用「主要作者 / 主要贡献者」即可，并通过 canonical Person schema 统一到 Jason Xun。**不做** 仓库迁移 —— 迁移会丢 stars、丢 issue 历史，付出大于收益。
 
 ## 已确认的决策（2026-05-30）
 
