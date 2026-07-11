@@ -1,0 +1,21 @@
+.github/workflows/pages.yml
+  s_d739fdcae4d112::t_0259d025eb31db 5-7,14-15,58,64-66
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "34ba622268b95bbe76a1f902fbbbb8bf832d87c5",
+  "prompts": {},
+  "sessions": {
+    "s_d739fdcae4d112": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "s_d739fdcae4d112",
+        "model": "unknown"
+      },
+      "human_author": "Jason <150260202+estelledc@users.noreply.github.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
