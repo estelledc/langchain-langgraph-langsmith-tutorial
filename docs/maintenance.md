@@ -174,11 +174,11 @@ README 里 `LangChain 1.3.x 实测` 这句要跟上当前版本。
 
 | 工具 | 路径 | 用途 |
 |---|---|---|
-| smoke test | [scripts/smoke-test.sh](../scripts/smoke-test.sh) | 一键跑 14 个 final |
+| smoke test | [scripts/smoke-test.sh](https://github.com/estelledc/langchain-langgraph-langsmith-tutorial/blob/master/scripts/smoke-test.sh) | 一键跑 14 个直接执行入口 |
 | 实测档案 | [docs/test-runs.md](test-runs.md) | 历次跑批结果 + 破坏性变更记录 |
 | changelog | [CHANGELOG.md](../CHANGELOG.md) | 版本号 + 重要变更 |
-| 长远 spec | [docs/superpowers/specs/2026-05-30-tutorial-positioning-design.md](superpowers/specs/2026-05-30-tutorial-positioning-design.md) | 项目定位与 Phase 1+2+3 总规划 |
-| awesome-list PR | [docs/superpowers/awesome-list-pr-templates.md](superpowers/awesome-list-pr-templates.md) | PR A/B 模板 + fallback list |
+| 长远 spec | [docs/superpowers/specs/2026-05-30-tutorial-positioning-design.md](https://github.com/estelledc/langchain-langgraph-langsmith-tutorial/blob/master/docs/superpowers/specs/2026-05-30-tutorial-positioning-design.md) | 项目定位与 Phase 1+2+3 总规划 |
+| awesome-list PR | [docs/superpowers/awesome-list-pr-templates.md](https://github.com/estelledc/langchain-langgraph-langsmith-tutorial/blob/master/docs/superpowers/awesome-list-pr-templates.md) | PR A/B 模板 + fallback list |
 
 ## 历次年度回顾
 

@@ -1,6 +1,7 @@
 # LangChain Tutorial Zero — pin 在 docs/test-runs.md 实测过的版本
 # 维护节奏：每半年回头跑一次全量 final smoke test，确认 pin 还能跑
-# 上次实测：2026-05-29，全部 14 个 final 通过
+# 上次实测：2026-05-29，smoke test 的 14 个直接执行入口中
+# 12 PASS / 1 PARTIAL / 1 SKIP；完整边界见 docs/test-runs.md
 
 # Core
 langchain==1.3.2

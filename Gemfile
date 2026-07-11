@@ -3,6 +3,7 @@ source "https://rubygems.org"
 # GitHub Pages 推荐用 github-pages gem 锁版本，避免本地 build 和 GH 部署版本不一致
 gem "github-pages", group: :jekyll_plugins
 gem "jekyll-include-cache", group: :jekyll_plugins
+gem "html-proofer", "~> 5.0", group: :test
 
 # Windows / JRuby 兼容
 platforms :mingw, :x64_mingw, :mswin, :jruby do

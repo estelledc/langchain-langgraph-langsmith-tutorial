@@ -10,7 +10,7 @@
 
 这是 **LangChain Tutorial Zero** —— 给零基础选手的 AI 辅助学习教程。结构：
 
-- `tutorial/` — 14 篇学习剧本（任务卡 + 给 AI 的 prompt + 自检）
+- `tutorial/` — 16 篇学习剧本（任务卡 + 给 AI 的 prompt + 自检）
 - `final/` — 14 个独立可执行的参考答案 .py
 - `_scratch/` — 学习者的主战场（gitignore；自己写代码放这）
 - `docs/` — 速查（concepts / prompts-cheatsheet / debug-recipes / challenges）
@@ -95,7 +95,7 @@ LLM 会幻觉。涉及具体 API / 版本 / 错误码时：
 
 ### 2. 报错诊断时
 
-**先查 [docs/debug-recipes.md](docs/debug-recipes.md)**——16 个高频报错已经分类。匹配上的直接引用，不匹配再用"我以为 vs 实际"+ 3 候选根因方法。
+**先查 [docs/debug-recipes.md](docs/debug-recipes.md)**——18 个高频报错已经分类。匹配上的直接引用，不匹配再用"我以为 vs 实际"+ 3 候选根因方法。
 
 ### 3. 涉及 langchain 1.x 兼容性时
 
