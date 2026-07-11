@@ -1,0 +1,69 @@
+.github/workflows/pages.yml
+  s_2f611e0e83b4e3::t_d667293ce575ad 22-28,32-38,41-53,56,67
+CLAUDE.md
+  s_2f611e0e83b4e3::t_94289851a65ab8 13,98
+Gemfile
+  s_2f611e0e83b4e3::t_3c6fc37b0019ab 6
+Gemfile.lock
+  s_2f611e0e83b4e3::t_6dfc870d8740d4 1-493
+README.md
+  s_2f611e0e83b4e3::t_85d91d3a0cb56c 4-6,9-248,251-257,260,262,264-267,269
+_config.yml
+  s_2f611e0e83b4e3::t_33a880bd35a1f4 2-5,7-14,21,42-45,60-61
+_layouts/default.html
+  s_2f611e0e83b4e3::t_ef326e7ecf219a 1-2,4,6-21,24-54,56-57,60-64,66-89,92-99,101,104-120,124-128,131,135-136,139
+_sass/jx/VERSION
+  s_2f611e0e83b4e3::t_6244d93df20c33 1
+_sass/jx/_base.scss
+  s_2f611e0e83b4e3::t_3ad36c4400c791 1,10,29-47,81-113,160
+_sass/jx/_bridge-cayman.scss
+  s_2f611e0e83b4e3::t_17374027395191 1-3,5-7
+_sass/jx/_components.scss
+  s_2f611e0e83b4e3::t_2c4f684df8c189 22-24,64-83,210-590
+_sass/jx/_tokens.scss
+  s_2f611e0e83b4e3::t_bc701fe7fa9ba7 1,3,44-55,74,110-111,163-174
+_sass/jx/base.css
+  s_2f611e0e83b4e3::t_3c1ab3d6f4843d 1-165
+_sass/jx/components.css
+  s_2f611e0e83b4e3::t_a222fed21ba868 1-590
+_sass/jx/tokens.css
+  s_2f611e0e83b4e3::t_1ca29098bcae6b 1-184
+_sass/opendesign/theme.scss
+  s_2f611e0e83b4e3::t_8180680462b76b 1,4-58,63-67,70-73,76-88,90-97,100-109,112-139,141-147,150-153,156-167,170,172-774,776-784,786-837,839
+assets/css/style.scss
+  s_2f611e0e83b4e3::t_42f37668869124 5-6
+docs/challenges.md
+  s_2f611e0e83b4e3::t_cf1909bf0b1cd7 19
+docs/debug-recipes.md
+  s_2f611e0e83b4e3::t_74c7ba04fc9765 5,420
+docs/maintenance.md
+  s_2f611e0e83b4e3::t_ab779849c9238f 177,180-181
+docs/prompts-cheatsheet.md
+  s_2f611e0e83b4e3::t_81040a8e242c60 3,377
+docs/test-runs.md
+  s_2f611e0e83b4e3::t_610f97ce9e8cdd 10,38
+requirements.txt
+  s_2f611e0e83b4e3::t_289abb54bb689a 3-4
+scripts/check-showcase.rb
+  s_2f611e0e83b4e3::t_0596588368ed51 1-214
+tutorial/README.md
+  s_2f611e0e83b4e3::t_da038d52ed712e 11
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "6c4452d5369f7f9411ae000712dd41dc64fbc305",
+  "prompts": {},
+  "sessions": {
+    "s_2f611e0e83b4e3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_2f611e0e83b4e3",
+        "model": "unknown"
+      },
+      "human_author": "Jason <150260202+estelledc@users.noreply.github.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
