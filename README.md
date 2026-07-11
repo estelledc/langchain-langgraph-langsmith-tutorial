@@ -48,6 +48,45 @@ last_modified_at: 2026-07-11
   <div><strong data-metric="challenges">7</strong><span>个开放挑战</span></div>
 </div>
 
+<section class="home-section task-lab" id="try-one" aria-labelledby="task-lab-title">
+  <div class="home-heading">
+    <span class="home-heading__index">Try one task · no timer</span>
+    <h2 id="task-lab-title">先完成一个微任务，再决定要不要学四周。</h2>
+    <p>这不是装饰性的 demo。它复刻第一课的最小节奏：用类比定位角色、补一处代码、自检，再写下一句能复用的理解。</p>
+  </div>
+  <div class="task-lab__grid">
+    <ol class="task-lab__steps" aria-label="微任务进度">
+      <li data-task-stage="analogy" data-state="current" aria-current="step"><span>01</span><strong>类比</strong><small>先建立角色直觉</small></li>
+      <li data-task-stage="fill"><span>02</span><strong>补代码</strong><small>只填关键一格</small></li>
+      <li data-task-stage="check"><span>03</span><strong>自检</strong><small>解释为什么</small></li>
+      <li data-task-stage="journal"><span>04</span><strong>日志</strong><small>留下迁移线索</small></li>
+    </ol>
+    <div class="task-lab__workbench" data-task-lab>
+      <p class="task-lab__analogy"><span>地铁类比</span> Prompt 是目的地说明，模型客户端是把这张说明送进模型、再把回复带回来的列车。</p>
+      <fieldset>
+        <legend>哪一个名字应该填进模型客户端的位置？</legend>
+        <pre aria-label="待补全的 Python 代码"><code>llm = <mark data-code-slot>_____</mark>(
+    model="qwen-plus"
+)
+reply = llm.invoke("用一句话介绍你自己")</code></pre>
+        <div class="task-lab__choices">
+          <label><input type="radio" name="model-client" value="PromptTemplate"> <span>PromptTemplate</span></label>
+          <label><input type="radio" name="model-client" value="ChatOpenAI"> <span>ChatOpenAI</span></label>
+          <label><input type="radio" name="model-client" value="LangSmith"> <span>LangSmith</span></label>
+        </div>
+        <button class="task-lab__check" type="button" data-check-answer disabled>检查我的选择</button>
+        <p class="task-lab__status" data-task-status role="status" aria-live="polite">先选择一个答案；这里只检查角色判断，不会调用外部模型。</p>
+      </fieldset>
+      <div class="task-lab__journal" data-task-journal hidden>
+        <span>Journal prompt</span>
+        <p>补完这句话：<strong>“模型客户端像列车，但这个类比不适用于 ______，因为 ______。”</strong></p>
+        <a href="https://estelledc.github.io/langchain-langgraph-langsmith-tutorial/tutorial/week-1-langchain/01_hello_llm.html">带着这句话进入第一课 →</a>
+      </div>
+      <noscript><p class="task-lab__noscript">正确答案是 <code>ChatOpenAI</code>。启用 JavaScript 后可以体验选择、自检与日志解锁。</p></noscript>
+    </div>
+  </div>
+</section>
+
 <section class="home-section" id="problem" aria-labelledby="problem-title">
   <div class="home-heading">
     <span class="home-heading__index">01 / Problem</span>
@@ -143,6 +182,14 @@ last_modified_at: 2026-07-11
     <h2 id="evidence-title">把“教程能不能运行”拆成可追溯的证据，而不是一句保证。</h2>
     <p>公开证据区分当前静态检查与 2026-05-29 的历史 API 实测；需要外部凭证的行为不会被本站构建冒充为已重新验证。</p>
   </div>
+  <div class="verification-passport" aria-label="验证护照">
+    <header><div><span>Verification passport</span><strong>不同证据，不混写成一次“全部通过”。</strong></div><time datetime="2026-07-11">2026-07-11</time></header>
+    <ul>
+      <li><span class="jx-source-tag" data-source="build">Build</span><div><strong>当前静态契约 · Verified</strong><small>课程数量、页面结构、链接、Python 语法与发布门禁在本轮重新检查。</small></div></li>
+      <li><span class="jx-source-tag" data-source="history">History</span><div><strong>外部 API 跑批 · Observed 2026-05-29</strong><small>14 个入口的历史结果为 12 PASS / 1 PARTIAL / 1 SKIP，保留环境与凭证限制。</small></div></li>
+      <li><span class="jx-source-tag" data-source="external">External</span><div><strong>当前模型服务状态 · Unknown</strong><small>未在 Pages 构建中重新调用收费 API，因此不声称今天仍全部可运行。</small></div></li>
+    </ul>
+  </div>
   <div class="evidence-grid">
     <article class="evidence-card evidence-card--primary">
       <span class="card-kicker">Historical run · 2026-05-29</span>
@@ -178,7 +225,7 @@ last_modified_at: 2026-07-11
     <p><a href="https://estelledc.github.io/langchain-langgraph-langsmith-tutorial/tutorial/week-1-langchain/01_hello_llm.html">打开第一篇任务卡</a></p>
   </div>
   <figure class="lesson-proof__visual">
-    <img src="docs/screenshots/03-tutorial-task-cards.png" alt="Hello LLM 教程页中的准备清单和任务卡示例" width="1280" height="900">
+    <img src="docs/screenshots/03-tutorial-task-cards.png" alt="Hello LLM 教程页中的准备清单和任务卡示例" width="1280" height="900" loading="lazy" decoding="async">
   </figure>
 </section>
 

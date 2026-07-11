@@ -13,8 +13,26 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap"></noscript>
 
-    {% seo %}
-    <meta name="twitter:description" content="{{ page.description | default: site.description | strip_html | normalize_whitespace | escape }}">
+    {% assign public_title = page.title | default: site.title %}
+    {% assign public_description = page.description | default: site.description | strip_html | normalize_whitespace %}
+    {% assign public_url = page.url | absolute_url %}
+    {% assign public_image = page.image | default: site.logo | absolute_url %}
+    <title>{{ public_title | escape }}{% unless public_title == site.title %} · {{ site.title | escape }}{% endunless %}</title>
+    <meta name="description" content="{{ public_description | escape }}">
+    <meta name="author" content="Jason Xun">
+    {% if page.url == '/404.html' %}<meta name="robots" content="noindex,follow">{% else %}<meta name="robots" content="index,follow,max-image-preview:large">{% endif %}
+    <link rel="canonical" href="{{ public_url }}">
+    <meta property="og:type" content="{% if page.url == '/' %}website{% else %}article{% endif %}">
+    <meta property="og:locale" content="zh_CN">
+    <meta property="og:site_name" content="{{ site.title | escape }}">
+    <meta property="og:title" content="{{ public_title | escape }}">
+    <meta property="og:description" content="{{ public_description | escape }}">
+    <meta property="og:url" content="{{ public_url }}">
+    <meta property="og:image" content="{{ public_image }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ public_title | escape }}">
+    <meta name="twitter:description" content="{{ public_description | escape }}">
+    <meta name="twitter:image" content="{{ public_image }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="LangChain Tutorial Zero：把 AI 变成编程学习搭档">
@@ -22,11 +40,26 @@
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
     {% include head-custom.html %}
 
-    {% if page.url == '/' %}
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://estelledc.github.io/#person",
+          "name": "Jason Xun",
+          "url": "https://estelledc.github.io/",
+          "sameAs": ["https://github.com/estelledc"]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "{{ site.url }}{{ site.baseurl }}/#website",
+          "url": "{{ site.url }}{{ site.baseurl }}/",
+          "name": "LangChain Tutorial Zero",
+          "inLanguage": ["zh-CN", "en"],
+          "author": { "@id": "https://estelledc.github.io/#person" }
+        },
+        {% if page.url == '/' %}
         {
           "@type": "Course",
           "@id": "{{ site.url }}{{ site.baseurl }}/#course",
@@ -40,18 +73,22 @@
           "teaches": ["LangChain", "LangGraph", "LangSmith", "AI-assisted learning"],
           "creator": { "@id": "https://estelledc.github.io/#person" },
           "sameAs": "https://github.com/estelledc/langchain-langgraph-langsmith-tutorial"
-        },
-        {
-          "@type": "Person",
-          "@id": "https://estelledc.github.io/#person",
-          "name": "Jason Xun",
-          "url": "https://estelledc.github.io/",
-          "sameAs": ["https://github.com/estelledc"]
         }
+        {% else %}
+        {
+          "@type": "WebPage",
+          "@id": "{{ public_url }}#webpage",
+          "url": "{{ public_url }}",
+          "name": {{ public_title | jsonify }},
+          "description": {{ public_description | jsonify }},
+          "inLanguage": "zh-CN",
+          "author": { "@id": "https://estelledc.github.io/#person" },
+          "isPartOf": { "@id": "{{ site.url }}{{ site.baseurl }}/#website" }
+        }
+        {% endif %}
       ]
     }
     </script>
-    {% endif %}
   </head>
   <body class="{% if page.url == '/' %}page--home{% else %}page--article{% endif %}">
     <a class="jx-skip-link" href="#content">跳到正文</a>
@@ -114,8 +151,12 @@
         <a href="https://estelledc.github.io/resume/">resume</a>
         <a href="https://github.com/estelledc">github</a>
       </nav>
-      <time class="jx-footer__stamp" datetime="2026-07-11" lang="en">Verified · 2026-07-11</time>
+      <time class="jx-footer__stamp" datetime="2026-07-11" lang="en">Page reviewed · 2026-07-11</time>
     </footer>
+
+    {% if page.url == '/' %}
+    <script src="{{ '/assets/js/tutorial-lab.js' | relative_url }}" defer></script>
+    {% endif %}
 
     {% if content contains 'language-mermaid' %}
     <script type="module">

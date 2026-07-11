@@ -12,7 +12,7 @@
 
 **Phase 范围：** 本计划只覆盖 Spec 的 Phase 0（骨架 + 元教程）+ Phase 1（week-1 五篇 tutorial 标杆）。Phase 2（week-2/3/4 批量推进）+ Phase 3（cheatsheet + 发布）会在 week-1 完成并复盘后单独出新计划。
 
-**Repo cwd：** 所有命令都在 `/Users/jason/intern-journal/explorations/langchain-tutorial-zero/` 下执行。
+**Repo cwd：** 所有命令都在 `$HOME/projects/langchain-tutorial-zero/` 下执行。
 
 ---
 

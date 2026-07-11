@@ -37,6 +37,7 @@ end
 readme = read("README.md")
 layout = read("_layouts/default.html")
 theme = read("_sass/opendesign/theme.scss")
+task_lab = read("assets/js/tutorial-lab.js")
 config = YAML.safe_load(read("_config.yml"), aliases: true) || {}
 workflow = read(".github/workflows/pages.yml")
 smoke = read("scripts/smoke-test.sh")
@@ -83,6 +84,8 @@ end
   "learning system" => 'id="learning-system"',
   "curriculum" => 'id="curriculum"',
   "evidence" => 'id="evidence"',
+  "interactive task lab" => 'data-task-lab',
+  "verification passport" => 'class="verification-passport"',
   "role and AI boundary" => 'id="role"',
   "limitations" => 'id="limitations"',
   "English summary" => "English summary.",
@@ -94,6 +97,8 @@ end
 check(readme.scan(/<h1\b/i).length == 1, "homepage source must contain exactly one h1")
 check(readme.include?("本次前端重构没有把它们重新宣称为通过"), "homepage must distinguish historical API runs from current checks")
 check(readme.include?("Human owns") && readme.include?("AI assists"), "homepage must disclose the human/AI responsibility boundary")
+check(readme.include?('loading="lazy" decoding="async"'), "homepage evidence image must use lazy async decoding")
+check(readme.include?("当前模型服务状态 · Unknown"), "homepage must state the unverified current external-service boundary")
 check(!readme.include?("4 周 14 篇"), "homepage still contains the stale 14-lesson claim")
 check(!readme.include?("21 个高频 prompt"), "homepage still contains the stale 21-template claim")
 check(!readme.include?("16 个高频报错"), "homepage still contains the stale 16-recipe claim")
@@ -111,16 +116,22 @@ end
 
 check(layout.include?('class="jx-skip-link"'), "layout is missing the skip link")
 check(layout.include?('class="site-nav-menu"'), "layout is missing accessible mobile navigation")
+check(layout.include?("assets/js/tutorial-lab.js"), "homepage layout is missing the task-lab controller")
 check(layout.include?('twitter:description'), "layout must emit twitter:description")
 check(layout.include?('"@type": "Course"'), "homepage JSON-LD must describe a Course")
 check(layout.include?('"@type": "Person"'), "homepage JSON-LD must describe its creator")
+check(!layout.include?("{% seo %}"), "layout must not emit a second incomplete Person through jekyll-seo-tag")
 check(theme.include?("@media (prefers-reduced-motion: reduce)"), "theme is missing reduced-motion handling")
 check(theme.include?("@media (max-width: 560px)"), "theme is missing the mobile breakpoint")
-check(read("_sass/jx/VERSION").strip == "2.0.0", "Jason DS vendor version must be 2.0.0")
+check(read("_sass/jx/VERSION").strip == "2.1.0", "Jason DS vendor version must be 2.1.0")
 check(read("_sass/jx/_tokens.scss").include?("Tokens v2.0.0"), "compiled Sass partial is not using Jason DS v2 tokens")
 %w[tokens base components].each do |bundle|
   check(read("_sass/jx/_#{bundle}.scss") == read("_sass/jx/#{bundle}.css"), "Jason DS Sass partial drifted from synced #{bundle}.css")
 end
+check(task_lab.include?('selected.value === "ChatOpenAI"'), "task lab must verify the model-client answer")
+check(readme.include?('aria-current="step"'), "task lab must expose its initial current step without JavaScript")
+check(task_lab.include?('setAttribute("aria-current", "step")'), "task-lab controller must keep current-step semantics in sync")
+check(!task_lab.match?(/\beval\s*\(|new\s+Function/), "task-lab script must not execute dynamic code")
 
 check(config["url"] == "https://estelledc.github.io", "canonical host is unexpected")
 check(config["baseurl"] == "/langchain-langgraph-langsmith-tutorial", "baseurl is unexpected")
@@ -178,6 +189,8 @@ if ARGV.include?("--built")
       check(html.include?('lang="en"') && html.include?("English summary."), "rendered homepage is missing its English summary")
       check(html.include?('id="content"') && html.include?('href="#content"'), "rendered homepage is missing its skip-link target")
       check(!html.include?("class=\"page-header\""), "legacy Cayman page header leaked into the homepage")
+      check(html.include?('data-task-lab') && html.include?('class="verification-passport"'), "rendered homepage is missing the round-two task and evidence surfaces")
+      check(html.include?('/assets/js/tutorial-lab.js'), "rendered homepage is missing the task-lab script")
 
       global_urls.each do |url|
         check(html.include?(%{href="#{url}"}), "rendered homepage is missing identity URL: #{url}")
@@ -199,6 +212,35 @@ if ARGV.include?("--built")
       forbidden.each do |marker|
         check(!html.include?(marker), "rendered homepage exposes forbidden marker: #{marker}")
       end
+    end
+
+    built_html = Dir.glob(built_root.join("**/*.html")).sort
+    built_html.each do |path|
+      page_html = File.read(path, encoding: "UTF-8")
+      page_json_ld = page_html.scan(%r{<script\b[^>]*type=["']application/ld\+json["'][^>]*>(.*?)</script>}mi).flatten
+      page_nodes = page_json_ld.flat_map do |block|
+        node = JSON.parse(block)
+        node.is_a?(Hash) && node["@graph"].is_a?(Array) ? node["@graph"] : [node]
+      rescue JSON::ParserError => error
+        ERRORS << "#{Pathname(path).relative_path_from(built_root)}: invalid JSON-LD: #{error.message}"
+        []
+      end
+      people = page_nodes.select { |node| node.is_a?(Hash) && node["@type"] == "Person" }
+      check(people.length == 1, "#{Pathname(path).relative_path_from(built_root)}: expected exactly one Person, found #{people.length}")
+      if people.length == 1
+        check(people[0]["@id"] == "https://estelledc.github.io/#person" && people[0]["name"] == "Jason Xun", "#{Pathname(path).relative_path_from(built_root)}: Person identity is incomplete")
+      end
+    end
+
+    built_404 = built_root.join("404.html")
+    check(built_404.file? && File.read(built_404, encoding: "UTF-8").include?('content="noindex,follow"'), "rendered 404 must be noindex,follow")
+    built_sitemap = built_root.join("sitemap.xml")
+    if built_sitemap.file?
+      sitemap = File.read(built_sitemap, encoding: "UTF-8")
+      check(!sitemap.match?(/<loc>[^<]+\.(?:css|js|xml|txt)<\/loc>/), "sitemap must contain only indexable HTML routes")
+      check(!sitemap.include?("/404.html</loc>"), "sitemap must exclude the noindex 404 route")
+    else
+      check(false, "rendered sitemap.xml is missing")
     end
   end
 end

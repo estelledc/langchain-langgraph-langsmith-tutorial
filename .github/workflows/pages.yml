@@ -37,6 +37,9 @@ jobs:
       - name: Check showcase source contract
         run: ruby scripts/check-showcase.rb
 
+      - name: Check task-lab behavior
+        run: node scripts/test-tutorial-lab.mjs
+
       - name: Build with Jekyll
         env:
           JEKYLL_ENV: production

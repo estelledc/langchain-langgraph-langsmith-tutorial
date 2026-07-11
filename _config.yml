@@ -10,7 +10,7 @@ author:
   name: Jason Xun
   url: https://estelledc.github.io/
 
-# jekyll-seo-tag 默认分享图；首页 front-matter 同样显式声明。
+# 默认分享图；layout 统一生成 canonical metadata 与 canonical Person graph。
 logo: /assets/og-tutorial-zero.png
 
 # GitHub Pages 默认主题（零配置原生支持）
@@ -18,7 +18,6 @@ theme: jekyll-theme-cayman
 
 # GitHub Pages 默认插件（启用相对 .md 链接 → .html 重写）
 plugins:
-  - jekyll-seo-tag
   - jekyll-relative-links
   - jekyll-default-layout
   - jekyll-readme-index
