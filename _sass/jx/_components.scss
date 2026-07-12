@@ -82,7 +82,7 @@
   --_chip-glyph: var(--jx-state-archived-glyph);
 }
 
-/* Jason DS · External Pill v1.0.0
+/* Jason DS · External Pill v2.2.0
  * 出站链接统一 hairline + 右上 ↗ 箭头 (no icon font)
  */
 
@@ -112,13 +112,23 @@
   color: var(--jx-accent);
   box-shadow: 0 0 0 1px var(--jx-accent);
 }
-.jx-pill:hover::after {
-  color: var(--jx-accent);
-  transform: translate(1px, -1px);
-}
+.jx-pill:hover::after { color: var(--jx-accent); }
 .jx-pill:focus-visible {
   outline: none;
   box-shadow: var(--jx-shadow-focus);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .jx-pill:hover::after {
+    transform: translate(1px, -1px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jx-pill::after {
+    transform: none;
+    transition: color var(--jx-duration-fast) var(--jx-ease-out);
+  }
 }
 
 /* Jason DS · Footer v1.0.0
@@ -207,7 +217,7 @@
   box-shadow: var(--jx-shadow-focus);
 }
 
-/* Jason DS · Site chrome v2.0.0
+/* Jason DS · Site chrome v2.2.0
  * Shared identity, accessible navigation, skip link, and action styles.
  */
 
@@ -237,6 +247,7 @@
   background: color-mix(in oklab, var(--jx-paper), transparent 8%);
   border-bottom: 1px solid var(--jx-rule);
   backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
 }
 
 .jx-site-header__inner {
@@ -311,13 +322,18 @@
   font-weight: var(--jx-weight-ui);
   line-height: 1;
   text-decoration: none;
-  transition: transform var(--jx-duration-fast) var(--jx-easing),
-              background var(--jx-duration-fast) var(--jx-easing);
+  transition: transform var(--jx-duration-press) var(--jx-ease-out),
+              color var(--jx-duration-fast) var(--jx-ease-out),
+              background-color var(--jx-duration-fast) var(--jx-ease-out),
+              border-color var(--jx-duration-fast) var(--jx-ease-out);
 }
 
 .jx-action:hover {
   color: var(--jx-cta-fg);
-  transform: translateY(-1px);
+}
+
+.jx-action:active {
+  transform: scale(var(--jx-press-scale));
 }
 
 .jx-action--secondary {
@@ -329,6 +345,54 @@
 .jx-action--secondary:hover {
   color: var(--jx-ink);
   background: var(--jx-surface-sunk);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .jx-action:hover {
+    transform: translateY(-1px);
+  }
+
+  .jx-action:active {
+    transform: scale(var(--jx-press-scale));
+  }
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .jx-site-header {
+    background: var(--jx-paper);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .jx-site-header {
+    background: var(--jx-paper);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .jx-site-header {
+    background: var(--jx-paper);
+    border-bottom-color: var(--jx-rule-strong);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jx-skip-link {
+    transition: none;
+  }
+
+  .jx-action,
+  .jx-action:hover,
+  .jx-action:active {
+    transform: none;
+    transition-property: color, background-color, border-color;
+    transition-duration: var(--jx-duration-fast);
+    transition-timing-function: var(--jx-ease-out);
+  }
 }
 
 @media (max-width: 760px) {
@@ -382,7 +446,6 @@
     border-radius: var(--jx-radius-2);
   }
 }
-
 
 /* Jason DS · Project proof v2.0.0
  * Hiring-facing evidence block used on project and documentation homepages.

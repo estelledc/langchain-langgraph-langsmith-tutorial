@@ -122,9 +122,14 @@ check(layout.include?('"@type": "Course"'), "homepage JSON-LD must describe a Co
 check(layout.include?('"@type": "Person"'), "homepage JSON-LD must describe its creator")
 check(!layout.include?("{% seo %}"), "layout must not emit a second incomplete Person through jekyll-seo-tag")
 check(theme.include?("@media (prefers-reduced-motion: reduce)"), "theme is missing reduced-motion handling")
+check(theme.include?("@media (hover: hover) and (pointer: fine)"), "theme is missing fine-pointer hover gating")
+check(!theme.match?(/\btransition\s*:\s*all\b/i), "theme contains transition: all")
+check(!theme.match?(/\bscale\(\s*0(?:\.0+)?\s*\)/i), "theme contains scale(0)")
+check(!theme.match?(/(?<![-\w])ease-in(?![-\w])/i), "theme contains UI ease-in")
+check(!theme.include?("transition-duration: 0.01ms"), "theme uses a global zero-duration motion reset")
 check(theme.include?("@media (max-width: 560px)"), "theme is missing the mobile breakpoint")
-check(read("_sass/jx/VERSION").strip == "2.1.0", "Jason DS vendor version must be 2.1.0")
-check(read("_sass/jx/_tokens.scss").include?("Tokens v2.0.0"), "compiled Sass partial is not using Jason DS v2 tokens")
+check(read("_sass/jx/VERSION").strip == "2.2.0", "Jason DS vendor version must be 2.2.0")
+check(read("_sass/jx/_tokens.scss").include?("Tokens v2.2.0"), "compiled Sass partial is not using Jason DS v2.2 tokens")
 %w[tokens base components].each do |bundle|
   check(read("_sass/jx/_#{bundle}.scss") == read("_sass/jx/#{bundle}.css"), "Jason DS Sass partial drifted from synced #{bundle}.css")
 end
