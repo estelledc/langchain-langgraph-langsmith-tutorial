@@ -570,13 +570,7 @@ a:hover { color: var(--jx-accent-hover); }
   background: var(--jx-surface);
   border-top: 3px solid var(--jx-rule-strong);
   text-decoration: none;
-  transition: transform var(--jx-duration-fast) var(--jx-easing),
-              border-color var(--jx-duration-fast) var(--jx-easing);
-}
-.week-card:hover {
-  color: var(--jx-ink);
-  border-color: var(--jx-accent);
-  transform: translateY(-3px);
+  transition: border-color var(--jx-duration-fast) var(--jx-ease-out);
 }
 .week-card__meta {
   margin-top: auto;
@@ -1036,14 +1030,13 @@ a:hover { color: var(--jx-accent-hover); }
   .jx-footer { padding-inline: 0; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
+@media (hover: hover) and (pointer: fine) {
+  .week-card:hover {
+    color: var(--jx-ink);
+    border-color: var(--jx-accent);
   }
-  .week-card:hover { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
 }

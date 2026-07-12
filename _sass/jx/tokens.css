@@ -1,4 +1,4 @@
-/* Jason DS · Tokens v2.0.0
+/* Jason DS · Tokens v2.2.0
  * SoT: dotfiles/home-claude/design-system/jx-tokens.css
  * 展示站通过 vendor copy 同步：scripts/sync-jx-to-repos.sh
  *
@@ -134,12 +134,18 @@
   --jx-shadow-focus: 0 0 0 3px var(--jx-focus-ring);
   --jx-shadow-press: inset 0 1px 0 rgba(22,24,29,0.06);
 
-  /* ── Motion ── */
-  --jx-easing: cubic-bezier(0.2, 0.8, 0.2, 1);
-  --jx-easing-press: cubic-bezier(0.4, 0, 0.6, 1);
+  /* ── Motion · responsive by default, quiet by frequency ── */
+  --jx-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --jx-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --jx-ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --jx-easing: var(--jx-ease-out); /* compatibility alias */
+  --jx-easing-press: var(--jx-ease-out);
   --jx-duration-fast: 120ms;
+  --jx-duration-press: 140ms;
+  --jx-duration-popover: 180ms;
   --jx-duration-base: 200ms;
   --jx-duration-slow: 320ms;
+  --jx-press-scale: 0.97;
 }
 
 /* ── Color · dark mirror ── */

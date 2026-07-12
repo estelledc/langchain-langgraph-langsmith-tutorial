@@ -1,4 +1,4 @@
-/* Jason DS · Base v2.0.0
+/* Jason DS · Base v2.2.0
  * 默认 reset + body 排版基底 + chrome layer 强制 sans
  */
 
@@ -155,11 +155,7 @@ hr {
   color: var(--jx-ink);
 }
 
-/* Reduce motion */
+/* Reduced motion keeps semantic color/opacity feedback; components remove travel. */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  * {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
 }
