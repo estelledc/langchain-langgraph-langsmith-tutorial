@@ -1,0 +1,4 @@
+{"case_id":"adv-calc-import","dataset_version":"tool-input-adversarial-v1","tool":"calculate_arithmetic","input":{"expression":"__import__('os').system('id')"},"expected_status":"error","expected_error":"INVALID_INPUT"}
+{"case_id":"adv-calc-attribute","dataset_version":"tool-input-adversarial-v1","tool":"calculate_arithmetic","input":{"expression":"(1).__class__.__mro__"},"expected_status":"error","expected_error":"INVALID_INPUT"}
+{"case_id":"adv-calc-exponent","dataset_version":"tool-input-adversarial-v1","tool":"calculate_arithmetic","input":{"expression":"9 ** 999"},"expected_status":"error","expected_error":"INVALID_INPUT"}
+{"case_id":"adv-calc-valid","dataset_version":"tool-input-adversarial-v1","tool":"calculate_arithmetic","input":{"expression":"(2 + 3) * 4"},"expected_status":"ok","expected_value":20}
