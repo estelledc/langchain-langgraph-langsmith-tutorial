@@ -1,0 +1,2 @@
+{"tool":"search_fixture_documents","capability":"fixture.search","side_effect":"read","idempotent":true,"output_is_untrusted":true,"errors":["NOT_FOUND","INVALID_INPUT"]}
+{"tool":"calculate_arithmetic","capability":"math.calculate","side_effect":"none","idempotent":true,"output_is_untrusted":false,"errors":["INVALID_INPUT","INTERNAL"]}

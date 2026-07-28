@@ -35,8 +35,8 @@
     <meta name="twitter:image" content="{{ public_image }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="LangChain Tutorial Zero：把 AI 变成编程学习搭档">
-    <meta name="twitter:image:alt" content="LangChain Tutorial Zero：把 AI 变成编程学习搭档">
+    <meta property="og:image:alt" content="Agent Engineering Lab：用证据验证 Agent 行为">
+    <meta name="twitter:image:alt" content="Agent Engineering Lab：用证据验证 Agent 行为">
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
     {% include head-custom.html %}
 
@@ -55,7 +55,7 @@
           "@type": "WebSite",
           "@id": "{{ site.url }}{{ site.baseurl }}/#website",
           "url": "{{ site.url }}{{ site.baseurl }}/",
-          "name": "LangChain Tutorial Zero",
+          "name": "Agent Engineering Lab",
           "inLanguage": ["zh-CN", "en"],
           "author": { "@id": "https://estelledc.github.io/#person" }
         },
@@ -63,14 +63,14 @@
         {
           "@type": "Course",
           "@id": "{{ site.url }}{{ site.baseurl }}/#course",
-          "name": "LangChain Tutorial Zero",
+          "name": "Agent Engineering Lab",
           "description": {{ page.description | default: site.description | jsonify }},
           "url": "{{ site.url }}{{ site.baseurl }}/",
-          "image": "{{ site.url }}{{ site.baseurl }}/assets/og-tutorial-zero.png",
+          "image": "{{ site.url }}{{ site.baseurl }}/assets/og-agent-engineering-lab.png",
           "inLanguage": ["zh-CN", "en"],
-          "educationalLevel": "Beginner",
-          "learningResourceType": "Tutorial",
-          "teaches": ["LangChain", "LangGraph", "LangSmith", "AI-assisted learning"],
+          "educationalLevel": "Beginner to Intermediate",
+          "learningResourceType": "Executable Lab",
+          "teaches": ["Agent Engineering", "LangChain", "LangGraph", "Evaluation", "Regression Testing"],
           "creator": { "@id": "https://estelledc.github.io/#person" },
           "sameAs": "https://github.com/estelledc/langchain-langgraph-langsmith-tutorial"
         }
@@ -97,13 +97,14 @@
       <div class="site-topbar__inner">
         <a class="site-brand" href="{{ '/' | relative_url }}" rel="home">
           <span aria-hidden="true">~/</span>
-          <strong>tutorial-zero</strong>
+          <strong>agent-lab</strong>
         </a>
 
         <nav class="site-nav site-nav--desktop" aria-label="主导航">
-          <a href="{{ '/HOW_TO_LEARN_WITH_AI.html' | relative_url }}">Start</a>
-          <a href="{{ '/tutorial/' | relative_url }}">Curriculum</a>
-          <a href="{{ '/docs/concepts.html' | relative_url }}">Concepts</a>
+          <a href="{{ '/SETUP.html' | relative_url }}">Setup</a>
+          <a href="{{ '/labs/' | relative_url }}">Labs</a>
+          <a href="{{ '/docs/architecture.html' | relative_url }}">Architecture</a>
+          <a href="{{ '/docs/verification.html' | relative_url }}">Verification</a>
           <span class="site-nav__divider" aria-hidden="true"></span>
           <a class="jx-return-to-hub" href="https://estelledc.github.io/">Hub</a>
           <a href="https://estelledc.github.io/about/">About</a>
@@ -114,9 +115,10 @@
         <details class="site-nav-menu">
           <summary aria-label="打开导航">Menu</summary>
           <nav aria-label="移动端导航">
-            <a href="{{ '/HOW_TO_LEARN_WITH_AI.html' | relative_url }}">Start</a>
-            <a href="{{ '/tutorial/' | relative_url }}">Curriculum</a>
-            <a href="{{ '/docs/concepts.html' | relative_url }}">Concepts</a>
+            <a href="{{ '/SETUP.html' | relative_url }}">Setup</a>
+            <a href="{{ '/labs/' | relative_url }}">Labs</a>
+            <a href="{{ '/docs/architecture.html' | relative_url }}">Architecture</a>
+            <a href="{{ '/docs/verification.html' | relative_url }}">Verification</a>
             <a href="https://estelledc.github.io/">Hub</a>
             <a href="https://estelledc.github.io/about/">About</a>
             <a href="https://estelledc.github.io/resume/">Resume</a>
@@ -129,7 +131,7 @@
     <main id="content" class="main-content{% if page.url == '/' %} main-content--home{% endif %}" tabindex="-1">
       {% unless page.url == '/' %}
       <div class="article-context" aria-label="页面位置">
-        <a href="{{ '/' | relative_url }}">Tutorial Zero</a>
+        <a href="{{ '/' | relative_url }}">Agent Lab</a>
         <span aria-hidden="true">/</span>
         <span>{{ page.title | default: 'Notes' }}</span>
       </div>
@@ -140,23 +142,20 @@
 
     <footer class="jx-footer">
       <div class="jx-footer__colophon">
-        <strong>LangChain Tutorial Zero</strong>
-        <span lang="en">Learn by building · MMXXVI</span>
+        <strong>Agent Engineering Lab</strong>
+        <span lang="en">Build · Break · Trace · Evaluate</span>
       </div>
       <nav class="jx-footer__index" aria-label="页脚导航">
         <a href="{{ '/SETUP.html' | relative_url }}">setup</a>
-        <a href="{{ '/HOW_TO_LEARN_WITH_AI.html' | relative_url }}">how to learn</a>
-        <a href="{{ '/tutorial/' | relative_url }}">curriculum</a>
+        <a href="{{ '/labs/' | relative_url }}">labs</a>
+        <a href="{{ '/docs/architecture.html' | relative_url }}">architecture</a>
+        <a href="{{ '/docs/verification.html' | relative_url }}">verification</a>
         <a href="https://estelledc.github.io/about/">about</a>
         <a href="https://estelledc.github.io/resume/">resume</a>
         <a href="https://github.com/estelledc">github</a>
       </nav>
-      <time class="jx-footer__stamp" datetime="2026-07-11" lang="en">Page reviewed · 2026-07-11</time>
+      <time class="jx-footer__stamp" datetime="2026-07-28" lang="en">Page reviewed · 2026-07-28</time>
     </footer>
-
-    {% if page.url == '/' %}
-    <script src="{{ '/assets/js/tutorial-lab.js' | relative_url }}" defer></script>
-    {% endif %}
 
     {% if content contains 'language-mermaid' %}
     <script type="module">

@@ -1,35 +1,45 @@
 ---
-name: 报错 / Bug
-about: 跑 final/ 或 _scratch/ 时遇到代码报错，且 docs/debug-recipes.md 里没列
+name: Bug / Regression
+about: 报告可复现的合同、runtime、grader、课程或部署问题
 title: "[Bug] "
 labels: bug
 assignees: ''
 ---
 
-## 报错来自哪个文件
+## 失败位于哪一层
 
-- 文件：`final/01_langchain/0X_xxx.py` 或 `_scratch/my_xxx.py`
-- 当时跑的命令：`python final/...` / `python -c "..."`
+- [ ] install / lock
+- [ ] domain contract
+- [ ] tool / retrieval / memory
+- [ ] Workflow / LangChain / LangGraph / Deep Agents
+- [ ] dataset / grader / gate
+- [ ] curriculum / site
+- [ ] deployment
 
-## 我以为会发生什么
+## 最小复现
 
-（1-2 句话讲你的预期。这一步比 traceback 更重要——暴露你的心智模型在哪卡住）
-
-## 实际报错
-
+```bash
+# 不含凭证和本机私密路径
 ```
-[贴报错最后 5-10 行 traceback，删掉 path 里你不想公开的部分]
-```
 
-## 已经试过什么
+涉及 eval 时请填写 suite、case_id、runtime、trial 和 dataset version。
 
-- [ ] 检查了 [docs/debug-recipes.md](../../docs/debug-recipes.md) 没有匹配条目
-- [ ] 跑了 `pip show langchain` 看版本（贴版本号在下方）
-- [ ] 用了 [万能诊断 prompt](../../docs/debug-recipes.md#万能诊断-prompt) 问 AI 但没解决
+## 预期行为
+
+说明你依据的合同、测试或文档。不要只写“应该成功”。
+
+## 实际行为
+
+贴最小错误片段、`RunStatus`、`termination_reason` 或 grader 四态结果。删除 token、真实用户数据和内部地址。
 
 ## 环境
 
-- Python：`python --version` 输出
-- LangChain：`pip show langchain` 的 Version 行
-- OS：Mac / Win / Linux
-- 网络：公网 / 公司 / VPN
+- source commit：
+- Python：
+- `uv.lock` 是否未修改：
+- OS：
+- 是否需要外部 provider：
+
+## 回归资产建议
+
+这个问题应进入 unit test、contract test、capability case、regression case 还是 adversarial case？

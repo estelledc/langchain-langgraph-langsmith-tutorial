@@ -1,12 +1,16 @@
 # 敏感配置（绝不提交真实 Key）
 .env
 
+# uv / Python environment
+.venv/
+
 # Python 编译产物
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 .Python
+.coverage
 
 # 打包产物
 *.egg-info/
@@ -33,6 +37,11 @@ _site/
 .jekyll-cache/
 .jekyll-metadata
 vendor/
+
+# 运行时评测与验证产物
+evals/reports/*.json
+verification-passport.json
+.langgraph_api/
 
 # 学习者主战场——你写的代码不进 git
 _scratch/*

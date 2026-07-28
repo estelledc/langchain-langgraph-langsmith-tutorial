@@ -1,23 +1,31 @@
 ---
-name: 改进建议 / Enhancement
-about: 教程内容 / 文档结构 / 工具链改进
-title: "[Enhancement] "
+name: Capability proposal
+about: 提议新能力、实验或工程合同
+title: "[Capability] "
 labels: enhancement
 assignees: ''
 ---
 
-## 改进什么
+## 要解决的真实任务
 
-（具体到文件 / 段落。例："tutorial/week-3-langgraph/02_conditional_edges.md 任务 3 的 prompt 太长，建议拆成 2 个小 prompt"）
+输入、用户可见结果和失败成本是什么？
 
-## 为什么需要改
+## 无 Agent 基线
 
-（背后的真问题。零基础视角更值钱）
+普通程序或固定 Workflow 为什么不够？请给已观察证据，不要只写“更智能”。
 
-## 你的方案
+## 最小能力增量
 
-（如果有具体建议直接贴；如果只是发现问题不需要给方案）
+需要新增哪个合同、工具、状态、runtime 或 adapter？哪些未来扩展不在本次范围？
 
-## 关联资源
+## 验收
 
-（可选：相关 issue / 官方文档链接 / 你看到别的项目怎么做的）
+- capability case：
+- regression / adversarial case：
+- 预算与权限：
+- 预期轨迹：
+- rollback / stop condition：
+
+## UNKNOWN
+
+哪些外部行为、成本或模型质量当前还不能验证？

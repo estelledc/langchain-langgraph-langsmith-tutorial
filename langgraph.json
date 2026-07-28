@@ -1,0 +1,8 @@
+{
+  "$schema": "https://langgra.ph/schema.json",
+  "dependencies": ["."],
+  "graphs": {
+    "trusted_research": "./src/agent_lab/deployment.py:graph"
+  },
+  "env": ".env"
+}

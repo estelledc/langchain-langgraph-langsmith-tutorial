@@ -1,0 +1,18 @@
+id: trusted-research-fast
+dataset_version: trusted-research-fast-v1
+datasets:
+  - datasets/capability/trusted-research-v1.jsonl
+  - datasets/regression/trusted-research-v1.jsonl
+runtimes:
+  - workflow
+  - langgraph
+trials: 1
+graders:
+  - status
+  - attribution
+  - trajectory
+  - tool_contract
+  - policy
+min_pass_rate: 1.0
+max_unknown_rate: 0.0
+max_evaluator_error_rate: 0.0

@@ -1,75 +1,74 @@
-# SETUP — 环境搭建
+---
+layout: default
+title: Setup
+description: Agent Engineering Lab 的离线安装、可选 provider 与验证入口。
+---
 
-## 0. 你需要的
+# Setup
 
-- Python 3.10+ （`python --version` 检查）
-- 一个 [DashScope](https://dashscope.aliyuncs.com) 账号（阿里云通义千问，国内手机号注册即可，新号送免费额度）
-- 一个 [LangSmith](https://smith.langchain.com) 账号（免费 5K runs/月，看 Trace 用）
+## 1. 默认离线路径
 
-## 1. 申请 API Key（10 分钟）
-
-### DashScope（必填）
-1. 登录 [dashscope.aliyuncs.com](https://dashscope.aliyuncs.com)
-2. 控制台 → API-KEY 管理 → 创建新 Key
-3. 复制 Key（形如 `sk-xxxxxxxx`），放到下面 .env 里的 `DASHSCOPE_API_KEY`
-
-### LangSmith（必填）
-1. 登录 [smith.langchain.com](https://smith.langchain.com)
-2. 右上头像 → Settings → API Keys → Create API Key
-3. 复制（形如 `lsv2_xx...`），放到 .env 里的 `LANGCHAIN_API_KEY`
-
-## 2. 配 .env
+需要 Python 3.11–3.13 和 [uv](https://docs.astral.sh/uv/)。仓库通过 `.python-version` 默认选择 Python 3.13。
 
 ```bash
-cp .env.example .env
-# 用任何编辑器打开 .env，把两个 _here 占位符替换成真实 Key
+git clone https://github.com/estelledc/langchain-langgraph-langsmith-tutorial.git
+cd langchain-langgraph-langsmith-tutorial
+uv sync --frozen
+uv run agent-lab run --goal "LangSmith 的评测闭环是什么？"
+uv run agent-lab eval --suite fast
 ```
 
-最少要填的：
-- `DASHSCOPE_API_KEY`
-- `LANGCHAIN_API_KEY`
+这条路径不读取 `.env`，不调用模型 API，也不上传 Trace。
 
-`LANGCHAIN_PROJECT=study` 是 LangSmith 项目名，所有 Trace 会聚在 `study` 项目里，可以保留默认。
-
-## 3. 装依赖
+## 2. 完整本地门禁
 
 ```bash
-# 推荐用虚拟环境（避免和系统 Python 包冲突）
-python -m venv .venv
-source .venv/bin/activate    # Windows: .venv\Scripts\activate
-
-pip install -r requirements.txt
+uv run agent-lab verify
 ```
 
-## 4. 第一次烟雾测试
+它依次运行格式检查、lint、mypy、pytest + coverage、课程合同、站点源合同、`git diff --check` 和 fast eval。
+
+站点渲染另需 Ruby/Bundler：
 
 ```bash
-python final/01_langchain/01_hello_llm.py
+bundle install
+bundle exec jekyll build
+uv run python scripts/check_site.py --built _site
 ```
 
-期望看到：
-- 三段输出（invoke / stream / batch）
-- 末尾 `✅ 运行完毕！请前往 ...`
+## 3. 可选依赖
 
-如果看到 LLM 真的回答了「什么是 LangChain？」，那环境就 OK 了。
+```bash
+uv sync --extra provider-openai  # OpenAI 兼容模型
+uv sync --extra eval-cloud       # 显式 LangSmith 实验
+uv sync --extra persistence      # SQLite checkpointer
+uv sync --extra experimental     # Deep Agents
+uv sync --extra server           # 本地 Agent Server CLI
+uv sync --all-extras             # 全部可选适配器
+```
 
-## 5. 看一眼 Trace（验证 LangSmith 通了）
+可选依赖不改变离线门禁，也不会自动启用外部调用。
 
-打开 [smith.langchain.com](https://smith.langchain.com)，左侧 Projects → `study`，应该看到刚才那次跑的 Trace 记录（含每次 LLM 调用、token 用量、耗时）。
+## 4. Live provider
 
-## 排错
+复制 `.env.example` 为 `.env`，只填写自己被授权使用的凭证。不要提交 `.env`。
 
-| 报错 | 多半原因 | 处理 |
-|------|----------|------|
-| `KeyError: 'DASHSCOPE_BASE_URL'` | .env 没加载 / 没填完 | 检查 .env 是不是放在仓库根目录，是不是写完整 |
-| `401 Unauthorized` | DashScope key 错 | 重新去 DashScope 控制台拷一遍 |
-| `403 ... text-embedding-v3` | DashScope key 没开通 embedding 模型 | 控制台 → 模型广场 → 开通"通用文本向量"。仅 `final/01_langchain/05_rag_basic.py` 这篇用得到，其他文件不影响 |
-| `ModuleNotFoundError: langchain_xxx` | 依赖没装全 | `pip install -r requirements.txt --upgrade` |
-| `ImportError: cannot import name 'X' from 'langchain.Y'` | langchain 版本破坏性变更（如 1.x 把 0.x 的 agents / pydantic_v1 移走了） | 看 [docs/test-runs.md](docs/test-runs.md) 第一节"需要修的代码"——已记录已知的 6 处迁移；新版变更跟着 [LangChain 升级指南](https://python.langchain.com/docs/versions/v1_0/) 改 import 路径 |
-| `Connection error` | 网络问题 / 代理 | .env 取消注释 `HTTPS_PROXY` 或 ping `dashscope.aliyuncs.com` |
-| `SSLCertVerificationError` | 公司 MDM 网络拦了 TLS | 普通家用网络不会撞；公司网络下需要 export 公司 CA bundle 到 `SSL_CERT_FILE` 和 `REQUESTS_CA_BUNDLE` |
-| LangSmith 没看到 Trace | `LANGCHAIN_TRACING_V2` 没设 / API key 错 | 检查 .env 里这两项 |
+Live 运行至少要显式记录：
 
-实在搞不定？发 Issue 时贴：你的 OS、Python 版本、完整报错（删掉 key）。
+- provider 与 model configuration。
+- prompt、dataset 和 grader 版本。
+- trials、pass rate、unknown rate 和 evaluator error rate。
+- 外部错误、成本和延迟。
 
-> **想验证仓库代码是否真能跑？** 看 [docs/test-runs.md](docs/test-runs.md)——作者实测过所有 14 个独立可执行脚本的真实输出和耗时。
+单次 smoke 只证明一次请求发生过，不证明稳定能力或生产状态。
+
+## 5. Agent Server
+
+`langgraph.json` 已注册 `trusted_research` 图。安装锁定的可选 CLI 后可本地启动：
+
+```bash
+uv sync --extra server
+uv run langgraph dev --no-browser
+```
+
+云端或自托管部署需要单独的认证、数据库、队列和 deployment receipt。本仓库的 Pages 部署不等于 Agent Server 已部署。
