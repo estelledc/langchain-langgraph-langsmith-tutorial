@@ -1,5 +1,5 @@
-title: LangChain Tutorial Zero
-description: 一套面向初学者的中文 AI 辅助编程教程：用任务卡、苏格拉底式 prompt、可执行参考与卡点日志学习 LangChain、LangGraph 和 LangSmith。
+title: Agent Engineering Lab
+description: 面向中文开发者的 Agent Systems Engineering 可执行实验室：用任务合同、证据、Trace、Dataset、Eval 和 Regression 证明 Agent 行为。
 url: https://estelledc.github.io
 baseurl: /langchain-langgraph-langsmith-tutorial
 repository: estelledc/langchain-langgraph-langsmith-tutorial
@@ -9,21 +9,13 @@ timezone: Asia/Shanghai
 author:
   name: Jason Xun
   url: https://estelledc.github.io/
-
-# 默认分享图；layout 统一生成 canonical metadata 与 canonical Person graph。
-logo: /assets/og-tutorial-zero.png
-
-# GitHub Pages 默认主题（零配置原生支持）
+logo: /assets/og-agent-engineering-lab.png
 theme: jekyll-theme-cayman
-
-# GitHub Pages 默认插件（启用相对 .md 链接 → .html 重写）
 plugins:
   - jekyll-relative-links
   - jekyll-default-layout
   - jekyll-readme-index
   - jekyll-titles-from-headings
-
-# 让 README.md 自动当首页 index.html
 relative_links:
   enabled: true
   collections: true
@@ -31,41 +23,44 @@ readme_index:
   enabled: true
   remove_originals: false
   with_frontmatter: true
-
-# 强制给所有页面套 default layout（绕过 jekyll-default-layout 不稳定）
 defaults:
   - scope:
       path: ""
     values:
       layout: default
-      image: /assets/og-tutorial-zero.png
-
 sass:
   style: compressed
-
-# 不要把这些目录里的内容当成站点页面发布
 exclude:
-  - .venv/
   - .env
   - .env.example
-  - _scratch/
-  - .gitignore
-  - requirements.txt
-  - "**/__pycache__/"
-  - "**/*.pyc"
-  - LICENSE
+  - .github/
+  - .python-version
+  - .venv/
+  - AGENTS.md
+  - CHANGELOG.md
   - Gemfile
   - Gemfile.lock
+  - Makefile
+  - curriculum/
+  - datasets/
+  - evals/
+  - fixtures/
+  - langgraph.json
+  - legacy/
+  - prompts/
+  - pyproject.toml
   - scripts/
-  - docs/superpowers/
+  - skills/
+  - src/
+  - tests/
+  - uv.lock
   - vendor/
-
-# 顶部导航（Cayman 主题不显式用，但保留作记录用）
+  - verification-passport.json
+  - "**/__pycache__/"
+  - "**/*.pyc"
 header_pages:
   - SETUP.md
-  - HOW_TO_LEARN_WITH_AI.md
-  - tutorial/README.md
-  - docs/concepts.md
-  - docs/prompts-cheatsheet.md
-  - docs/debug-recipes.md
-  - docs/challenges.md
+  - labs/README.md
+  - docs/architecture.md
+  - docs/verification.md
+  - docs/compatibility.md

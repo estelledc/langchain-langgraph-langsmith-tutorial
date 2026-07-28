@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["schema_version", "tracks", "labs"],
+  "properties": {
+    "schema_version": {"const": "agent-lab-curriculum-v1"},
+    "tracks": {"type": "object", "required": ["core", "frontier"]},
+    "labs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id", "order", "track", "title", "status", "prerequisites",
+          "summary", "question", "artifact", "references", "capabilities",
+          "expected_trace", "failure_cases", "acceptance", "eval_suites"
+        ],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]+$"},
+          "order": {"type": "integer", "minimum": 0},
+          "track": {"enum": ["core", "frontier"]},
+          "status": {"enum": ["executable", "implemented", "configured", "scaffold"]},
+          "prerequisites": {"type": "array", "items": {"type": "string"}},
+          "references": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+          "capabilities": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+          "expected_trace": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+          "failure_cases": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+          "acceptance": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+          "eval_suites": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": false
+}

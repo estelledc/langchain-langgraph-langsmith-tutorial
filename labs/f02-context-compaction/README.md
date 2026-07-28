@@ -1,0 +1,66 @@
+---
+layout: default
+title: Context Compaction
+description: 比较 trim、summary 和 notes 的信息损失、成本与延迟。
+---
+
+# f02-context-compaction · Context Compaction
+
+> 状态：`scaffold`。当前只有实验合同，不代表能力已实现或验证。
+
+比较 trim、summary 和 notes 的信息损失、成本与延迟。
+
+- 前置：[f01-filesystem-context](../f01-filesystem-context/)
+- 产物：`compaction comparison`
+- 能力：`context-compaction`
+
+## 1. Frame
+
+先回答：**压缩省下的 token 是否抵得过事实丢失？**
+
+不要先选框架。先写清任务输入、成功条件、风险和不需要 Agent 的最小基线。
+
+## 2. Predict
+
+在运行前预测可观察轨迹：
+
+```text
+measure → compact → replay → compare
+```
+
+## 3. Build
+
+完成或审查 `compaction comparison`。实现入口：
+
+- [`docs/adrs/0004-memory-model.md`](https://github.com/estelledc/langchain-langgraph-langsmith-tutorial/blob/master/docs/adrs/0004-memory-model.md)
+
+## 4. Break
+
+主动制造这些失败，不要只跑 happy path：
+
+- `lost-constraint`
+- `stale-summary`
+- `hidden-cost`
+
+## 5. Trace
+
+只记录节点、工具、状态、证据和终止原因。不要记录或要求模型暴露隐藏推理。
+
+## 6. Evaluate
+
+验收合同：
+
+- `paired-eval`
+- `loss-reported`
+
+关联 suite：`frontier-compaction-candidate`
+
+## 7. Reflect
+
+解释额外复杂度解决了哪个已观察问题，以及它新增了什么维护和失败成本。
+
+## 8. Promote
+
+把失败提升为 dataset case、确定性 policy、测试或版本化 learning。没有新证据时，不提升状态。
+
+[返回实验目录](../)

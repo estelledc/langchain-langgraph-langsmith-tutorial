@@ -12,6 +12,18 @@
 
 ## [Unreleased]
 
+### Changed
+
+- 重定位为 Agent Engineering Lab，课程从框架 API 路径改为 15 个核心实验与 10 个前沿实验。
+- V1 冻结到 `v1-legacy`，旧教程保存在 `legacy/v1/`。
+- 安装合同迁移到 `pyproject.toml` + `uv.lock`，默认离线且无需 API Key。
+- 新增 framework-neutral `RunRequest / Evidence / Citation / RunResult` 合同。
+- 新增 Workflow、LangChain `create_agent` 和 LangGraph runtime 边界。
+- 删除模型可控 `eval()` 路径，使用受限 AST 计算器。
+- 模拟搜索改为明确的版本化 fixture search。
+- 新增 capability、regression、adversarial、tool-contract 数据集与四态 grader。
+- 新增严格 fast suite、verification passport、课程生成器和统一 CI/Pages 门禁。
+
 ---
 
 ## [1.1.0] — 2026-05-30

@@ -1,0 +1,419 @@
+schema_version: agent-lab-curriculum-v1
+tracks:
+  core:
+    title: 核心路径
+    description: 从无 Agent 基线到证据闭环与部署合同。
+  frontier:
+    title: 前沿实验
+    description: 只有测出收益后才进入核心架构的可选能力。
+labs:
+  - id: 00-no-agent-baseline
+    order: 0
+    track: core
+    title: Agent、Workflow 与普通程序
+    status: executable
+    prerequisites: []
+    summary: 先做确定性基线，再判断任务是否需要模型和工具循环。
+    question: 这个问题是否根本不需要 Agent？
+    artifact: TrustedResearchWorkflow
+    references:
+      - src/agent_lab/runtimes/workflow.py
+      - tests/integration/test_workflow.py
+    capabilities: [deterministic-baseline, bounded-execution]
+    expected_trace: [validate, authorize, retrieve, validate_evidence, synthesize, verify, finalize]
+    failure_cases: [evidence-not-found, permission-denied, budget-exhausted]
+    acceptance: [offline-without-api-key, unknown-abstains, citations-reference-evidence]
+    eval_suites: [trusted-research-fast-v1]
+  - id: 01-typed-io
+    order: 1
+    track: core
+    title: Typed I/O 与结构化结果
+    status: executable
+    prerequisites: [00-no-agent-baseline]
+    summary: 用 RunRequest、Budget、Evidence 和 RunResult 把成功与失败说清楚。
+    question: 哪些状态应该由代码拒绝，而不是让模型猜？
+    artifact: framework-neutral domain contracts
+    references:
+      - src/agent_lab/domain/models.py
+      - tests/unit/test_domain.py
+    capabilities: [typed-request, typed-outcome, evidence-hash]
+    expected_trace: [validate]
+    failure_cases: [missing-answer, missing-evidence-id, duplicate-evidence-id]
+    acceptance: [invalid-contract-fails, completed-requires-answer]
+    eval_suites: [trusted-research-fast-v1]
+  - id: 02-tool-contracts
+    order: 2
+    track: core
+    title: 工具合同与错误语义
+    status: executable
+    prerequisites: [01-typed-io]
+    summary: 把工具当正式 API，显式声明参数、权限、副作用、幂等与错误。
+    question: NOT_FOUND、TIMEOUT 和系统异常为什么不能返回同一句自然语言？
+    artifact: fixture search and safe calculator
+    references:
+      - src/agent_lab/capabilities/tools/contracts.py
+      - src/agent_lab/capabilities/tools/calculator.py
+      - datasets/contracts/tool-contract-v1.jsonl
+    capabilities: [typed-tools, error-taxonomy, safe-arithmetic]
+    expected_trace: [authorize, tool-call]
+    failure_cases: [malicious-expression, unknown-query, unauthorized-tool]
+    acceptance: [no-eval-exec, structured-not-found, contract-dataset-matches-code]
+    eval_suites: [tool-input-adversarial-v1]
+  - id: 03-langchain-agent
+    order: 3
+    track: core
+    title: LangChain create_agent
+    status: implemented
+    prerequisites: [02-tool-contracts]
+    summary: 在确定性权限外壳中接入标准模型与工具循环，并要求结构化引用。
+    question: 简单工具循环是否已足够，还是确实需要自定义图？
+    artifact: LangChainResearchRuntime
+    references:
+      - src/agent_lab/runtimes/langchain_agent.py
+      - tests/security/test_security_boundaries.py
+    capabilities: [create-agent, structured-output, tool-loop]
+    expected_trace: [validate, agent, verify]
+    failure_cases: [model-budget-zero, provider-error, invalid-citation]
+    acceptance: [model-is-injected, provider-error-is-not-score, tool-output-untrusted]
+    eval_suites: [live-provider-candidate]
+  - id: 04-middleware-budget
+    order: 4
+    track: core
+    title: Middleware、Policy 与预算
+    status: executable
+    prerequisites: [03-langchain-agent]
+    summary: 用代码层 middleware 和 policy 限制模型、工具、步骤与权限。
+    question: 哪些约束放在 Prompt 里仍然不够？
+    artifact: ToolPolicy and call-limit middleware
+    references:
+      - src/agent_lab/application/policies.py
+      - src/agent_lab/runtimes/langchain_agent.py
+    capabilities: [policy-shell, model-budget, tool-budget]
+    expected_trace: [authorize, agent]
+    failure_cases: [missing-permission, tool-budget-zero, capability-not-allowed]
+    acceptance: [denied-before-tool-call, budgets-are-deterministic]
+    eval_suites: [trusted-research-fast-v1]
+  - id: 05-context-engineering
+    order: 5
+    track: core
+    title: Context Engineering
+    status: executable
+    prerequisites: [04-middleware-budget]
+    summary: 区分模型上下文、工具上下文、runtime context、state 和 store。
+    question: 什么应该进入模型，什么只应该留在工具或运行时？
+    artifact: RunContext and evidence boundary
+    references:
+      - src/agent_lab/application/context.py
+      - docs/adrs/0004-memory-model.md
+    capabilities: [runtime-context, state-boundary, secret-isolation]
+    expected_trace: [validate, authorize]
+    failure_cases: [secret-in-state, untrusted-tool-instruction, context-bloat]
+    acceptance: [secrets-not-serialized, permissions-from-context]
+    eval_suites: [trusted-research-fast-v1]
+  - id: 06-langgraph-runtime
+    order: 6
+    track: core
+    title: LangGraph Runtime
+    status: executable
+    prerequisites: [05-context-engineering]
+    summary: 把同一任务实现为显式状态图，比较额外复杂度带来的能力。
+    question: 哪些状态、分支和恢复需求值得引入自定义图？
+    artifact: LangGraphResearchRuntime
+    references:
+      - src/agent_lab/runtimes/graph.py
+      - tests/graph/test_graph_runtime.py
+    capabilities: [typed-stategraph, conditional-routing, runtime-parity]
+    expected_trace: [authorize, retrieve, validate_evidence, synthesize, verify, finalize]
+    failure_cases: [wrong-route, missing-terminal, citation-contract-failed]
+    acceptance: [same-domain-contract, expected-node-sequence]
+    eval_suites: [trusted-research-fast-v1]
+  - id: 07-persistence-hitl
+    order: 7
+    track: core
+    title: Persistence、Interrupt 与 Resume
+    status: executable
+    prerequisites: [06-langgraph-runtime]
+    summary: 注入 checkpointer，按 thread 保存状态，并通过 interrupt 暂停审批。
+    question: 相同 thread_id 在什么条件下才真的能续接？
+    artifact: approval graph and injected checkpointer
+    references:
+      - src/agent_lab/runtimes/approval.py
+      - tests/graph/test_graph_runtime.py
+    capabilities: [checkpoint, interrupt, resume, hitl]
+    expected_trace: [request_approval, interrupt, apply_decision]
+    failure_cases: [new-checkpointer-loses-state, wrong-thread-resume, non-idempotent-side-effect]
+    acceptance: [same-thread-resumes, approval-precedes-side-effect]
+    eval_suites: [graph-contract-tests]
+  - id: 08-evidence-first-rag
+    order: 8
+    track: core
+    title: Evidence-first Retrieval
+    status: executable
+    prerequisites: [07-persistence-hitl]
+    summary: 搜索结果先成为结构化 Evidence，再由 writer 生成带 ID 的结论。
+    question: 如何证明答案真由检索证据支持，而不是模型顺手编的？
+    artifact: versioned fixture search
+    references:
+      - src/agent_lab/capabilities/retrieval/fixture.py
+      - src/agent_lab/data/trusted_research.json
+    capabilities: [typed-evidence, citation-contract, abstention]
+    expected_trace: [retrieve, validate_evidence, synthesize, verify]
+    failure_cases: [not-found, stale-evidence, unsupported-citation]
+    acceptance: [fixture-not-web, no-evidence-no-fact]
+    eval_suites: [trusted-research-fast-v1]
+  - id: 09-memory-engineering
+    order: 9
+    track: core
+    title: Memory Engineering
+    status: executable
+    prerequisites: [08-evidence-first-rag]
+    summary: 把 thread state 与 semantic、episodic、procedural memory 分开。
+    question: 哪些聊天内容有资格升级为长期记忆？
+    artifact: approval-aware memory store
+    references:
+      - src/agent_lab/capabilities/memory/store.py
+      - tests/unit/test_memory.py
+    capabilities: [semantic-memory, episodic-memory, procedural-memory, versioned-write]
+    expected_trace: [approval, memory-write]
+    failure_cases: [unapproved-write, namespace-leak, stale-version]
+    acceptance: [approval-required, namespace-isolated, updates-versioned]
+    eval_suites: [memory-contract-tests]
+  - id: 10-observability
+    order: 10
+    track: core
+    title: Observability 与 Trace
+    status: executable
+    prerequisites: [09-memory-engineering]
+    summary: 记录节点、工具、状态和终止原因，不暴露隐藏推理。
+    question: 看到一条失败 Trace 后，如何定位是工具、路由还是证据问题？
+    artifact: TraceRecorder and RunMetrics
+    references:
+      - src/agent_lab/observability/tracing.py
+      - src/agent_lab/domain/models.py
+    capabilities: [structured-trace, termination-reason, operational-metrics]
+    expected_trace: [request_received, tool_started, tool_finished, run_completed]
+    failure_cases: [missing-trace-id, hidden-reasoning-leak, ambiguous-termination]
+    acceptance: [actions-not-thoughts, ordered-events]
+    eval_suites: [trusted-research-fast-v1]
+  - id: 11-agent-evals
+    order: 11
+    track: core
+    title: Final、Step 与 Trajectory Eval
+    status: executable
+    prerequisites: [10-observability]
+    summary: 先用确定性 grader 检查状态、证据、工具和轨迹，再考虑语义 Judge。
+    question: 哪些失败可以被代码百分之百判定？
+    artifact: deterministic graders
+    references:
+      - src/agent_lab/evaluation/graders.py
+      - tests/integration/test_evaluation.py
+    capabilities: [final-eval, step-eval, trajectory-eval, attribution-eval]
+    expected_trace: [run-case, grade, aggregate]
+    failure_cases: [grader-error, missing-expected-trace, false-average]
+    acceptance: [four-state-semantics, unknown-error-unscored]
+    eval_suites: [trusted-research-fast-v1]
+  - id: 12-regression-engineering
+    order: 12
+    track: core
+    title: Regression Engineering
+    status: executable
+    prerequisites: [11-agent-evals]
+    summary: 把 unknown、注入、越权和预算失败固化为版本化数据集。
+    question: 一次修复如何变成以后永远会被检查的资产？
+    artifact: capability and regression datasets
+    references:
+      - datasets/capability/trusted-research-v1.jsonl
+      - datasets/regression/trusted-research-v1.jsonl
+      - evals/suites/fast.yaml
+    capabilities: [capability-dataset, regression-dataset, strict-gate]
+    expected_trace: [case, runtime, trial, graders, gate]
+    failure_cases: [duplicate-case-id, dataset-drift, evaluator-error]
+    acceptance: [workflow-and-graph-pass, error-rate-zero]
+    eval_suites: [trusted-research-fast-v1]
+  - id: 13-deployment
+    order: 13
+    track: core
+    title: Agent Server 与发布合同
+    status: configured
+    prerequisites: [12-regression-engineering]
+    summary: 用 langgraph.json 注册图，并把部署前门禁与线上状态分开。
+    question: 构建成功、部署请求和线上可用分别需要什么证据？
+    artifact: Agent Server blueprint and GitHub Pages workflow
+    references:
+      - langgraph.json
+      - src/agent_lab/deployment.py
+      - .github/workflows/pages.yml
+    capabilities: [agent-server-blueprint, pages-deployment, release-gate]
+    expected_trace: [build, test, deploy, verify]
+    failure_cases: [build-only-claimed-live, missing-persistence, unverified-url]
+    acceptance: [compiled-graph-exported, deployment-receipt-required]
+    eval_suites: [trusted-research-fast-v1]
+  - id: 14-production-loop
+    order: 14
+    track: core
+    title: Production Trace → Dataset → Regression
+    status: scaffold
+    prerequisites: [13-deployment]
+    summary: 只把经筛选和脱敏的真实失败 Trace 提升为离线回归样例。
+    question: 生产流量里的异常如何安全、可追溯地回流？
+    artifact: production promotion contract
+    references:
+      - docs/verification.md
+      - docs/adrs/0003-evaluation-semantics.md
+    capabilities: [trace-backtest, promotion-review, privacy-filter]
+    expected_trace: [observe, triage, redact, review, promote, regress]
+    failure_cases: [raw-trace-committed, fixture-promoted-as-production, missing-owner-review]
+    acceptance: [promotion-is-reviewed, source-tier-preserved]
+    eval_suites: [production-candidate]
+  - id: f01-filesystem-context
+    order: 101
+    track: frontier
+    title: Filesystem Context
+    status: scaffold
+    prerequisites: [05-context-engineering]
+    summary: 研究何时用文件系统卸载上下文，并测试权限和信息召回。
+    question: 文件系统比长 Prompt 多带来了什么可测收益？
+    artifact: experiment contract
+    references: [docs/adrs/0001-framework-boundaries.md]
+    capabilities: [filesystem-context]
+    expected_trace: [write-note, read-note, synthesize]
+    failure_cases: [path-escape, stale-note, secret-write]
+    acceptance: [sandbox-only, recall-measured]
+    eval_suites: [frontier-filesystem-candidate]
+  - id: f02-context-compaction
+    order: 102
+    track: frontier
+    title: Context Compaction
+    status: scaffold
+    prerequisites: [f01-filesystem-context]
+    summary: 比较 trim、summary 和 notes 的信息损失、成本与延迟。
+    question: 压缩省下的 token 是否抵得过事实丢失？
+    artifact: compaction comparison
+    references: [docs/adrs/0004-memory-model.md]
+    capabilities: [context-compaction]
+    expected_trace: [measure, compact, replay, compare]
+    failure_cases: [lost-constraint, stale-summary, hidden-cost]
+    acceptance: [paired-eval, loss-reported]
+    eval_suites: [frontier-compaction-candidate]
+  - id: f03-agent-skills
+    order: 103
+    track: frontier
+    title: Agent Skills
+    status: scaffold
+    prerequisites: [f02-context-compaction]
+    summary: 将程序性知识按需加载，同时审计来源、版本和不可信指令。
+    question: Skill 是知识模块，还是新的供应链攻击面？
+    artifact: skill trust contract
+    references: [docs/adrs/0005-tool-security.md]
+    capabilities: [progressive-disclosure, skill-versioning]
+    expected_trace: [discover, validate, load, execute]
+    failure_cases: [untrusted-skill, version-drift, overbroad-permission]
+    acceptance: [source-recorded, permissions-bounded]
+    eval_suites: [frontier-skills-candidate]
+  - id: f04-deep-agents
+    order: 104
+    track: frontier
+    title: Deep Agents Harness
+    status: implemented
+    prerequisites: [f03-agent-skills]
+    summary: 用可选适配器比较规划、文件系统和 subagents 是否改善长任务。
+    question: Harness 的额外复杂度在哪些 case 上真的换来收益？
+    artifact: lazy Deep Agents adapter
+    references:
+      - src/agent_lab/adapters/deepagents.py
+      - docs/adrs/0006-provider-strategy.md
+    capabilities: [deep-agent, planning, context-offload]
+    expected_trace: [plan, delegate, synthesize]
+    failure_cases: [dependency-drift, context-bloat, needless-delegation]
+    acceptance: [optional-dependency, same-domain-outcome]
+    eval_suites: [frontier-deepagents-candidate]
+  - id: f05-subagents
+    order: 105
+    track: frontier
+    title: Subagents
+    status: scaffold
+    prerequisites: [f04-deep-agents]
+    summary: 只为上下文隔离或可测并行收益引入子 Agent。
+    question: 并行收益是否超过协调成本和错误面？
+    artifact: architecture comparison
+    references: [docs/adrs/0001-framework-boundaries.md]
+    capabilities: [subagent-isolation, parallel-work]
+    expected_trace: [delegate, isolate, join]
+    failure_cases: [duplicate-work, context-leak, conflicting-output]
+    acceptance: [single-agent-baseline, benefit-measured]
+    eval_suites: [frontier-subagents-candidate]
+  - id: f06-sandboxed-code
+    order: 106
+    track: frontier
+    title: Sandboxed Code Execution
+    status: scaffold
+    prerequisites: [f05-subagents]
+    summary: 代码执行只进入隔离环境，并测试文件、网络、时间和资源边界。
+    question: 执行能力需要哪些宿主机之外的安全合同？
+    artifact: sandbox threat model
+    references: [docs/adrs/0005-tool-security.md]
+    capabilities: [sandbox, resource-limit]
+    expected_trace: [approve, isolate, execute, collect]
+    failure_cases: [host-shell, network-escape, resource-exhaustion]
+    acceptance: [no-host-execution, bounded-resources]
+    eval_suites: [frontier-sandbox-candidate]
+  - id: f07-mcp
+    order: 107
+    track: frontier
+    title: MCP Adapter
+    status: scaffold
+    prerequisites: [f06-sandboxed-code]
+    summary: 把 MCP 放在内部 Tool Contract 之外的边界适配层。
+    question: 协议便利性如何不反向污染领域模型？
+    artifact: MCP boundary adapter
+    references: [docs/adrs/0001-framework-boundaries.md]
+    capabilities: [mcp-adapter, external-tools]
+    expected_trace: [discover, authorize, invoke, normalize]
+    failure_cases: [schema-drift, untrusted-server, permission-escalation]
+    acceptance: [internal-contract-stable, server-trust-explicit]
+    eval_suites: [frontier-mcp-candidate]
+  - id: f08-a2a
+    order: 108
+    track: frontier
+    title: A2A
+    status: scaffold
+    prerequisites: [f07-mcp]
+    summary: 只在跨团队、跨服务和远程任务生命周期确实存在时采用 A2A。
+    question: 这是远程 Agent 协作，还是一个进程内的普通函数调用？
+    artifact: remote-agent protocol experiment
+    references: [docs/adrs/0001-framework-boundaries.md]
+    capabilities: [a2a, remote-task-lifecycle]
+    expected_trace: [submit, stream, artifact, complete]
+    failure_cases: [lost-correlation, duplicate-task, trust-mismatch]
+    acceptance: [remote-boundary-real, trace-correlated]
+    eval_suites: [frontier-a2a-candidate]
+  - id: f09-online-evals
+    order: 109
+    track: frontier
+    title: Online Evals
+    status: scaffold
+    prerequisites: [14-production-loop]
+    summary: 对真实流量设置采样、成本和隐私策略，并把失败回流离线数据集。
+    question: 哪些线上信号足以触发告警，哪些需要人工复核？
+    artifact: online evaluation policy
+    references: [docs/adrs/0003-evaluation-semantics.md]
+    capabilities: [online-eval, sampling, alerting]
+    expected_trace: [sample, evaluate, alert, promote]
+    failure_cases: [biased-sample, privacy-leak, judge-outage]
+    acceptance: [sampling-explicit, errors-separated]
+    eval_suites: [frontier-online-eval-candidate]
+  - id: f10-adaptive-routing
+    order: 110
+    track: frontier
+    title: Adaptive Routing
+    status: scaffold
+    prerequisites: [f09-online-evals]
+    summary: 用质量、成本和延迟数据决定模型或架构路由，不凭感觉升级复杂度。
+    question: 路由策略在哪些分布变化下会失效？
+    artifact: routing benchmark
+    references: [docs/adrs/0003-evaluation-semantics.md]
+    capabilities: [adaptive-routing, cost-quality-tradeoff]
+    expected_trace: [classify, route, run, compare]
+    failure_cases: [distribution-shift, cost-spike, silent-quality-drop]
+    acceptance: [baseline-comparison, rollback-threshold]
+    eval_suites: [frontier-routing-candidate]

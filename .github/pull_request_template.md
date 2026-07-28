@@ -1,28 +1,31 @@
-## 这个 PR 改了什么
+## What changed
 
-（1-3 句话。例："给 docs/debug-recipes.md 加了 langchain-core 1.4 的 PydanticUserError 报错条目"）
+说明用户可见行为和涉及的合同/runtime/dataset/lab。
 
-## 为什么这么改
+## Why
 
-（动机 / 撞到的真实场景）
+根因或已观察问题是什么？为什么更小方案不够？
 
-## 改的类型
+## Evidence
 
-- [ ] 修 bug / 报错
-- [ ] 加新报错到 debug-recipes.md
-- [ ] 加新 prompt 到 prompts-cheatsheet.md
-- [ ] 加新概念到 concepts.md
-- [ ] tutorial 内容修订（具体哪一篇）
-- [ ] 工程化（CI / build / config）
-- [ ] 其他
+- [ ] `uv sync --frozen`
+- [ ] `uv run agent-lab verify`
+- [ ] `bundle exec jekyll build`
+- [ ] `uv run python scripts/check_site.py --built _site`
+- [ ] `bundle exec htmlproofer _site --disable-external --no-enforce-https --swap-urls '^/langchain-langgraph-langsmith-tutorial:'`
 
-## 自检
+列出新增/变化的 case_id，以及修复前后的结果。不要只写“测试通过”。
 
-- [ ] 改的 markdown 本地预览过没格式问题
-- [ ] 内部链接（`.md` / 相对路径）能跳通
-- [ ] 没动 `final/*.py`（除非是 langchain 升级兼容性修复）
-- [ ] 没引入新的 secret / API key
+## Behavior delta
 
-## 相关 issue
+| Dataset / case | Before | After | Evidence |
+|---|---|---|---|
+| | | | |
 
-Closes #
+## Risk and rollback
+
+权限、数据、成本、延迟、兼容性和回滚路径。
+
+## UNKNOWN
+
+明确写出未执行的 live provider、online eval、Agent Server 或 production verification。
