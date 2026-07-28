@@ -1,11 +1,3 @@
----
-layout: default
-title: Agent Engineering Lab
-description: 面向中文开发者的 Agent Systems Engineering 可执行实验室：用任务合同、证据、Trace、Dataset、Eval 和 Regression 证明 Agent 行为。
-image: /assets/og-agent-engineering-lab.png
-last_modified_at: 2026-07-28
----
-
 # Agent Engineering Lab
 
 > 从最小 Workflow 到可验证、可恢复、可演进的 Agent 系统。

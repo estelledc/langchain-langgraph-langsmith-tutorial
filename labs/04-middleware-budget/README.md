@@ -1,9 +1,3 @@
----
-layout: default
-title: Middleware、Policy 与预算
-description: 用代码层 middleware 和 policy 限制模型、工具、步骤与权限。
----
-
 # 04-middleware-budget · Middleware、Policy 与预算
 
 > 状态：`executable`。离线实现与自动化验收均已接入。

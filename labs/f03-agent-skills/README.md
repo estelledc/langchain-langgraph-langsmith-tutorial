@@ -1,9 +1,3 @@
----
-layout: default
-title: Agent Skills
-description: 将程序性知识按需加载，同时审计来源、版本和不可信指令。
----
-
 # f03-agent-skills · Agent Skills
 
 > 状态：`scaffold`。当前只有实验合同，不代表能力已实现或验证。

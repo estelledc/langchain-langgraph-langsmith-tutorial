@@ -1,9 +1,3 @@
----
-layout: default
-title: Persistence、Interrupt 与 Resume
-description: 注入 checkpointer，按 thread 保存状态，并通过 interrupt 暂停审批。
----
-
 # 07-persistence-hitl · Persistence、Interrupt 与 Resume
 
 > 状态：`executable`。离线实现与自动化验收均已接入。

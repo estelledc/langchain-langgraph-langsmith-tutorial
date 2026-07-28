@@ -1,9 +1,3 @@
----
-layout: default
-title: Adaptive Routing
-description: 用质量、成本和延迟数据决定模型或架构路由，不凭感觉升级复杂度。
----
-
 # f10-adaptive-routing · Adaptive Routing
 
 > 状态：`scaffold`。当前只有实验合同，不代表能力已实现或验证。

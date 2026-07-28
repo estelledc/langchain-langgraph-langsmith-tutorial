@@ -1,9 +1,3 @@
----
-layout: default
-title: Agent Engineering Labs
-description: 15 个核心实验与 10 个前沿实验的可执行学习路径。
----
-
 # Agent Engineering Labs
 
 课程不是按框架 API 排序，而是按任务合同、工具、上下文、状态、证据和评测能力推进。状态字段是证据边界，不是进度装饰。

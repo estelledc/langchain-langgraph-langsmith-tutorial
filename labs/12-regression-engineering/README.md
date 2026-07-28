@@ -1,9 +1,3 @@
----
-layout: default
-title: Regression Engineering
-description: 把 unknown、注入、越权和预算失败固化为版本化数据集。
----
-
 # 12-regression-engineering · Regression Engineering
 
 > 状态：`executable`。离线实现与自动化验收均已接入。

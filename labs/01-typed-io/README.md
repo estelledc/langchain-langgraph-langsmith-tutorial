@@ -1,9 +1,3 @@
----
-layout: default
-title: Typed I/O 与结构化结果
-description: 用 RunRequest、Budget、Evidence 和 RunResult 把成功与失败说清楚。
----
-
 # 01-typed-io · Typed I/O 与结构化结果
 
 > 状态：`executable`。离线实现与自动化验收均已接入。

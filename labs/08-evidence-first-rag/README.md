@@ -1,9 +1,3 @@
----
-layout: default
-title: Evidence-first Retrieval
-description: 搜索结果先成为结构化 Evidence，再由 writer 生成带 ID 的结论。
----
-
 # 08-evidence-first-rag · Evidence-first Retrieval
 
 > 状态：`executable`。离线实现与自动化验收均已接入。

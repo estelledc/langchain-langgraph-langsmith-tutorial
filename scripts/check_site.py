@@ -19,6 +19,15 @@ def public_markdown(root: Path) -> list[Path]:
     return sorted(path for path in direct + nested if path.is_file())
 
 
+def github_readmes(root: Path) -> list[Path]:
+    excluded = {".venv", "_site", "legacy", "vendor"}
+    return sorted(
+        path
+        for path in root.glob("**/README.md")
+        if not excluded.intersection(path.relative_to(root).parts)
+    )
+
+
 def check_source(root: Path) -> list[str]:
     errors: list[str] = []
     readme = (root / "README.md").read_text(encoding="utf-8")
@@ -35,12 +44,27 @@ def check_source(root: Path) -> list[str]:
     for stale in ("4 周、16 篇，从", "langchain-community==1.0.4        #"):
         if stale in readme:
             errors.append(f"README retained stale V1 claim: {stale}")
+    for path in github_readmes(root):
+        text = path.read_text(encoding="utf-8")
+        if text.startswith("---\n"):
+            errors.append(
+                f"{path.relative_to(root)} must not contain Jekyll front matter; use _config.yml"
+            )
 
     config = yaml.safe_load((root / "_config.yml").read_text(encoding="utf-8"))
     if config.get("title") != "Agent Engineering Lab":
         errors.append("_config.yml title drift")
     if "legacy/" not in config.get("exclude", []):
         errors.append("legacy/ must be excluded from V2 Pages build")
+    if "jekyll-readme-index" not in config.get("plugins", []):
+        errors.append("jekyll-readme-index must render front-matter-free README files")
+    readme_index = config.get("readme_index", {})
+    if (
+        readme_index.get("enabled") is not True
+        or readme_index.get("remove_originals") is not True
+        or readme_index.get("with_frontmatter") is not False
+    ):
+        errors.append("readme_index must render README only, without front matter or raw copies")
 
     lab_pages = sorted((root / "labs").glob("*/README.md"))
     if len(lab_pages) != 25:

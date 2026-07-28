@@ -1,9 +1,3 @@
----
-layout: default
-title: A2A
-description: 只在跨团队、跨服务和远程任务生命周期确实存在时采用 A2A。
----
-
 # f08-a2a · A2A
 
 > 状态：`scaffold`。当前只有实验合同，不代表能力已实现或验证。

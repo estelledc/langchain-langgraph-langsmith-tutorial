@@ -1,9 +1,3 @@
----
-layout: default
-title: Agent Server 与发布合同
-description: 用 langgraph.json 注册图，并把部署前门禁与线上状态分开。
----
-
 # 13-deployment · Agent Server 与发布合同
 
 > 状态：`configured`。部署或集成合同已配置；外部结果以实际 receipt 为准。
