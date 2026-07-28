@@ -12,6 +12,8 @@ cd langchain-langgraph-langsmith-tutorial
 uv sync --frozen
 uv run agent-lab run --goal "LangGraph 的 checkpointer 和 Store 有什么区别？"
 uv run agent-lab eval --suite fast
+uv run agent-lab eval --suite security
+uv run agent-lab eval --suite contracts
 ```
 
 当前可执行合同：
@@ -22,7 +24,7 @@ uv run agent-lab eval --suite fast
 | 离线实现 | Deterministic Workflow + Typed LangGraph |
 | 模型实现 | LangChain `create_agent` 适配器；模型与 provider 显式注入 |
 | 数据集 | capability、regression、adversarial、tool contracts 分层 |
-| 评测 | Final、Attribution、Step、Trajectory、Policy 确定性 grader |
+| 评测 | runtime、security、tool-contract 三类严格离线 suite |
 | 状态 | `PASS / FAIL / UNKNOWN / ERROR`，后两者不生成质量分 |
 | 发布 | fresh install、lint、type、tests、eval、curriculum、site 全部先过门禁 |
 
@@ -91,16 +93,24 @@ V2 的第一个真实闭环：
 → Verification Passport
 ```
 
-fast suite 当前包含 9 个 case，分别跑 Workflow 和 LangGraph，共 18 个确定性 case-run。它会主动覆盖：
+fast suite 当前包含 9 个 case，分别跑 Workflow 和 LangGraph，共 18 个确定性 case-run。单个 runtime 崩溃只会把当前 case 记为 `ERROR`，不会中断其余 case。它会主动覆盖：
 
 - 有证据时完成并引用。
 - 无证据时拒答为 `unknown`。
 - 提示注入 fixture 被隔离。
 - 权限缺失和 capability 未授权时不调用工具。
 - 工具预算为零时在执行前停止。
-- grader 异常不会折算成中间分。
+- runtime 与 grader 异常不会折算成中间分。
+
+另外两套正式门禁保持各自的数据合同：`security` 执行 4 个计算器对抗输入，`contracts` 对照 2 个版本化 ToolSpec。它们不会为了复用 fast runner 而伪装成 Research `RunRequest`。
 
 [查看完整实验路径](labs/) · [查看架构](docs/architecture.md) · [查看验证口径](docs/verification.md)
+
+## 正在孵化：XcodeFixBench
+
+下一条写操作纵向切片是 [XcodeFixBench](apps/xcode_fixbench/)：给定固定源码提交、Xcode/Simulator 环境和权限合同，要求 Coding Agent 复现、诊断、修改并用 Patch Passport 证明 iOS Bug 已修复。
+
+当前已跑通一个 synthetic Keyboard task 的固定 Git 快照、审批、Gold/Negative Patch、XCTest、iOS Simulator runtime oracle 与 Patch Passport；还没有真机第三方输入法证明、多 Agent 排行榜或正式 held-out 集。详细边界、威胁模型与晋级门禁见 [RFC 0002](docs/rfcs/0002-xcode-fix-bench.md)。
 
 ## 学习闭环
 
@@ -119,7 +129,8 @@ Frame → Predict → Build → Break → Trace → Evaluate → Reflect → Pro
 - 锁文件可解析并安装。
 - 离线 Workflow 和 LangGraph 满足同一合同。
 - 安全计算器拒绝名称、调用、属性访问和超限指数。
-- fast regression suite 的严格阈值可执行。
+- fast、security、contracts 三套严格阈值可执行。
+- wheel 在源码树外仍能读取随包发布的数据集、suite 和 XcodeFixBench task 合同。
 - 课程导航和页面由同一元数据生成。
 
 它不能证明：
@@ -140,7 +151,7 @@ Frame → Predict → Build → Break → Trace → Evaluate → Reflect → Pro
 ```bash
 make sync        # uv sync --frozen
 make test        # pytest + coverage
-make eval        # 18 个离线 case-run
+make eval        # fast + security + contracts 三类离线 suite
 make verify      # 本地完整离线门禁
 make site        # Jekyll 渲染
 ```
@@ -148,6 +159,7 @@ make site        # Jekyll 渲染
 - [安装与可选依赖](SETUP.md)
 - [25 个实验](labs/)
 - [RFC 0001：产品范围](docs/rfcs/0001-product-scope.md)
+- [RFC 0002：XcodeFixBench](docs/rfcs/0002-xcode-fix-bench.md)
 - [ADR 索引与架构](docs/architecture.md)
 - [验证、发布和 UNKNOWN](docs/verification.md)
 - [兼容性矩阵](docs/compatibility.md)

@@ -5,6 +5,9 @@ from __future__ import annotations
 import re
 from collections.abc import Callable
 
+from pydantic import ValidationError
+
+from agent_lab.capabilities.tools.registry import TOOL_INPUT_MODELS
 from agent_lab.domain.evaluation import EvalResult, EvalStatus
 from agent_lab.domain.models import RunResult, RunStatus
 from agent_lab.evaluation.cases import EvalCase
@@ -117,8 +120,16 @@ def grade_tool_contract(result: RunResult, case: EvalCase) -> EvalResult:
     for call in result.tool_calls:
         if call.capability not in case.allowed_capabilities:
             return _fail("tool_contract", f"tool used forbidden capability {call.capability}")
-        if "query" not in call.arguments:
-            return _fail("tool_contract", "search call missing query argument")
+        input_model = TOOL_INPUT_MODELS.get(call.tool_name)
+        if input_model is None:
+            return _fail("tool_contract", f"tool input contract not registered: {call.tool_name}")
+        try:
+            input_model.model_validate(call.arguments)
+        except ValidationError as exc:
+            return _fail(
+                "tool_contract",
+                f"invalid {call.tool_name} arguments: {exc.errors(include_url=False)}",
+            )
     return _pass("tool_contract", "tool count, name, capability and arguments satisfied")
 
 

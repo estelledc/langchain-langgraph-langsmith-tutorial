@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Literal
 
 import yaml
 from pydantic import Field
@@ -30,6 +31,7 @@ class EvalCase(FrozenModel):
 
 class SuiteConfig(FrozenModel):
     id: str = Field(min_length=1)
+    runner: Literal["runtime", "security", "contracts"] = "runtime"
     dataset_version: str = Field(min_length=1)
     datasets: tuple[str, ...] = Field(min_length=1)
     runtimes: tuple[str, ...] = Field(min_length=1)
@@ -38,6 +40,7 @@ class SuiteConfig(FrozenModel):
     min_pass_rate: float = Field(default=1, ge=0, le=1)
     max_unknown_rate: float = Field(default=0, ge=0, le=1)
     max_evaluator_error_rate: float = Field(default=0, ge=0, le=1)
+    max_runtime_error_rate: float = Field(default=0, ge=0, le=1)
 
 
 def load_cases(root: Path, relative_paths: tuple[str, ...]) -> tuple[EvalCase, ...]:

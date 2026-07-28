@@ -26,11 +26,20 @@ bundle exec jekyll build
 uv run python scripts/check_site.py --built _site
 ```
 
-fast suite 由 9 个 case × 2 个 runtime 组成，要求：
+离线发布门禁由三类 suite 组成：
+
+| suite | 数据合同 | 当前规模 | 证明范围 |
+|---|---|---:|---|
+| `fast` | `RunRequest → RunResult` | 9 case × 2 runtime = 18 case-run | Workflow/LangGraph 行为与证据合同 |
+| `security` | 结构化 tool input | 4 case | 安全计算器拒绝注入、属性访问和资源超限 |
+| `contracts` | 版本化 ToolSpec | 2 case | 实现声明与 capability、副作用、错误集合一致 |
+
+三者都要求：
 
 - pass rate = 1.0。
 - unknown rate = 0.0。
 - evaluator error rate = 0.0。
+- runtime error rate = 0.0。
 
 这里的 unknown rate 指 grader 无法判断，不是 Agent 正确返回 `RunStatus.UNKNOWN`。无证据拒答本身可以是一个通过的 capability case。
 
@@ -45,19 +54,33 @@ fast suite 由 9 个 case × 2 个 runtime 组成，要求：
 
 ## Verification Passport
 
+Passport 不能由调用者手填 `test_status=PASS`。推荐一次完成构建、完整门禁和护照：
+
 ```bash
-uv run agent-lab passport --suite fast --output verification-passport.json
+uv build --clear
+uv run agent-lab verify \
+  --passport-output verification-passport.json \
+  --artifact-dir dist
 ```
+
+`uv run agent-lab passport` 是同一完整门禁的便利入口，不是跳过测试的报告生成器。
 
 护照包含：
 
 - source commit 与 worktree dirty 状态。
 - `uv.lock` 哈希和关键包版本。
-- dataset 文件哈希与 suite 版本。
-- pass、unknown、evaluator error rate。
+- dataset、suite 配置和 wheel/sdist 文件哈希。
+- Ruff、mypy、pytest、课程、站点和三类 suite 的派生 gate 状态。
+- 每套 suite 的 pass、unknown、evaluator error、runtime error rate。
 - 未运行的 live provider 与 online eval。
 
 护照是运行产物，由 CI 上传；它不与源码 commit 自引用地混在一起。
+
+CI 还会在 Python 3.11、3.12、3.13 运行离线门禁，并把 wheel 安装到干净环境，从源码树外执行 `agent-lab run/eval`、`xcodefix task` 和全部 optional extras 的 import smoke。这个检查证明发行物可安装，不证明外部 provider 或 Xcode live run 可用。
+
+## XcodeFixBench 证据边界
+
+`keyboard-layout-001` 当前是 `synthetic-seeded` 开发任务。Gold Patch、Negative Patch、审批绑定、XCTest 和 Simulator runtime oracle 已形成完整本机证据链，但任务尚未达到 RFC 要求的 20 次稳定性晋级门禁，也没有真机第三方输入法或 held-out Agent 排行榜。因此它属于 executable dev slice，不属于正式 benchmark 成绩。
 
 ## 生产回流
 

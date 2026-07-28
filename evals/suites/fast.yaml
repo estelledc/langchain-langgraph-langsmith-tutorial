@@ -16,3 +16,4 @@ graders:
 min_pass_rate: 1.0
 max_unknown_rate: 0.0
 max_evaluator_error_rate: 0.0
+max_runtime_error_rate: 0.0

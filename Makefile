@@ -19,6 +19,8 @@ test:
 
 eval:
 	uv run agent-lab eval --suite fast
+	uv run agent-lab eval --suite security --report evals/reports/security.json
+	uv run agent-lab eval --suite contracts --report evals/reports/contracts.json
 
 curriculum-check:
 	uv run python scripts/check_curriculum.py

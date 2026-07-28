@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Protocol
 
 from langgraph.checkpoint.memory import InMemorySaver
 
@@ -18,6 +19,11 @@ from agent_lab.runtimes.graph import LangGraphResearchRuntime
 from agent_lab.runtimes.workflow import TrustedResearchWorkflow
 
 
+def _safe_error_message(exc: Exception, *, limit: int = 500) -> str:
+    message = " ".join(str(exc).split()) or "runtime raised without a message"
+    return message[:limit]
+
+
 def build_default_service() -> ResearchService:
     search = FixtureSearchAdapter()
     return ResearchService(
@@ -28,9 +34,53 @@ def build_default_service() -> ResearchService:
     )
 
 
-class SuiteRunner:
-    def __init__(self, root: Path, service: ResearchService | None = None) -> None:
+class SuiteExecutor(Protocol):
+    def run(self, suite_path: Path) -> SuiteReport: ...
+
+    def gate(self, report: SuiteReport, config: SuiteConfig) -> tuple[bool, tuple[str, ...]]: ...
+
+    @staticmethod
+    def write_report(report: SuiteReport, path: Path) -> None: ...
+
+
+class BaseSuiteRunner:
+    def __init__(self, root: Path) -> None:
         self.root = root
+
+    def gate(self, report: SuiteReport, config: SuiteConfig) -> tuple[bool, tuple[str, ...]]:
+        failures: list[str] = []
+        if report.pass_rate < config.min_pass_rate:
+            failures.append(
+                f"pass_rate {report.pass_rate:.3f} < required {config.min_pass_rate:.3f}"
+            )
+        if report.unknown_rate > config.max_unknown_rate:
+            failures.append(
+                f"unknown_rate {report.unknown_rate:.3f} > allowed {config.max_unknown_rate:.3f}"
+            )
+        if report.evaluator_error_rate > config.max_evaluator_error_rate:
+            failures.append(
+                "evaluator_error_rate "
+                f"{report.evaluator_error_rate:.3f} > allowed {config.max_evaluator_error_rate:.3f}"
+            )
+        if report.runtime_error_rate > config.max_runtime_error_rate:
+            failures.append(
+                "runtime_error_rate "
+                f"{report.runtime_error_rate:.3f} > allowed {config.max_runtime_error_rate:.3f}"
+            )
+        return not failures, tuple(failures)
+
+    @staticmethod
+    def write_report(report: SuiteReport, path: Path) -> None:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(
+            json.dumps(report.model_dump(mode="json"), ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+
+
+class SuiteRunner(BaseSuiteRunner):
+    def __init__(self, root: Path, service: ResearchService | None = None) -> None:
+        super().__init__(root)
         self.service = service or build_default_service()
 
     def run(self, suite_path: Path) -> SuiteReport:
@@ -41,6 +91,7 @@ class SuiteRunner:
         grader_count = 0
         unknown_count = 0
         error_count = 0
+        runtime_error_count = 0
         passed_runs = 0
         total_runs = 0
 
@@ -48,7 +99,33 @@ class SuiteRunner:
             for runtime in config.runtimes:
                 for trial in range(1, config.trials + 1):
                     total_runs += 1
-                    result = self._run_case(case, runtime=runtime, trial=trial)
+                    run_id = f"{case.case_id}:{runtime}:trial-{trial}"
+                    try:
+                        result = self._run_case(case, runtime=runtime, trial=trial)
+                    except Exception as exc:  # one runtime failure must not abort the suite
+                        runtime_error_count += 1
+                        failed.append(run_id)
+                        safe_message = _safe_error_message(exc)
+                        reports.append(
+                            CaseReport(
+                                case_id=case.case_id,
+                                trial=trial,
+                                runtime=runtime,
+                                result_status=EvalStatus.ERROR,
+                                graders=(
+                                    EvalResult(
+                                        grader="runtime",
+                                        status=EvalStatus.ERROR,
+                                        message="runtime 执行失败",
+                                        error=f"{type(exc).__name__}: {safe_message}",
+                                    ),
+                                ),
+                                error_phase="runtime",
+                                error_type=type(exc).__name__,
+                                error_message=safe_message,
+                            )
+                        )
+                        continue
                     grader_results: list[EvalResult] = []
                     for name in config.graders:
                         grader = GRADERS.get(name)
@@ -78,7 +155,7 @@ class SuiteRunner:
                     if run_passed:
                         passed_runs += 1
                     else:
-                        failed.append(f"{case.case_id}:{runtime}:trial-{trial}")
+                        failed.append(run_id)
                     reports.append(
                         CaseReport(
                             case_id=case.case_id,
@@ -97,32 +174,8 @@ class SuiteRunner:
             pass_rate=passed_runs / total_runs if total_runs else 0,
             unknown_rate=unknown_count / denominator,
             evaluator_error_rate=error_count / denominator,
+            runtime_error_rate=runtime_error_count / total_runs if total_runs else 0,
             failed_cases=tuple(failed),
-        )
-
-    def gate(self, report: SuiteReport, config: SuiteConfig) -> tuple[bool, tuple[str, ...]]:
-        failures: list[str] = []
-        if report.pass_rate < config.min_pass_rate:
-            failures.append(
-                f"pass_rate {report.pass_rate:.3f} < required {config.min_pass_rate:.3f}"
-            )
-        if report.unknown_rate > config.max_unknown_rate:
-            failures.append(
-                f"unknown_rate {report.unknown_rate:.3f} > allowed {config.max_unknown_rate:.3f}"
-            )
-        if report.evaluator_error_rate > config.max_evaluator_error_rate:
-            failures.append(
-                "evaluator_error_rate "
-                f"{report.evaluator_error_rate:.3f} > allowed {config.max_evaluator_error_rate:.3f}"
-            )
-        return not failures, tuple(failures)
-
-    @staticmethod
-    def write_report(report: SuiteReport, path: Path) -> None:
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(
-            json.dumps(report.model_dump(mode="json"), ensure_ascii=False, indent=2) + "\n",
-            encoding="utf-8",
         )
 
     def _run_case(self, case: EvalCase, *, runtime: str, trial: int) -> RunResult:
@@ -143,5 +196,14 @@ class SuiteRunner:
 def run_named_suite(root: Path, name: str) -> tuple[SuiteConfig, SuiteReport]:
     suite_path = root / "evals" / "suites" / f"{name}.yaml"
     config = load_suite(suite_path)
-    report = SuiteRunner(root).run(suite_path)
+    report = build_suite_runner(root, config).run(suite_path)
     return config, report
+
+
+def build_suite_runner(root: Path, config: SuiteConfig) -> SuiteExecutor:
+    if config.runner == "runtime":
+        return SuiteRunner(root)
+
+    from agent_lab.evaluation.deterministic_runner import DeterministicSuiteRunner
+
+    return DeterministicSuiteRunner(root)

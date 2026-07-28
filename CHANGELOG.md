@@ -12,6 +12,20 @@
 
 ## [Unreleased]
 
+### Added
+
+- 新增 XcodeFixBench executable development slice：固定 Keyboard fixture、隔离 Git workspace、payload-bound approval、Gold/Negative Patch、Xcode build/XCTest、Simulator runtime oracle 与 Patch Passport。
+- 新增 `xcodefix task/run` CLI，并将 benchmark corpus 包含进 wheel。
+- 将 adversarial tool input 与 ToolSpec 数据集提升为 `security`、`contracts` 正式 suite，分别生成独立结构化报告。
+- wheel 现包含离线 datasets 与 suite 配置，可从源码树外执行 `agent-lab run/eval` 与 `xcodefix task`。
+
+### Fixed
+
+- Runtime 异常现在转换为 case-level `ERROR` 并继续执行 suite；`runtime_error_rate` 与 evaluator error 分开统计。
+- Tool contract grader 改为按注册的 Pydantic 输入模型验证参数，不再硬编码 `query`。
+- Verification Passport 升级为 v2，删除调用者可手填的 `test_status`；只有完整质量门禁与 fast/security/contracts 全部通过才生成。
+- CI 补齐 Python 3.12、wheel/sdist 构建、干净环境安装、全部 optional extras import smoke 和发行物哈希。
+
 ### Changed
 
 - 重定位为 Agent Engineering Lab，课程从框架 API 路径改为 15 个核心实验与 10 个前沿实验。

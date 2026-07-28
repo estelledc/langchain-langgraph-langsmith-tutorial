@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from enum import StrEnum
-from typing import Self
+from typing import Literal, Self
 
 from pydantic import Field, model_validator
 
@@ -43,6 +43,19 @@ class CaseReport(FrozenModel):
     runtime: str
     result_status: str
     graders: tuple[EvalResult, ...]
+    error_phase: Literal["dataset", "runtime", "evaluator"] | None = None
+    error_type: str | None = None
+    error_message: str | None = None
+
+    @model_validator(mode="after")
+    def validate_error_semantics(self) -> Self:
+        error_fields = (self.error_phase, self.error_type, self.error_message)
+        if self.result_status == EvalStatus.ERROR:
+            if any(value is None for value in error_fields):
+                raise ValueError("ERROR requires phase, type and message")
+        elif any(value is not None for value in error_fields):
+            raise ValueError("runtime error details require result_status=ERROR")
+        return self
 
 
 class SuiteReport(FrozenModel):
@@ -52,4 +65,5 @@ class SuiteReport(FrozenModel):
     pass_rate: float = Field(ge=0, le=1)
     unknown_rate: float = Field(ge=0, le=1)
     evaluator_error_rate: float = Field(ge=0, le=1)
+    runtime_error_rate: float = Field(ge=0, le=1)
     failed_cases: tuple[str, ...] = ()

@@ -52,6 +52,7 @@ dev = [
 
 [project.scripts]
 agent-lab = "agent_lab.cli:main"
+xcodefix = "agent_lab.repair.cli:main"
 
 [project.urls]
 Homepage = "https://estelledc.github.io/langchain-langgraph-langsmith-tutorial/"
@@ -60,6 +61,11 @@ Issues = "https://github.com/estelledc/langchain-langgraph-langsmith-tutorial/is
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/agent_lab"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"benchmarks" = "agent_lab/repair/package_root/benchmarks"
+"datasets" = "agent_lab/package_root/datasets"
+"evals/suites" = "agent_lab/package_root/evals/suites"
 
 [tool.uv]
 default-groups = ["dev"]

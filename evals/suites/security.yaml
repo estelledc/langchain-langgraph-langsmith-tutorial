@@ -1,0 +1,14 @@
+id: tool-input-security
+runner: security
+dataset_version: tool-input-adversarial-v1
+datasets:
+  - datasets/adversarial/tool-input-v1.jsonl
+runtimes:
+  - deterministic-tool
+trials: 1
+graders:
+  - tool_security
+min_pass_rate: 1.0
+max_unknown_rate: 0.0
+max_evaluator_error_rate: 0.0
+max_runtime_error_rate: 0.0

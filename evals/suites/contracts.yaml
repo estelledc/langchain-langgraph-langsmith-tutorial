@@ -1,0 +1,14 @@
+id: tool-spec-contracts
+runner: contracts
+dataset_version: tool-contract-v1
+datasets:
+  - datasets/contracts/tool-contract-v1.jsonl
+runtimes:
+  - tool-registry
+trials: 1
+graders:
+  - tool_spec_contract
+min_pass_rate: 1.0
+max_unknown_rate: 0.0
+max_evaluator_error_rate: 0.0
+max_runtime_error_rate: 0.0
