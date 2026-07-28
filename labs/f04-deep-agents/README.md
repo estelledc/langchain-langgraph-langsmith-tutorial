@@ -1,9 +1,3 @@
----
-layout: default
-title: Deep Agents Harness
-description: 用可选适配器比较规划、文件系统和 subagents 是否改善长任务。
----
-
 # f04-deep-agents · Deep Agents Harness
 
 > 状态：`implemented`。实现已存在；涉及外部模型的行为仍需单独 live 验证。

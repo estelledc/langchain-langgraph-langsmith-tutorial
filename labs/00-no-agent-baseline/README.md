@@ -1,9 +1,3 @@
----
-layout: default
-title: Agent、Workflow 与普通程序
-description: 先做确定性基线，再判断任务是否需要模型和工具循环。
----
-
 # 00-no-agent-baseline · Agent、Workflow 与普通程序
 
 > 状态：`executable`。离线实现与自动化验收均已接入。

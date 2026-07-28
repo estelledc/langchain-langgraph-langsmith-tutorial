@@ -1,9 +1,3 @@
----
-layout: default
-title: 工具合同与错误语义
-description: 把工具当正式 API，显式声明参数、权限、副作用、幂等与错误。
----
-
 # 02-tool-contracts · 工具合同与错误语义
 
 > 状态：`executable`。离线实现与自动化验收均已接入。

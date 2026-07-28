@@ -1,9 +1,3 @@
----
-layout: default
-title: Context Engineering
-description: 区分模型上下文、工具上下文、runtime context、state 和 store。
----
-
 # 05-context-engineering · Context Engineering
 
 > 状态：`executable`。离线实现与自动化验收均已接入。

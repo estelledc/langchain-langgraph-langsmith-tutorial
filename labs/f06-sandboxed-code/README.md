@@ -1,9 +1,3 @@
----
-layout: default
-title: Sandboxed Code Execution
-description: 代码执行只进入隔离环境，并测试文件、网络、时间和资源边界。
----
-
 # f06-sandboxed-code · Sandboxed Code Execution
 
 > 状态：`scaffold`。当前只有实验合同，不代表能力已实现或验证。

@@ -1,9 +1,3 @@
----
-layout: default
-title: Context Compaction
-description: 比较 trim、summary 和 notes 的信息损失、成本与延迟。
----
-
 # f02-context-compaction · Context Compaction
 
 > 状态：`scaffold`。当前只有实验合同，不代表能力已实现或验证。

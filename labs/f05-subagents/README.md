@@ -1,9 +1,3 @@
----
-layout: default
-title: Subagents
-description: 只为上下文隔离或可测并行收益引入子 Agent。
----
-
 # f05-subagents · Subagents
 
 > 状态：`scaffold`。当前只有实验合同，不代表能力已实现或验证。

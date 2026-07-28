@@ -1,9 +1,3 @@
----
-layout: default
-title: LangChain create_agent
-description: 在确定性权限外壳中接入标准模型与工具循环，并要求结构化引用。
----
-
 # 03-langchain-agent · LangChain create_agent
 
 > 状态：`implemented`。实现已存在；涉及外部模型的行为仍需单独 live 验证。

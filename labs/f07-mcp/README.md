@@ -1,9 +1,3 @@
----
-layout: default
-title: MCP Adapter
-description: 把 MCP 放在内部 Tool Contract 之外的边界适配层。
----
-
 # f07-mcp · MCP Adapter
 
 > 状态：`scaffold`。当前只有实验合同，不代表能力已实现或验证。

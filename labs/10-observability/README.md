@@ -1,9 +1,3 @@
----
-layout: default
-title: Observability 与 Trace
-description: 记录节点、工具、状态和终止原因，不暴露隐藏推理。
----
-
 # 10-observability · Observability 与 Trace
 
 > 状态：`executable`。离线实现与自动化验收均已接入。

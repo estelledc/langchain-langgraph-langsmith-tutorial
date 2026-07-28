@@ -1,9 +1,3 @@
----
-layout: default
-title: Final、Step 与 Trajectory Eval
-description: 先用确定性 grader 检查状态、证据、工具和轨迹，再考虑语义 Judge。
----
-
 # 11-agent-evals · Final、Step 与 Trajectory Eval
 
 > 状态：`executable`。离线实现与自动化验收均已接入。

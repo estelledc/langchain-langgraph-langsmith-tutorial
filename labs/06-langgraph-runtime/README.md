@@ -1,9 +1,3 @@
----
-layout: default
-title: LangGraph Runtime
-description: 把同一任务实现为显式状态图，比较额外复杂度带来的能力。
----
-
 # 06-langgraph-runtime · LangGraph Runtime
 
 > 状态：`executable`。离线实现与自动化验收均已接入。

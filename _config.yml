@@ -21,8 +21,8 @@ relative_links:
   collections: true
 readme_index:
   enabled: true
-  remove_originals: false
-  with_frontmatter: true
+  remove_originals: true
+  with_frontmatter: false
 defaults:
   - scope:
       path: ""

@@ -1,9 +1,3 @@
----
-layout: default
-title: Memory Engineering
-description: 把 thread state 与 semantic、episodic、procedural memory 分开。
----
-
 # 09-memory-engineering · Memory Engineering
 
 > 状态：`executable`。离线实现与自动化验收均已接入。

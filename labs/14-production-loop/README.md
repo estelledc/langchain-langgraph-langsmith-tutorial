@@ -1,9 +1,3 @@
----
-layout: default
-title: Production Trace → Dataset → Regression
-description: 只把经筛选和脱敏的真实失败 Trace 提升为离线回归样例。
----
-
 # 14-production-loop · Production Trace → Dataset → Regression
 
 > 状态：`scaffold`。当前只有实验合同，不代表能力已实现或验证。
