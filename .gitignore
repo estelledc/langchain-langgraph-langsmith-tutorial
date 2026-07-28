@@ -42,6 +42,7 @@ vendor/
 evals/reports/*.json
 verification-passport.json
 .langgraph_api/
+runs/
 
 # 学习者主战场——你写的代码不进 git
 _scratch/*

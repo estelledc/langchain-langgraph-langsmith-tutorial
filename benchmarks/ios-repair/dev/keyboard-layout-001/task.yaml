@@ -1,0 +1,102 @@
+schema_version: xcodefix-task-v1
+task_id: keyboard-layout-001
+title: Composer keeps a stale height after keyboard geometry changes
+origin: synthetic-seeded
+repository:
+  kind: embedded-fixture
+  url: embedded://keyboard-layout-001
+  base_commit: ba73f5bb1a942d80dd806257cfa6a9e9a11656e6
+  license_spdx: MIT
+  fixture_path: benchmarks/ios-repair/fixtures/keyboard-layout-001
+environment:
+  macos_version: 26.5.2 (25F84)
+  xcode_version: 26.0 (17A324)
+  ios_runtime: 26.0.1 (23A8464)
+  device: iPhone 17 Pro
+  swift_version: "6.2"
+problem_statement: >-
+  One keyboard notification reports a 325-point overlap. The layout guide later reaches
+  521 points without a second notification, but the composer panel remains fixed at 325.
+expected_invariants:
+  - System-keyboard height follows the current layout-guide overlap.
+  - Business panels keep their explicit height.
+  - Hidden panels collapse to zero.
+  - The fix works for guide heights other than the known 521-point example.
+reproduction:
+  scheme: KeyboardFixture
+  steps:
+    - Build and install the broken fixture on the pinned simulator.
+    - Launch it with the structured --autorun argument.
+    - Wait for the runtime result file to reach phase complete.
+    - Confirm one 325-point notification and a final 521-point guide overlap.
+    - Confirm the broken panel remains 325 points with a 196-point mismatch.
+  required_artifacts:
+    - screenshot.before
+    - runtime.result
+permissions:
+  readable_paths:
+    - "**"
+  writable_paths:
+    - KeyboardFixture/KeyboardHeightResolver.swift
+  forbidden_paths:
+    - KeyboardFixture.xcodeproj/**
+    - KeyboardFixtureTests/**
+    - KeyboardTaskOracleTests/**
+    - scripts/**
+  allowed_capabilities:
+    - repo.read
+    - repo.search
+    - repo.list
+    - git.diff
+    - test.run
+    - build.run
+    - fs.write
+    - git.commit
+  approval_required_capabilities:
+    - fs.write
+    - git.commit
+  forbidden_capabilities:
+    - git.push
+    - repo.remote.write
+    - host.unrestricted
+budget:
+  max_model_calls: 20
+  max_tool_calls: 100
+  max_steps: 80
+  max_evidence_items: 30
+  max_tokens: 100000
+  max_cost_usd: 10
+  timeout_seconds: 1800
+verification:
+  build_scheme: KeyboardFixture
+  public_test_plans:
+    - KeyboardFixtureTests
+  task_oracle_ids:
+    - KeyboardTaskOracleTests
+  replay_script: benchmarks/ios-repair/dev/keyboard-layout-001/replay.yaml
+  required_checks:
+    - reproduction
+    - root_cause_evidence
+    - patch_scope
+    - build
+    - existing_tests
+    - task_oracle
+    - simulator_replay
+    - forbidden_changes
+    - regression
+  required_artifacts:
+    - patch.diff
+    - approval.receipt
+    - build.xcresult
+    - test.xcresult
+    - screenshot.after
+    - runtime.result
+    - agent.trace
+  changed_file_limit: 1
+  max_patch_bytes: 4096
+  repetitions: 1
+metadata:
+  split: dev
+  fixture_version: "1"
+  gold_patch: benchmarks/ios-repair/dev/keyboard-layout-001/gold.patch
+  negative_patch: benchmarks/ios-repair/dev/keyboard-layout-001/negative/hardcoded-height.patch

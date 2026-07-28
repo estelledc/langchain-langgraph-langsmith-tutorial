@@ -1,0 +1,21 @@
+schema_version: xcodefix-replay-v1
+bundle_id: dev.xcodefixbench.keyboardfixture
+launch_arguments:
+  - --autorun
+result_relative_path: Documents/xcodefix-result.json
+timeout_seconds: 15
+baseline:
+  outcome: bug_reproduced
+  notification_count: 1
+  notification_height: 325
+  guide_overlap: 521
+  panel_height: 325
+  mismatch: 196
+patched:
+  outcome: fix_verified
+  notification_count: 1
+  notification_height: 325
+  guide_overlap: 521
+  panel_height: 521
+  mismatch: 0
+tolerance: 0.5

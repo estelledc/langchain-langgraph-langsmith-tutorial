@@ -1,0 +1,14 @@
+diff --git a/KeyboardFixture/KeyboardHeightResolver.swift b/KeyboardFixture/KeyboardHeightResolver.swift
+--- a/KeyboardFixture/KeyboardHeightResolver.swift
++++ b/KeyboardFixture/KeyboardHeightResolver.swift
+@@ -10,8 +10,7 @@ struct KeyboardHeightResolver {
+     func resolve(_ source: PanelHeightSource) -> CGFloat {
+         switch source {
+-        case let .systemKeyboard(notificationHeight, _):
+-            // XCODEFIX_BUG: a notification is an event snapshot, not the final geometry source.
+-            return max(0, notificationHeight)
++        case let .systemKeyboard(_, guideOverlap):
++            return guideOverlap > 325 ? 521 : guideOverlap
+         case let .businessPanel(height):
+             return max(0, height)
+         case .hidden:
