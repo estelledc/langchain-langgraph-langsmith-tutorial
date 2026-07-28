@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 
 from agent_lab.cli import main
+from agent_lab.evaluation import passport as passport_module
 
 
 def test_run_command_returns_offline_answer(capsys) -> None:
@@ -25,7 +26,20 @@ def test_eval_command_writes_report(root: Path, capsys) -> None:
     report_path.unlink()
 
 
-def test_passport_records_dirty_and_unknown_live_checks(root: Path, tmp_path: Path, capsys) -> None:
+def test_passport_records_dirty_and_unknown_live_checks(
+    root: Path,
+    tmp_path: Path,
+    capsys,
+    monkeypatch,
+) -> None:
+    real_git = passport_module._git
+
+    def fake_git(root: Path, *args: str) -> str:
+        if args == ("status", "--porcelain"):
+            return " M synthetic-change"
+        return real_git(root, *args)
+
+    monkeypatch.setattr(passport_module, "_git", fake_git)
     output_path = tmp_path / "passport.json"
     exit_code = main(
         [
